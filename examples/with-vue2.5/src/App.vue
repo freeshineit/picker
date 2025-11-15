@@ -1,15 +1,15 @@
 <template>
   <div id="app">
-    <I18n />
+    <Picker />
   </div>
 </template>
 
 <script>
-import I18n from "./components/i18n";
+import Picker from './components';
 export default {
-  name: "app",
+  name: 'app',
   components: {
-    I18n,
+    Picker,
   },
 };
 </script>
