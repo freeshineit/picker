@@ -4,7 +4,6 @@
   "description": "picker component for js framework, support mobile and pc",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
-  "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development rollup --config rollup.config.mjs --watch",
     "build": "pnpm run clean && cross-env NODE_ENV=production rollup --config rollup.config.mjs && pnpm run docs",

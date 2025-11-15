@@ -135,7 +135,7 @@ class Picker {
 
   // prettier-ignore
   /**
-   * @description 创建一个 Picker 实例
+   * 创建一个 Picker 实例
    * @param {HTMLElement | (() => HTMLElement) | null} container - 容器元素，可以是 HTMLElement 或一个返回 HTMLElement 的函数。
    * @param {Partial<PickerOptions>} options - 选项对象，包含以下属性：
    * - `wrapClassName`: 前缀类名，默认为 ""。
