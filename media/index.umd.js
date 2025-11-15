@@ -1,7 +1,7 @@
 /**
- * drag scroll support move and touch
- *
- * @skax/picker v1.1.3
+ * picker component for js framework, support mobile and pc
+ * 
+ * @skax/picker v1.1.5
  * Copyright (c) 2025-11-15 ShineShao <xiaoshaoqq@gmail.com>
  * 
  * This source code is licensed under the MIT license found in the
@@ -321,14 +321,14 @@
       var $popupContainerRect = this._$popupContainer.getBoundingClientRect();
       // 容器的坐标 - 挂载的容器的坐标差
       // prettier-ignore
-      var containerLeft = $containerRect.left - $popupContainerRect.left;
-      var containerRight = -($containerRect.right - $popupContainerRect.right);
+      var containerLeft = Math.ceil($containerRect.left) - Math.ceil($popupContainerRect.left);
+      var containerRight = -(Math.ceil($containerRect.right) - Math.ceil($popupContainerRect.right));
       // prettier-ignore
-      var containerTop = $containerRect.y - $popupContainerRect.y;
-      var left = containerLeft + ($containerRect.width - $wrapperContentRect.width) / 2;
+      var containerTop = Math.ceil($containerRect.y) - Math.ceil($popupContainerRect.y);
+      var left = containerLeft + (Math.ceil($containerRect.width) - Math.ceil($wrapperContentRect.width)) / 2;
       var right;
-      var top = containerTop - $wrapperContentRect.height;
-      var bottom = containerTop + $containerRect.height;
+      var top = containerTop - Math.ceil($wrapperContentRect.height);
+      var bottom = containerTop + Math.ceil($containerRect.height);
       if (/^t/.test(this._options.placement)) {
         var _this__options_offset, _this__options_offset1, _this__options_offset2;
         switch (this._options.placement) {
@@ -567,7 +567,7 @@
      * Picker.VERSION; // 输出版本号
      * ```
      */
-  Picker.VERSION = '1.1.3';
+  Picker.VERSION = '1.1.5';
 
   return Picker;
 
