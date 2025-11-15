@@ -1,5 +1,7 @@
 ## @skax/picker
 
+![build](https://github.com/freeshineit/picker/workflows/build/badge.svg) ![Download](https://img.shields.io/npm/dm/@skax/picker.svg) ![Version](https://img.shields.io/npm/v/@skax/picker.svg) ![License](https://img.shields.io/npm/l/@skax/picker.svg)
+
 Picker 是一个通用的弹窗组件，可以用于日期选择器、时间选择器等场景。
 它提供了丰富的配置选项，可以自定义弹窗的样式、位置、触发方式等。
 
