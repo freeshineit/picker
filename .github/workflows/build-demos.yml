@@ -27,5 +27,5 @@ jobs:
       - name: Build with-react-ts
         working-directory: ./examples/with-react-ts
         run: |
-          pnpm install --no-frozen-lockfile
+          pnpm install
           pnpm run build
