@@ -44,9 +44,6 @@ devDependencies:
   '@rollup/plugin-typescript':
     specifier: ^11.1.6
     version: 11.1.6(rollup@4.53.2)(typescript@5.3.3)
-  '@skax/camel':
-    specifier: ^0.2.6
-    version: 0.2.6
   '@swc/core':
     specifier: ^1.11.29
     version: 1.15.2
@@ -1953,12 +1950,6 @@ packages:
 
   /@shikijs/vscode-textmate@10.0.2:
     resolution: {integrity: sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg==}
-    dev: true
-
-  /@skax/camel@0.2.6:
-    resolution: {integrity: sha512-oWud6xkHu3pBxVAPLlWLzfMUHoF5H3eWHtyx6aFKfq7rcEM6nT3QxYXoLnfDb9wThABZYTtfewHV9vlpLDmuZA==}
-    engines: {node: '>=14'}
-    requiresBuild: true
     dev: true
 
   /@swc/core-darwin-arm64@1.15.2:

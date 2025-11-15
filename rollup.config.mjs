@@ -34,8 +34,8 @@ const isDev = process.env.NODE_ENV !== 'production';
 function generateConfig(pkg, configs) {
   // prettier-ignore
   const banner = `/**
- * drag scroll support move and touch
- *
+ * ${pkg.description}
+ * 
  * ${pkg.name} v${pkg.version}
  * Copyright (c) ${dayjs().format("YYYY-MM-DD")} ${pkg.author}
  * 

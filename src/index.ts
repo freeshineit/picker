@@ -398,15 +398,15 @@ class Picker {
 
     // 容器的坐标 - 挂载的容器的坐标差
     // prettier-ignore
-    const containerLeft = $containerRect.left - $popupContainerRect.left;
-    const containerRight = -($containerRect.right - $popupContainerRect.right);
+    const containerLeft = Math.ceil($containerRect.left) - Math.ceil($popupContainerRect.left);
+    const containerRight = -(Math.ceil($containerRect.right) - Math.ceil($popupContainerRect.right));
     // prettier-ignore
-    const containerTop = $containerRect.y - $popupContainerRect.y;
+    const containerTop = Math.ceil($containerRect.y) - Math.ceil($popupContainerRect.y);
 
-    let left: number | undefined = containerLeft + ($containerRect.width - $wrapperContentRect.width) / 2;
+    let left: number | undefined = containerLeft + (Math.ceil($containerRect.width) - Math.ceil($wrapperContentRect.width)) / 2;
     let right: number | undefined;
-    const top = containerTop - $wrapperContentRect.height;
-    const bottom = containerTop + $containerRect.height;
+    const top = containerTop - Math.ceil($wrapperContentRect.height);
+    const bottom = containerTop + Math.ceil($containerRect.height);
 
     if (/^t/.test(this._options.placement)) {
       switch (this._options.placement) {

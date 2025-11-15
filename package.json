@@ -1,10 +1,9 @@
 {
   "name": "@skax/picker",
-  "version": "1.1.3",
+  "version": "1.1.5",
   "description": "picker component for js framework, support mobile and pc",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
-  "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development rollup --config rollup.config.mjs --watch",
     "build": "pnpm run clean && cross-env NODE_ENV=production rollup --config rollup.config.mjs && pnpm run docs",
@@ -30,7 +29,6 @@
     "@rollup/plugin-strip": "^3.0.4",
     "@rollup/plugin-swc": "^0.4.0",
     "@rollup/plugin-typescript": "^11.1.6",
-    "@skax/camel": "^0.2.6",
     "@swc/core": "^1.11.29",
     "autoprefixer": "^10.4.21",
     "cross-env": "^10.1.0",

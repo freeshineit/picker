@@ -30,7 +30,11 @@
   </head>
 
   <body>
-    <div class="app">
+    <div class="app" style="padding-top: 50px">
+      <div class="container" style="padding: 40px 100px">
+        <button id="btn" style="padding: 20px">btn</button>
+      </div>
+
       <div class="container" style="padding: 40px 100px">
         <div id="container-top" style="background-color: red">container top</div>
         <button id="container-top-destroy">destroy</button>
@@ -117,6 +121,24 @@
         document.body.addEventListener('click', function (e) {
           console.log('body click');
         });
+
+        let btn = new Picker(document.getElementById('btn'), {
+          getPopupContainer: () => document.getElementById('btn'),
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          placement: 'bottom', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          isMobile: isMobile,
+          disabled: true,
+          // offset: [0, 40],
+        });
+        btn.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+        </div>`);
+        //
 
         let containerTop = new Picker(document.getElementById('container-top'), {
           getPopupContainer: () => document.getElementById('container-top'),
