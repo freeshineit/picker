@@ -1,0 +1,23 @@
+module.exports = {
+  presets: [
+    [
+      '@babel/preset-env',
+      {
+        // targets 根据你的支持环境调整
+        targets: {
+          browsers: ['>0.25%', 'not dead'],
+        },
+        // 保持模块为 false 让 rollup 处理模块
+        modules: false,
+        // 使用 core-js polyfill 的话可在这里配置，但 optional chaining / nullish 不需要 polyfill
+        // useBuiltIns: 'usage',
+        // corejs: 3
+      },
+    ],
+  ],
+  plugins: [
+    // 明确添加插件以确保支持可选链和空合并运算符（保守且兼容）
+    '@babel/plugin-proposal-optional-chaining',
+    '@babel/plugin-proposal-nullish-coalescing-operator',
+  ],
+};

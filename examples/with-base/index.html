@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transform 拖动滚动与弹性效果</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        width: 100%;
+        height: 200vh;
+        padding: 25px;
+        box-sizing: border-box;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+        font-size: 28px;
+        font-weight: 600;
+      }
+
+      .description {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #666;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      .item {
+        padding: 20px;
+        background: linear-gradient(145deg, #ffffff, #f0f0f0);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        border-left: 5px solid #4a90e2;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        user-select: none;
+      }
+
+      .item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .item h3 {
+        margin-bottom: 10px;
+        color: #2c3e50;
+        font-size: 18px;
+      }
+
+      .item p {
+        color: #555;
+        line-height: 1.6;
+        font-size: 14px;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .control-btn {
+        padding: 8px 16px;
+        background: #4a90e2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition:
+          background 0.3s,
+          transform 0.2s;
+      }
+
+      .control-btn:hover {
+        background: #357abd;
+        transform: translateY(-2px);
+      }
+
+      #content {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+
+      .stats {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 14px;
+        color: #666;
+      }
+    </style>
+    <link rel="stylesheet" href="./style/css.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Transform 拖动滚动与弹性效果</h1>
+      <div class="description">使用 CSS transform 和 translate3d 实现，支持 GPU 加速，提供更流畅的滚动体验</div>
+      <div id="scrollContainer"></div>
+      <div class="stats">
+        <span id="positionInfo">位置: 0px</span> |
+        <span id="velocityInfo">速度: 0px/帧</span>
+      </div>
+      <div class="controls">
+        <button class="control-btn" id="resetBtn">重置位置</button>
+        <button class="control-btn" id="toTopBtn">滚动到顶部</button>
+        <button class="control-btn" id="toBottomBtn">滚动到底部</button>
+      </div>
+      <div>
+        <textarea id="content" rows="10" cols="50"></textarea>
+        <button class="control-btn" id="innerHtmlBtn">innerHtml</button>
+      </div>
+      <div>
+        <input type="checkbox" id="readonly" />
+        <button class="control-btn" id="readonlyBtn">readonly</button>
+      </div>
+      <div>
+        <input type="text" id="width" value="100%" />
+        <input type="text" id="height" value="400px" />
+        <button class="control-btn" id="resizeBtn">resize</button>
+      </div>
+    </div>
+    <script src="./index.umd.js"></script>
+    <script>
+      const html = `
+                <div class="item">
+                  <h3>项目 1</h3>
+                  <p>这是第一个项目的内容。使用 transform: translate3d 实现平移，可以获得更好的性能。</p>
+                </div>
+                <div class="item" id="item_11">
+                  <h3>项目 2</h3>
+                  <p>这是第二个项目的内容。GPU 加速使滚动更加流畅，特别是在移动设备上。</p>
+                </div>
+                <div class="item">
+                  <h3>项目 3</h3>
+                  <p>这是第三个项目的内容。弹性效果通过物理模拟实现，更加自然。</p>
+                </div>
+                <div class="item">
+                  <h3>项目 4</h3>
+                  <p>这是第四个项目的内容。尝试快速拖动并释放，观察弹性效果。</p>
+                </div>
+                <div class="item">
+                  <h3>项目 5</h3>
+                  <p>这是第五个项目的内容。滚动到边界时会有明显的弹性反馈。</p>
+                </div>
+                <div class="item">
+                  <h3>项目 6</h3>
+                  <p>这是第六个项目的内容。代码使用了 requestAnimationFrame 实现流畅动画。</p>
+                </div>
+                <div class="item">
+                  <h3>项目 7</h3>
+                  <p>这是第七个项目的内容。transform 方法避免了重排，性能更优。</p>
+                </div>
+                <div class="item">
+                  <h3>项目 8</h3>
+                  <p>这是第八个项目的内容。弹性系数和摩擦力可以调整以获得不同效果。</p>
+                </div>
+                <div class="item">
+                  <h3>项目 9</h3>
+                  <p>这是第九个项目的内容。尝试不同的拖动速度体验不同的弹性反馈。</p>
+                </div>
+                <div class="item">
+                  <h3>项目 10</h3>
+                  <p>这是第十个项目的内容。这是最后一个项目，向上拖动可以回到顶部。</p>
+                </div>
+                <div class="item">
+                  <h3>项目 11</h3>
+                  <p>额外添加的项目，用于测试更长的滚动内容。</p>
+                </div>
+                <div class="item">
+                  <h3>项目 12</h3>
+                  <p>最后一个测试项目，展示完整的滚动范围。</p>
+                </div>
+          `;
+
+      // document.getElementById('scrollContent').innerHTML = html;
+      let dragScroll = null;
+      // 初始化拖动滚动
+      document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('scrollContainer');
+        dragScroll = new DragScroll(container, {
+          content: html,
+          onDragStart: e => {
+            console.log('拖拽开始', e);
+          },
+          onDragging: (x, y) => {
+            console.log('拖拽中', x, y);
+          },
+          onDragEnd: e => {
+            console.log('拖拽结束', e);
+          },
+          onChange: state => {
+            document.getElementById('positionInfo').textContent = `位置 X: ${Math.round(state.x)}px, Y: ${Math.round(state.y)}px`;
+            document.getElementById('velocityInfo').textContent = `速度: ${state.velocity.toFixed(2)}px/帧`;
+          },
+          // readonly: true,
+          // hideScrollbar: true,
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', () => {
+          if (dragScroll) dragScroll.scrollToY(0);
+        });
+
+        document.getElementById('toTopBtn').addEventListener('click', () => {
+          if (dragScroll) dragScroll.scrollToY(0);
+        });
+
+        document.getElementById('toBottomBtn').addEventListener('click', () => {
+          const maxScroll = dragScroll.$content.scrollHeight - dragScroll.$container.clientHeight;
+          if (dragScroll) dragScroll.scrollToY(maxScroll);
+        });
+        document.getElementById('innerHtmlBtn').addEventListener('click', () => {
+          const content = document.getElementById('content').value;
+          if (dragScroll) dragScroll.innerHtml(content);
+        });
+        document.getElementById('readonlyBtn').addEventListener('click', () => {
+          /** @type {boolean} */
+          const readonly = document.getElementById('readonly').checked;
+          if (dragScroll) dragScroll.readonly = readonly;
+        });
+        document.getElementById('resizeBtn').addEventListener('click', () => {
+          /** @type {boolean} */
+          const width = document.getElementById('width').value;
+          const height = document.getElementById('height').value;
+          if (dragScroll) dragScroll.resize(width, height);
+        });
+
+        dragScroll.innerHtml(html);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+name: github pages
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+      - run: pnpm install
+      - run: pnpm run build
+
+      # - name: Copy static files to docs
+      - name: Ensure target directory exists
+        run: mkdir -p docs/media/style
+
+      - name: Copy JS to docs
+        run: cp dist/index.umd.js docs/media/index.umd.js
+
+      - name: Copy CSS to docs
+        run: cp dist/style/css.css docs/media/style/css.css
+
+      - name: Deploy to gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: ./docs
+          token: ${{ secrets.PAGE_GITHUB_TOKEN }}

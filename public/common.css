@@ -1,0 +1,25 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 200vh;
+}
+
+#app {
+  /* background-color: #000; */
+  height: 80vh;
+  display: flex;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+
+.box {
+  width: 400px;
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

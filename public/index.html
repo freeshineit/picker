@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Picker</title>
+    <link rel="stylesheet" href="./common.css" />
+    <link rel="stylesheet" href="./style/css.css" />
+    <style>
+      .app {
+        height: 1500vh;
+      }
+      .fixed {
+        position: fixed;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 30%;
+        border-left: 1px solid #eee;
+        background-color: #fff;
+        z-index: 50;
+        box-sizing: border-box;
+      }
+
+      #bodyHover {
+        display: inline-flex;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <div class="container" style="padding: 40px 100px">
+        <div id="container-top" style="background-color: red">container top</div>
+        <button id="container-top-destroy">destroy</button>
+      </div>
+      <div class="container" style="padding: 40px 100px">
+        <div id="container-tl" style="background-color: red">container top left</div>
+      </div>
+      <div class="container" style="padding: 40px 100px">
+        <div id="container-tr" style="background-color: red">container top right</div>
+      </div>
+      <div class="container" style="padding: 40px 100px">
+        <div id="container-bottom" style="background-color: red">container bottom</div>
+      </div>
+      <div class="container" style="padding: 40px 100px">
+        <div id="container-bl" style="background-color: red">container bottom left</div>
+      </div>
+      <div class="container" style="padding: 40px 100px">
+        <div id="container-br" style="background-color: red">container bottom right</div>
+      </div>
+      <!--- hover -->
+      <div class="container" style="padding: 40px 100px">
+        <div id="container-hover-top" style="background-color: red">hover container top</div>
+      </div>
+      <div class="container" style="padding: 40px 100px">
+        <div id="container-hover-tl" style="background-color: red">hover container top left offset: [0, -20]</div>
+      </div>
+      <div class="container" style="padding: 40px 100px">
+        <div id="container-hover-tr" style="background-color: red">hover container top right</div>
+      </div>
+      <div class="container" style="padding: 40px 100px">
+        <div id="container-hover-bottom" style="background-color: red">hover container bottom</div>
+      </div>
+      <div class="container" style="padding: 40px 100px">
+        <div id="container-hover-bl" style="background-color: red">hover container bottom left</div>
+      </div>
+      <div class="container" style="padding: 40px 100px">
+        <div id="container-hover-br" style="background-color: red">hover container bottom right</div>
+      </div>
+
+      <!--- body container -->
+      <div class="container" style="padding: 40px 100px">
+        <div id="container-body-hover-top" style="background-color: red">hover body container top</div>
+      </div>
+      <div class="container" style="padding: 40px 100px">
+        <div id="container-body-hover-tl" style="background-color: red">hover body container top left</div>
+      </div>
+      <div class="container" style="padding: 40px 100px">
+        <div id="container-body-hover-tr" style="background-color: red">hover body container top right</div>
+      </div>
+      <div class="container" style="padding: 40px 100px">
+        <div id="container-body-hover-bottom" style="background-color: red">hover body container bottom</div>
+      </div>
+      <div class="container" style="padding: 40px 100px">
+        <div id="container-body-hover-bl" style="background-color: red">hover body container bottom left</div>
+      </div>
+      <div class="container" style="padding: 40px 100px">
+        <div id="container-body-hover-br" style="background-color: red">hover body container bottom right</div>
+      </div>
+      <!--- end body container -->
+
+      <!--- hover -->
+      <div class="body" style="padding: 100px">
+        <div id="bodyHover" style="background-color: red">body hover</div>
+      </div>
+      <div class="container" style="padding: 100px">
+        <div id="containerOffsetHover" style="background-color: red">container offset [0, -20] hover tl</div>
+      </div>
+      <div class="body" style="padding: 100px">
+        <div id="bodyOffsetHover" style="background-color: red">body offset [0, -20] hover</div>
+      </div>
+      <!-- <div class="fixed" style="padding: 50px">
+        <div id="fixed" style="background-color: red">fixed top</div>
+        <div id="fixedHover" style="background-color: red">fixed hover top</div>
+      </div> -->
+    </div>
+    <script src="./index.umd.js"></script>
+    <script>
+      (function () {
+        const isMobile =
+          (window &&
+            /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone|Opera Mini)/i.test(navigator.userAgent)) ||
+          (/Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+
+        document.body.addEventListener('click', function (e) {
+          console.log('body click');
+        });
+
+        let containerTop = new Picker(document.getElementById('container-top'), {
+          getPopupContainer: () => document.getElementById('container-top'),
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          placement: 'top', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          isMobile: isMobile,
+          disabled: true,
+          // offset: [0, 40],
+        });
+        containerTop.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+        </div>`);
+
+        document.getElementById('container-top-destroy').addEventListener('click', e => {
+          if (containerTop) {
+            containerTop.destroy();
+            containerTop = null;
+          }
+        });
+
+        window.containerTop = containerTop;
+
+        const containerTL = new Picker(document.getElementById('container-tl'), {
+          getPopupContainer: () => document.getElementById('container-tl'),
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          placement: 'tl', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          // offset: [0, 40],
+          isMobile: isMobile,
+        });
+        containerTL.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+        </div>`);
+
+        const containerTR = new Picker(document.getElementById('container-tr'), {
+          getPopupContainer: () => document.getElementById('container-tr'),
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          placement: 'tr', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          // offset: [0, 40],
+          isMobile: isMobile,
+        });
+        containerTR.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+        </div>`);
+
+        const containerBottom = new Picker(document.getElementById('container-bottom'), {
+          getPopupContainer: () => document.getElementById('container-bottom'),
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          placement: 'bottom', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          // offset: [0, 40],
+          // isMobile: true,
+          isMobile: isMobile,
+        });
+        containerBottom.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+        </div>`);
+        const containerBL = new Picker(document.getElementById('container-bl'), {
+          getPopupContainer: () => document.getElementById('container-bl'),
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          placement: 'bl', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          // offset: [0, 40],
+          // isMobile: true,
+          isMobile: isMobile,
+        });
+        containerBL.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+        </div>`);
+
+        const containerBR = new Picker(document.getElementById('container-br'), {
+          getPopupContainer: () => document.getElementById('container-br'),
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          placement: 'br', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          // offset: [0, 40],
+          // isMobile: true,
+          isMobile: isMobile,
+        });
+        containerBR.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+        </div>`);
+
+        // hover
+        const containerHoverTop = new Picker(() => document.getElementById('container-hover-top'), {
+          getPopupContainer: () => document.getElementById('container-hover-top'),
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          trigger: 'hover',
+          placement: 'top', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          // offset: [0, 40],
+          // isMobile: true,
+          isMobile: isMobile,
+        });
+        containerHoverTop.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+        </div>`);
+        window.containerHoverTop = containerHoverTop;
+        const containerHoverTL = new Picker(() => document.getElementById('container-hover-tl'), {
+          getPopupContainer: () => document.getElementById('container-hover-tl'),
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          trigger: 'hover',
+          placement: 'tl', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          offset: [0, -20],
+          // isMobile: true,
+          isMobile: isMobile,
+        });
+        containerHoverTL.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+          <button id="container-hover-tl-button">123</button>
+        </div>`);
+
+        const containerHoverTLButton = new Picker(() => document.getElementById('container-hover-tl-button'), {
+          getPopupContainer: () => document.getElementById('container-hover-tl-button'),
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          trigger: 'hover',
+          placement: 'tr', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          offset: [0, -10],
+          // isMobile: true,
+          isMobile: isMobile,
+        });
+        containerHoverTLButton.innerHTML(`<div id="containerHoverTLButton" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+        </div>`);
+
+        containerHoverTLButton.$wrapperContent.querySelector('#containerHoverTLButton')?.addEventListener('click', e => {
+          console.log('containerHoverTLButton click');
+          e.stopPropagation();
+        });
+
+        const containerHoverTR = new Picker(() => document.getElementById('container-hover-tr'), {
+          getPopupContainer: () => document.getElementById('container-hover-tr'),
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          trigger: 'hover',
+          placement: 'tr', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          // offset: [0, 40],
+          // isMobile: true,
+          isMobile: isMobile,
+        });
+        containerHoverTR.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+        </div>`);
+        const containerHoverBottom = new Picker(() => document.getElementById('container-hover-bottom'), {
+          getPopupContainer: () => document.getElementById('container-hover-bottom'),
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          trigger: 'hover',
+          placement: 'bottom', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          // offset: [0, 40],
+          // isMobile: true,
+          isMobile: isMobile,
+        });
+        containerHoverBottom.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+        </div>`);
+        const containerHoverBL = new Picker(() => document.getElementById('container-hover-bl'), {
+          getPopupContainer: () => document.getElementById('container-hover-bl'),
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          trigger: 'hover',
+          placement: 'bl', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          // offset: [0, 40],
+          // isMobile: true,
+          isMobile: isMobile,
+        });
+        containerHoverBL.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+        </div>`);
+
+        const containerHoverBR = new Picker(() => document.getElementById('container-hover-br'), {
+          getPopupContainer: () => document.getElementById('container-hover-br'),
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          trigger: 'hover',
+          placement: 'br', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          // offset: [0, 40],
+          // isMobile: true,
+          isMobile: isMobile,
+        });
+        containerHoverBR.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+        </div>`);
+
+        // body hover
+        const containerBodyHoverTop = new Picker(() => document.getElementById('container-body-hover-top'), {
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          trigger: 'hover',
+          placement: 'top', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          // offset: [0, 40],
+          // isMobile: true,
+          isMobile: isMobile,
+        });
+        containerBodyHoverTop.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+        </div>`);
+        window.containerBodyHoverTop = containerBodyHoverTop;
+        const containerBodyHoverTL = new Picker(() => document.getElementById('container-body-hover-tl'), {
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          trigger: 'hover',
+          placement: 'tl', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          // offset: [0, 40],
+          // isMobile: true,
+          isMobile: isMobile,
+        });
+        containerBodyHoverTL.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+        </div>`);
+        window.containerBodyHoverTL = containerBodyHoverTL;
+        const containerBodyHoverTR = new Picker(() => document.getElementById('container-body-hover-tr'), {
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          trigger: 'hover',
+          placement: 'tr', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          // offset: [0, 40],
+          // isMobile: true,
+          isMobile: isMobile,
+        });
+        containerBodyHoverTR.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+        </div>`);
+        window.containerBodyHoverTR = containerBodyHoverTR;
+        const containerBodyHoverBottom = new Picker(() => document.getElementById('container-body-hover-bottom'), {
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          trigger: 'hover',
+          placement: 'bottom', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          // offset: [0, 40],
+          // isMobile: true,
+          isMobile: isMobile,
+        });
+        containerBodyHoverBottom.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+        </div>`);
+        window.containerBodyHoverBottom = containerBodyHoverBottom;
+        const containerBodyHoverBL = new Picker(() => document.getElementById('container-body-hover-bl'), {
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          trigger: 'hover',
+          placement: 'bl', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          // offset: [0, 40],
+          // isMobile: true,
+          isMobile: isMobile,
+        });
+        containerBodyHoverBL.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+        </div>`);
+        window.containerBodyHoverBL = containerBodyHoverBL;
+        const containerBodyHoverBR = new Picker(() => document.getElementById('container-body-hover-br'), {
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          trigger: 'hover',
+          placement: 'br', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          // offset: [0, 40],
+          // isMobile: true,
+          isMobile: isMobile,
+        });
+        containerBodyHoverBR.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+        </div>`);
+        window.containerBodyHoverBR = containerBodyHoverBR;
+        // end body hover
+
+        const bodyHover = new Picker(() => document.getElementById('bodyHover'), {
+          onOpenChange: open => {
+            console.log('bodyHover onOpenChange open:', open);
+          },
+          placement: 'tr',
+          // open: true,
+          wrapClassName: 'xxxx-hover-body',
+          trigger: 'hover',
+          isMobile: isMobile,
+
+          // offset: [0, 40],
+          content: `<div class="xxxxx" style="width: 400px; display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">body 123413</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">body 123413</div>
+        </div>`,
+        });
+
+        const containerOffsetHover = new Picker(() => document.getElementById('containerOffsetHover'), {
+          getPopupContainer: () => document.getElementById('containerOffsetHover'),
+          onOpenChange: open => {
+            console.log('containerOffsetHover onOpenChange open:', open);
+          },
+          placement: 'top',
+          // open: true,
+          wrapClassName: 'xxxx-offset-hover-body',
+          trigger: 'hover',
+          offset: [0, -20],
+          isMobile: isMobile,
+
+          content: `<div class="xxxxx" style="width: 400px; display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">body 123413</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">body 123413</div>
+        </div>`,
+        });
+
+        const bodyOffsetHover = new Picker(() => document.getElementById('bodyOffsetHover'), {
+          onOpenChange: open => {
+            console.log('bodyOffsetHover onOpenChange open:', open);
+          },
+          placement: 'top',
+          // open: true,
+          wrapClassName: 'xxxx-offset-hover-body',
+          trigger: 'hover',
+          offset: [0, -20],
+          isMobile: isMobile,
+
+          content: `<div class="xxxxx" style="width: 400px; display: flex;">
+                        <div style="flex: 1 1 auto; background-color: blue; height: 40px;">body 123413</div>
+                        <div style="flex: 1 1 auto; background-color: green; height: 40px;">body 123413</div>
+                      </div>`,
+        });
+
+        window.bodyOffsetHover = bodyOffsetHover;
+      })();
+    </script>
+  </body>
+</html>

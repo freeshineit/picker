@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Picker</title>
+    <link rel="stylesheet" href="./common.css" />
+    <link rel="stylesheet" href="./style/css.css" />
+    <style>
+      .app {
+        height: 1500vh;
+      }
+      .fixed {
+        position: fixed;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 30%;
+        border-left: 1px solid #eee;
+        background-color: #fff;
+        z-index: 50;
+        box-sizing: border-box;
+      }
+
+      #containerHover,
+      #bodyHover {
+        display: inline-flex;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <div class="container" style="padding: 100px"></div>
+      <div id="container" style="background-color: red">container tl</div>
+      <button id="destroy">destroy</button>
+    </div>
+    <script src="./index.umd.js"></script>
+    <script>
+      (function () {
+        let picker = new Picker(null, {
+          getPopupContainer: () => document.querySelector('.container'),
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          // placement: "tl", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          // offset: [0, 40],
+          isMobile: true,
+        });
+        picker.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 100px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 100px;">container 123413 tl</div>
+        </div>`);
+
+        document.getElementById('container')?.addEventListener('click', () => {
+          if (picker) picker.open = true;
+        });
+
+        document.getElementById('destroy')?.addEventListener('click', () => {
+          if (picker) {
+            picker.destroy();
+            picker = null;
+          }
+        });
+        // window.picker = picker;
+      })();
+    </script>
+  </body>
+</html>

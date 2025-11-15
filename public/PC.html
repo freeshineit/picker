@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Picker</title>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <link rel="stylesheet" href="./common.css" />
+    <link rel="stylesheet" href="./style/css.css" />
+    <style>
+      .app {
+        padding-top: 300px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <div class="container" style="padding: 40px 100px">
+        <div id="container-hover-tl" style="background-color: red; height: 40px; box-sizing: border-box">hover container top left offset: [0, -20]</div>
+      </div>
+    </div>
+    <script src="./index.umd.js"></script>
+    <script>
+      (function () {
+        const isMobile =
+          (window &&
+            /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone|Opera Mini)/i.test(navigator.userAgent)) ||
+          (/Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+
+        document.body.addEventListener('click', function (e) {
+          console.log('body click');
+        });
+
+        const containerHoverTL = new Picker(() => document.getElementById('container-hover-tl'), {
+          getPopupContainer: () => document.getElementById('container-hover-tl'),
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          trigger: 'hover',
+          placement: 'tl', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          offset: [0, -20],
+          // isMobile: true,
+          isMobile: isMobile,
+        });
+        containerHoverTL.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+          <button id="container-hover-tl-button">123</button>
+        </div>`);
+
+        window.containerHoverTL = containerHoverTL;
+
+        const containerHoverTLButton = new Picker(() => document.getElementById('container-hover-tl-button'), {
+          getPopupContainer: () => document.getElementById('container-hover-tl-button'),
+          onOpenChange: open => {
+            console.log('container onOpenChange open:', open);
+          },
+          trigger: 'hover',
+          placement: 'tr', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          // open: true,
+          wrapClassName: 'xxxx-container',
+          offset: [0, -10],
+          // isMobile: true,
+          isMobile: isMobile,
+        });
+        containerHoverTLButton.innerHTML(`<div id="containerHoverTLButton" style="width: 500px;display: flex;">
+          <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
+          <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
+          <span id="button">点击关闭</span>
+        </div>`);
+
+        containerHoverTLButton.$body.querySelector('#button')?.addEventListener('click', () => {
+          containerHoverTLButton.open = false;
+        });
+      })();
+    </script>
+  </body>
+</html>

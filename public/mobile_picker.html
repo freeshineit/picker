@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>移动端 Picker 组件</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background-color: #f5f5f5;
+      }
+
+      .picker-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #fff;
+        border-radius: 12px 12px 0 0;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        transform: translateY(100%);
+        transition: transform 0.3s ease-out;
+        z-index: 1000;
+      }
+
+      .picker-container.show {
+        transform: translateY(0);
+      }
+
+      .picker-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 16px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .picker-title {
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .picker-cancel,
+      .picker-confirm {
+        font-size: 14px;
+        color: #666;
+        background: none;
+        border: none;
+        outline: none;
+      }
+
+      .picker-confirm {
+        color: #1677ff;
+      }
+
+      .picker-content {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+      }
+
+      .picker-mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 80px;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .picker-mask-bottom {
+        top: auto;
+        bottom: 0;
+        background: linear-gradient(to top, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));
+      }
+
+      .picker-indicator {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        right: 0;
+        height: 40px;
+        border-top: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .picker-wheel {
+        position: relative;
+        padding: 80px 0;
+      }
+
+      .picker-item {
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        font-size: 16px;
+        color: #333;
+        transition: all 0.2s ease-out;
+      }
+
+      .picker-item.selected {
+        color: #1677ff;
+        font-weight: 500;
+        transform: scale(1.1);
+      }
+
+      .picker-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity 0.3s ease-out;
+        z-index: 999;
+        pointer-events: none;
+      }
+
+      .picker-overlay.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="openPicker">打开选择器</button>
+
+    <div class="picker-overlay" id="pickerOverlay"></div>
+
+    <div class="picker-container" id="pickerContainer">
+      <div class="picker-header">
+        <button class="picker-cancel" id="pickerCancel">取消</button>
+        <div class="picker-title">请选择</div>
+        <button class="picker-confirm" id="pickerConfirm">确定</button>
+      </div>
+      <div class="picker-content">
+        <div class="picker-mask"></div>
+        <div class="picker-indicator"></div>
+        <div class="picker-mask picker-mask-bottom"></div>
+        <div class="picker-wheel" id="pickerWheel"></div>
+      </div>
+    </div>
+
+    <script>
+      class Picker {
+        constructor(options) {
+          this.options = {
+            data: [],
+            defaultValue: null,
+            onConfirm: null,
+            onCancel: null,
+            ...options,
+          };
+
+          this.container = document.getElementById('pickerContainer');
+          this.overlay = document.getElementById('pickerOverlay');
+          this.wheel = document.getElementById('pickerWheel');
+          this.confirmBtn = document.getElementById('pickerConfirm');
+          this.cancelBtn = document.getElementById('pickerCancel');
+
+          this.currentIndex = 0;
+          this.startY = 0;
+          this.currentY = 0;
+          this.isDragging = false;
+          this.velocity = 0;
+          this.lastY = 0;
+          this.lastTime = 0;
+          this.animationId = null;
+          this.itemHeight = 40;
+          this.visibleItemCount = 5;
+
+          this.init();
+        }
+
+        init() {
+          this.renderItems();
+          this.setInitialPosition();
+          this.bindEvents();
+        }
+
+        renderItems() {
+          this.wheel.innerHTML = '';
+
+          this.options.data.forEach((item, index) => {
+            const div = document.createElement('div');
+            div.className = 'picker-item';
+            div.textContent = item.label || item;
+            div.dataset.index = index;
+            this.wheel.appendChild(div);
+          });
+        }
+
+        setInitialPosition() {
+          let initialIndex = 0;
+
+          if (this.options.defaultValue !== null) {
+            const index = this.options.data.findIndex(item => (item.value || item) === this.options.defaultValue);
+            if (index !== -1) initialIndex = index;
+          }
+
+          this.currentIndex = initialIndex;
+          this.updatePosition(initialIndex * this.itemHeight);
+          this.updateSelectedItem();
+        }
+
+        bindEvents() {
+          this.wheel.addEventListener('touchstart', this.handleTouchStart.bind(this));
+          this.wheel.addEventListener('touchmove', this.handleTouchMove.bind(this));
+          this.wheel.addEventListener('touchend', this.handleTouchEnd.bind(this));
+          this.wheel.addEventListener('mousedown', this.handleMouseDown.bind(this));
+          document.addEventListener('mousemove', this.handleMouseMove.bind(this));
+          document.addEventListener('mouseup', this.handleMouseUp.bind(this));
+
+          this.confirmBtn.addEventListener('click', this.handleConfirm.bind(this));
+          this.cancelBtn.addEventListener('click', this.handleCancel.bind(this));
+          this.overlay.addEventListener('click', this.handleCancel.bind(this));
+        }
+
+        handleTouchStart(e) {
+          e.preventDefault();
+          this.startDrag(e.touches[0].clientY);
+        }
+
+        handleMouseDown(e) {
+          e.preventDefault();
+          this.startDrag(e.clientY);
+        }
+
+        startDrag(clientY) {
+          this.isDragging = true;
+          this.startY = clientY;
+          this.lastY = this.currentY;
+          this.lastTime = performance.now();
+          this.velocity = 0;
+          this.cancelAnimation();
+        }
+
+        handleTouchMove(e) {
+          if (!this.isDragging) return;
+          e.preventDefault();
+          this.drag(e.touches[0].clientY);
+        }
+
+        handleMouseMove(e) {
+          if (!this.isDragging) return;
+          e.preventDefault();
+          this.drag(e.clientY);
+        }
+
+        drag(clientY) {
+          const deltaY = clientY - this.startY;
+          const newY = this.lastY + deltaY;
+
+          this.updatePosition(newY);
+
+          // 计算速度
+          const now = performance.now();
+          const deltaTime = now - this.lastTime;
+
+          if (deltaTime > 0) {
+            this.velocity = (newY - this.lastY) / deltaTime;
+            this.lastY = newY;
+            this.lastTime = now;
+          }
+        }
+
+        handleTouchEnd() {
+          if (!this.isDragging) return;
+          this.endDrag();
+        }
+
+        handleMouseUp() {
+          if (!this.isDragging) return;
+          this.endDrag();
+        }
+
+        endDrag() {
+          this.isDragging = false;
+          this.startInertia();
+        }
+
+        updatePosition(y) {
+          // 限制滚动范围
+          const minY = -this.itemHeight * (this.options.data.length - 1 - Math.floor(this.visibleItemCount / 2));
+          const maxY = this.itemHeight * Math.floor(this.visibleItemCount / 2);
+
+          this.currentY = Math.max(minY, Math.min(y, maxY));
+          this.wheel.style.transform = `translateY(${this.currentY}px)`;
+
+          // 更新当前选中项
+          const centerY = -this.currentY + (this.visibleItemCount * this.itemHeight) / 2;
+          this.currentIndex = Math.round(centerY / this.itemHeight) - 1;
+          this.currentIndex = Math.max(0, Math.min(this.currentIndex, this.options.data.length - 1));
+
+          this.updateSelectedItem();
+        }
+
+        updateSelectedItem() {
+          const items = this.wheel.querySelectorAll('.picker-item');
+          items.forEach((item, index) => {
+            if (index === this.currentIndex) {
+              item.classList.add('selected');
+            } else {
+              item.classList.remove('selected');
+            }
+          });
+        }
+
+        startInertia() {
+          this.cancelAnimation();
+
+          if (Math.abs(this.velocity) < 0.1) {
+            this.snapToNearestItem();
+            return;
+          }
+
+          const startTime = performance.now();
+          const friction = 0.95;
+
+          const animate = currentTime => {
+            const elapsed = currentTime - startTime;
+
+            if (Math.abs(this.velocity) > 0.1) {
+              this.velocity *= friction;
+              this.updatePosition(this.currentY + this.velocity * 16);
+
+              this.animationId = requestAnimationFrame(animate);
+            } else {
+              this.velocity = 0;
+              this.snapToNearestItem();
+            }
+          };
+
+          this.animationId = requestAnimationFrame(animate);
+        }
+
+        snapToNearestItem() {
+          const targetY = -this.currentIndex * this.itemHeight;
+          const duration = 300;
+          const startY = this.currentY;
+          const startTime = performance.now();
+
+          const animate = currentTime => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easeProgress = this.easeOutCubic(progress);
+
+            this.updatePosition(startY + (targetY - startY) * easeProgress);
+
+            if (progress < 1) {
+              this.animationId = requestAnimationFrame(animate);
+            } else {
+              this.animationId = null;
+            }
+          };
+
+          this.animationId = requestAnimationFrame(animate);
+        }
+
+        easeOutCubic(t) {
+          return 1 - Math.pow(1 - t, 3);
+        }
+
+        cancelAnimation() {
+          if (this.animationId) {
+            cancelAnimationFrame(this.animationId);
+            this.animationId = null;
+          }
+        }
+
+        handleConfirm() {
+          this.hide();
+          if (this.options.onConfirm) {
+            const selectedItem = this.options.data[this.currentIndex];
+            this.options.onConfirm(selectedItem.value !== undefined ? selectedItem.value : selectedItem, this.currentIndex);
+          }
+        }
+
+        handleCancel() {
+          this.hide();
+          if (this.options.onCancel) {
+            this.options.onCancel();
+          }
+        }
+
+        show() {
+          this.container.classList.add('show');
+          this.overlay.classList.add('show');
+          document.body.style.overflow = 'hidden';
+        }
+
+        hide() {
+          this.container.classList.remove('show');
+          this.overlay.classList.remove('show');
+          document.body.style.overflow = '';
+        }
+      }
+
+      // 使用示例
+      document.getElementById('openPicker').addEventListener('click', () => {
+        const picker = new Picker({
+          data: [
+            { label: '选项1', value: 'value1' },
+            { label: '选项2', value: 'value2' },
+            { label: '选项3', value: 'value3' },
+            { label: '选项4', value: 'value4' },
+            { label: '选项5', value: 'value5' },
+            { label: '选项6', value: 'value6' },
+            { label: '选项7', value: 'value7' },
+            { label: '选项8', value: 'value8' },
+            { label: '选项9', value: 'value9' },
+            { label: '选项10', value: 'value10' },
+          ],
+          defaultValue: 'value3',
+          onConfirm: (value, index) => {
+            console.log('选择了:', value, '索引:', index);
+          },
+          onCancel: () => {
+            console.log('选择已取消');
+          },
+        });
+
+        picker.show();
+      });
+    </script>
+  </body>
+</html>
