@@ -12,7 +12,9 @@
     "lint": "eslint --fix \"./src/*.{ts,tsx,js,jsx,mjs}\"",
     "fmt": "prettier --write \"./**/*.{ts,tsx,js,jsx,html,scss}\""
   },
-  "keywords": [],
+  "keywords": [
+    "picker"
+  ],
   "author": "ShineShao <xiaoshaoqq@gmail.com>",
   "license": "MIT",
   "devDependencies": {
