@@ -19,5 +19,10 @@
     "vue-cli-plugin-element": "1.0.0",
     "vue-template-compiler": "^2.5.17"
   },
-  "resolutions": {}
+  "resolutions": {
+    "minimatch": "9.0.5"
+  },
+  "overrides": {
+    "minimatch": "9.0.5"
+  }
 }
