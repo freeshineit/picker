@@ -20,7 +20,7 @@
     "baseUrl": ".",
     "rootDir": "."
   },
-  "include": ["__tests__", "eslint.config.js", ".prettier.js", "commitlint.config.js", "src"],
-  "exclude": ["node_modules", "dist", "coverage", "docs", "example", "site/**/*.{vue}", "site/with-vue3/src/main.ts", "dist"],
+  "include": ["__tests__", "eslint.config.js", ".prettier.js", "commitlint.config.js", "src", "babel.config.json"],
+  "exclude": ["node_modules", "dist", "coverage", "docs", "example", "site/**/*.{vue}", "site/with-vue3/src/main.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
