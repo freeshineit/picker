@@ -8,6 +8,6 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["__tests__", "eslint.config.js", ".prettier.js", "commitlint.config.js", "babel.config.json"],
+  "include": ["__tests__", "eslint.config.mjs", ".prettier.js", "commitlint.config.js", "babel.config.json"],
   "exclude": ["node_modules", "dist", "coverage", "docs", "examples", "build"]
 }
