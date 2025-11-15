@@ -6,7 +6,7 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 import configs from 'eslint-config-xx';
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'examples/with-base/index.umd.js']),
   ...configs,
   // {
   //   files: ['**/*.{js,jsx}'],
