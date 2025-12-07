@@ -1,7 +1,7 @@
 /**
  * picker component for js framework, support mobile and pc
  * 
- * @skax/picker v1.1.5
+ * @skax/picker v1.1.6-beta.1
  * Copyright (c) 2025-12-07 ShineShao <xiaoshaoqq@gmail.com>
  * 
  * This source code is licensed under the MIT license found in the
@@ -144,7 +144,8 @@
     trigger: 'click',
     mouseLeaveDelay: 0.1,
     mouseEnterDelay: 0.1,
-    isMobile: false
+    isMobile: false,
+    triggerClose: false
   };
   /**
    * Picker 弹窗, 支持 PC 和移动端
@@ -200,6 +201,7 @@
       (_this__$popupContainer1 = this._$popupContainer) == null ? void 0 : _this__$popupContainer1.appendChild(this.$wrapperContent);
       this._onContentClick = this._onContentClick.bind(this);
       this._onShow = this._onShow.bind(this);
+      this._onContainerClick = this._onContainerClick.bind(this);
       this._onWrapperShow = this._onWrapperShow.bind(this);
       this._onHide = this._onHide.bind(this);
       this._onDocumentClick = this._onDocumentClick.bind(this);
@@ -282,7 +284,7 @@
       var _this_$wrapperContent, _this_$container_removeEventListener, _this_$container, _this_$container_removeEventListener1, _this_$container1;
       (_this_$wrapperContent = this.$wrapperContent) == null ? void 0 : _this_$wrapperContent.removeEventListener('click', this._onContentClick);
       (_this_$container = this.$container) == null ? void 0 : (_this_$container_removeEventListener = _this_$container.removeEventListener) == null ? void 0 : _this_$container_removeEventListener.call(_this_$container, 'click', this._onContentClick);
-      if (this._options.trigger === 'click') (_this_$container1 = this.$container) == null ? void 0 : (_this_$container_removeEventListener1 = _this_$container1.removeEventListener) == null ? void 0 : _this_$container_removeEventListener1.call(_this_$container1, 'click', this._onShow);
+      if (this._options.trigger === 'click') (_this_$container1 = this.$container) == null ? void 0 : (_this_$container_removeEventListener1 = _this_$container1.removeEventListener) == null ? void 0 : _this_$container_removeEventListener1.call(_this_$container1, 'click', this._onContainerClick);
       if (this._options.trigger === 'hover') {
         var _this_$container_removeEventListener2, _this_$container2, _this_$container_removeEventListener3, _this_$container3, _this_$container_removeEventListener4, _this_$container4,
           // prettier-ignore
@@ -404,7 +406,7 @@
       this.$wrapperContent.addEventListener('click', this._onContentClick);
       (_this_$container = this.$container) == null ? void 0 : (_this_$container_addEventListener = _this_$container.addEventListener) == null ? void 0 : _this_$container_addEventListener.call(_this_$container, 'click', this._onContentClick);
       //
-      if (this._options.trigger === 'click') (_this_$container1 = this.$container) == null ? void 0 : (_this_$container_addEventListener1 = _this_$container1.addEventListener) == null ? void 0 : _this_$container_addEventListener1.call(_this_$container1, 'click', this._onShow);
+      if (this._options.trigger === 'click') (_this_$container1 = this.$container) == null ? void 0 : (_this_$container_addEventListener1 = _this_$container1.addEventListener) == null ? void 0 : _this_$container_addEventListener1.call(_this_$container1, 'click', this._onContainerClick);
       if (this._options.trigger === 'hover') {
         var _this_$container_addEventListener2, _this_$container2, _this_$container_addEventListener3, _this_$container3, _this_$container_addEventListener4, _this_$container4;
         (_this_$container2 = this.$container) == null ? void 0 : (_this_$container_addEventListener2 = _this_$container2.addEventListener) == null ? void 0 : _this_$container_addEventListener2.call(_this_$container2, 'mouseenter', this._onShow);
@@ -427,6 +429,23 @@
     */
     _proto._onContentClick = function _onContentClick(e) {
       pickerProvider.closeOther(e);
+    };
+    /**
+    * $container click event
+    * @param event - 鼠标点击事件
+    * @returns
+    */
+    _proto._onContainerClick = function _onContainerClick(event) {
+      var _this_$wrapperContent_contains, _this_$wrapperContent;
+      if (this._disabled) return;
+      // wrapper contain
+      var contain = ((_this_$wrapperContent = this.$wrapperContent) == null ? void 0 : (_this_$wrapperContent_contains = _this_$wrapperContent.contains) == null ? void 0 : _this_$wrapperContent_contains.call(_this_$wrapperContent, event.target)) || this.$wrapperContent === event.target;
+      // open 状态下触发关闭
+      if (this._options.triggerClose && this._options.trigger === 'click' && !contain) {
+        this.open = !this.open;
+      } else {
+        this.open = true;
+      }
     };
     /**
     * 显示事件
@@ -567,7 +586,7 @@
      * Picker.VERSION; // 输出版本号
      * ```
      */
-  Picker.VERSION = '1.1.5';
+  Picker.VERSION = '1.1.6-beta.1';
 
   return Picker;
 
