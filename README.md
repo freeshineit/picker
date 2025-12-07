@@ -76,3 +76,19 @@ picker.setPlacement('top'); // 设置弹窗位置
 picker.innerHTML('<div>新内容</div>'); // 设置弹窗内容
 picker.destroy(); // 销毁弹窗
 ```
+
+### sass
+
+```ts
+import '@skax/picker/dist/style/index.js'; // import sass file
+import Picker from '@skax/picker';
+const picker = new Picker(document.getElementById('picker-container'), {
+  placement: 'bottom',
+  content: '<div>选择内容</div>', //  or () => <div>选择内容</div>
+  trigger: 'click',
+});
+picker.open = true; // 打开弹窗
+picker.setPlacement('top'); // 设置弹窗位置
+picker.innerHTML('<div>新内容</div>'); // 设置弹窗内容
+picker.destroy(); // 销毁弹窗
+```
