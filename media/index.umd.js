@@ -1,7 +1,7 @@
 /**
  * picker component for js framework, support mobile and pc
  * 
- * @skax/picker v1.1.6-beta.1
+ * @skax/picker v1.1.6
  * Copyright (c) 2025-12-07 ShineShao <xiaoshaoqq@gmail.com>
  * 
  * This source code is licensed under the MIT license found in the
@@ -586,7 +586,7 @@
      * Picker.VERSION; // 输出版本号
      * ```
      */
-  Picker.VERSION = '1.1.6-beta.1';
+  Picker.VERSION = '1.1.6';
 
   return Picker;
 
