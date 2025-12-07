@@ -44,6 +44,11 @@ export interface PickerOptions {
    * |   点击    |   悬停   |
    */
   trigger?: 'click' | 'hover';
+  /**
+   * container 触发关闭行为, 默认 false
+   * 当 trigger 为 click 时生效，点击 container 区域会关闭弹窗
+   */
+  triggerClose?: boolean;
   /** 鼠标移出后(mouseleave)延时多少才隐藏，单位：秒, 默认 0.1 */
   mouseLeaveDelay?: number;
   /** 鼠标移入后（mouseover）延时多少才隐藏，单位：秒, 默认 0.1 */
@@ -80,6 +85,7 @@ const __$PICKER_DEFAULT_OPTIONS$__ = {
   mouseLeaveDelay: 0.1,
   mouseEnterDelay: 0.1,
   isMobile: false,
+  triggerClose: false,
 };
 
 /**
@@ -168,6 +174,7 @@ class Picker {
 
     this._onContentClick = this._onContentClick.bind(this);
     this._onShow = this._onShow.bind(this);
+    this._onContainerClick = this._onContainerClick.bind(this);
     this._onWrapperShow = this._onWrapperShow.bind(this);
     this._onHide = this._onHide.bind(this);
     this._onDocumentClick = this._onDocumentClick.bind(this);
@@ -352,7 +359,7 @@ class Picker {
   private _removeHtml() {
     this.$wrapperContent?.removeEventListener('click', this._onContentClick);
     this.$container?.removeEventListener?.('click', this._onContentClick);
-    if (this._options.trigger === 'click') this.$container?.removeEventListener?.('click', this._onShow);
+    if (this._options.trigger === 'click') this.$container?.removeEventListener?.('click', this._onContainerClick);
     if (this._options.trigger === 'hover') {
       this.$container?.removeEventListener?.('mouseenter', this._onShow);
       this.$container?.removeEventListener?.('mouseover', this._onShow);
@@ -496,7 +503,7 @@ class Picker {
     this.$wrapperContent.addEventListener('click', this._onContentClick);
     this.$container?.addEventListener?.('click', this._onContentClick);
     //
-    if (this._options.trigger === 'click') this.$container?.addEventListener?.('click', this._onShow);
+    if (this._options.trigger === 'click') this.$container?.addEventListener?.('click', this._onContainerClick);
     if (this._options.trigger === 'hover') {
       this.$container?.addEventListener?.('mouseenter', this._onShow);
       this.$container?.addEventListener?.('mouseover', this._onShow);
@@ -522,6 +529,23 @@ class Picker {
    */
   private _onContentClick(e: Event) {
     pickerProvider.closeOther(e);
+  }
+
+  /**
+   * $container click event
+   * @param event - 鼠标点击事件
+   * @returns
+   */
+  protected _onContainerClick(event: Event) {
+    if (this._disabled) return;
+    // wrapper contain
+    const contain = this.$wrapperContent?.contains?.(event.target as HTMLElement) || this.$wrapperContent === event.target;
+    // open 状态下触发关闭
+    if (this._options.triggerClose && this._options.trigger === 'click' && !contain) {
+      this.open = !this.open;
+    } else {
+      this.open = true;
+    }
   }
 
   /**
