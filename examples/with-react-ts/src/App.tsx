@@ -15,6 +15,7 @@ function App() {
       content: '<p>123</p>',
       placement: 'bottom',
       trigger: 'click',
+      triggerClose: true,
       onOpenChange: open => {
         console.log('open:', open);
       },

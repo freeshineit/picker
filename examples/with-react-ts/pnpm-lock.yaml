@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@skax/picker':
-    specifier: 1.1.5
-    version: 1.1.5
+    specifier: 1.1.6-beta.1
+    version: 1.1.6-beta.1
   '@types/node':
     specifier: ^16.18.126
     version: 16.18.126
@@ -2197,8 +2197,8 @@ packages:
       '@sinonjs/commons': 1.8.6
     dev: false
 
-  /@skax/picker@1.1.5:
-    resolution: {integrity: sha512-xG2jMsTUcXBuQfd3GpHyQKIB47sQKrv0ps2wzaEm/EeU2K7MzQmGGz4c5jZz9XuXF0z1rqoawB37u1ixz+ffVw==}
+  /@skax/picker@1.1.6-beta.1:
+    resolution: {integrity: sha512-oEIH1rIUhAvPL0ecypfqQYwv/Pq/al3biAmQyc6GIQzgfwbyAw1ELs05uufEG/s1UQQv+VK3eGL0KxrrJutHbw==}
     dev: false
 
   /@surma/rollup-plugin-off-main-thread@2.2.3:

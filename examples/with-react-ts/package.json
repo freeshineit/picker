@@ -10,7 +10,7 @@
     "react-dom": "^19.2.0",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
-    "@skax/picker": "1.1.5"
+    "@skax/picker": "1.1.6-beta.1"
   },
   "scripts": {
     "start": "react-scripts start",
