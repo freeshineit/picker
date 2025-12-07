@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import '@skax/picker/dist/style/css.css';
+import '@skax/picker/dist/style/index';
 import Picker from '@skax/picker';
 import logo from './logo.svg';
 import './App.css';
