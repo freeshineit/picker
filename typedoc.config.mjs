@@ -23,7 +23,7 @@ export default {
     ],
   },
   navigationLinks: {
-    Examples: 'https://github.com/freeshineit/drag-scroll/tree/main/examples',
-    Github: 'https://github.com/freeshineit/drag-scroll',
+    Examples: 'https://github.com/freeshineit/picker/tree/main/examples',
+    Github: 'https://github.com/freeshineit/picker',
   },
 };
