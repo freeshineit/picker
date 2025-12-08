@@ -1,3 +1,15 @@
+## v1.1.7 (2025-12-08)
+
+### Fixed
+
+- fix: css background-color -> background
+
+## v1.1.6 (2025-12-08)
+
+### Feat
+
+- support trigger click close
+
 ## v1.1.5 (2025-11-12)
 
 ### Feat
