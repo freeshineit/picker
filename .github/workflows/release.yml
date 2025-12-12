@@ -18,6 +18,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # 设置 Node
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+      - run: npm install -g npm@latest
+
+      # 设置 pnpm
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      # 安装依赖
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build project
+        run: pnpm run build
+
       - name: Check file versions
         run: |
           files="dist/index.js dist/index.mjs dist/index.umd.js package.json"
@@ -53,23 +73,6 @@ jobs:
           fi
 
           echo "所有文件版本号一致: $version"
-
-      # # 设置 pnpm
-      # - name: Setup PNPM
-      #   uses: pnpm/action-setup@v2
-      #   with:
-      #     version: 8
-      # 设置 Node
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          registry-url: https://registry.npmjs.org
-
-      - run: npm install -g npm@latest
-      # 安装依赖
-      - name: Install dependencies
-        run: npm install
 
       # 获取 tag 的版本类型（仅支持 正式版、alpha和beta版）
       - name: Determine release tag
