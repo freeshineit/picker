@@ -1,6 +1,6 @@
 {
   "name": "@skax/picker",
-  "version": "1.1.7",
+  "version": "1.1.8-alpha.1",
   "description": "picker component for js framework, support mobile and pc",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
