@@ -1,7 +1,7 @@
 /**
  * picker component for js framework, support mobile and pc
  * 
- * @skax/picker v1.1.8
+ * @skax/picker v1.1.9
  * Copyright (c) 2026-02-11 ShineShao <xiaoshaoqq@gmail.com>
  * 
  * This source code is licensed under the MIT license found in the
@@ -316,54 +316,78 @@
     * 现实位置
     */
     _proto._setPlacement = function _setPlacement() {
-      var _this_$container_getBoundingClientRect, _this_$container;
+      var _this_$container_getBoundingClientRect, _this_$container, _this__options_offset, _this__options_offset1;
       if (!this._open || this._options.isMobile || !this.$container) return;
       var $containerRect = (_this_$container = this.$container) == null ? void 0 : (_this_$container_getBoundingClientRect = _this_$container.getBoundingClientRect) == null ? void 0 : _this_$container_getBoundingClientRect.call(_this_$container);
       var $wrapperContentRect = this.$wrapperContent.getBoundingClientRect();
       var $popupContainerRect = this._$popupContainer.getBoundingClientRect();
+      var containerWidth = Math.ceil($containerRect.width);
+      var containerHeight = Math.ceil($containerRect.height);
+      var wrapperWidth = Math.ceil($wrapperContentRect.width);
+      var wrapperHeight = Math.ceil($wrapperContentRect.height);
+      var offsetX = ((_this__options_offset = this._options.offset) == null ? void 0 : _this__options_offset[0]) || 0;
+      var offsetY = ((_this__options_offset1 = this._options.offset) == null ? void 0 : _this__options_offset1[1]) || 0;
       // 容器的坐标 - 挂载的容器的坐标差
-      // prettier-ignore
       var containerLeft = Math.ceil($containerRect.left) - Math.ceil($popupContainerRect.left);
-      var containerRight = -(Math.ceil($containerRect.right) - Math.ceil($popupContainerRect.right));
-      // prettier-ignore
       var containerTop = Math.ceil($containerRect.y) - Math.ceil($popupContainerRect.y);
-      var left = containerLeft + (Math.ceil($containerRect.width) - Math.ceil($wrapperContentRect.width)) / 2;
-      var right;
-      var top = containerTop - Math.ceil($wrapperContentRect.height);
-      var bottom = containerTop + Math.ceil($containerRect.height);
-      if (/^t/.test(this._options.placement)) {
-        var _this__options_offset, _this__options_offset1, _this__options_offset2;
-        switch (this._options.placement) {
-          case 'top':
-            right = undefined;
-            break;
-          case 'tl':
-            right = undefined;
-            left = containerLeft;
-            break;
-          case 'tr':
-            left = undefined;
-            right = containerRight;
-            break;
+      // 视口尺寸
+      var viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+      var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      // 容器在视口中的绝对位置
+      var containerAbsTop = Math.ceil($containerRect.top);
+      var containerAbsBottom = Math.ceil($containerRect.bottom);
+      // 检测上下方向是否需要翻转
+      var actualPlacement = this._options.placement;
+      var isTopPlacement = /^t/.test(actualPlacement);
+      if (isTopPlacement) {
+        // 原本要放在上方，检查上方空间是否足够
+        var topSpace = containerAbsTop;
+        var needSpace = wrapperHeight + Math.abs(offsetY);
+        if (topSpace < needSpace) {
+          // 上方空间不够，检查下方空间
+          var bottomSpace = viewportHeight - containerAbsBottom;
+          if (bottomSpace >= needSpace) {
+            // 翻转到下方
+            actualPlacement = actualPlacement.replace(/^t/, 'b');
+          }
         }
-        this.$wrapperContent.style.cssText += "\n        " + (right !== undefined ? "right: " + (right + (((_this__options_offset = this._options.offset) == null ? void 0 : _this__options_offset[0]) || 0)) + "px;" : '') + "\n        " + (left !== undefined ? "left: " + (left + (((_this__options_offset1 = this._options.offset) == null ? void 0 : _this__options_offset1[0]) || 0)) + "px;" : '') + "\n        top: " + (top + (((_this__options_offset2 = this._options.offset) == null ? void 0 : _this__options_offset2[1]) || 0)) + "px;\n        z-index:" + this._options.zIndex + ";\n      ";
-      } else if (/^b/.test(this._options.placement)) {
-        var _this__options_offset3, _this__options_offset4, _this__options_offset5;
-        switch (this._options.placement) {
-          case 'bottom':
-            right = undefined;
-            break;
-          case 'bl':
-            right = undefined;
-            left = containerLeft;
-            break;
-          case 'br':
-            left = undefined;
-            right = containerRight;
-            break;
+      } else {
+        // 原本要放在下方，检查下方空间是否足够
+        var bottomSpace1 = viewportHeight - containerAbsBottom;
+        var needSpace1 = wrapperHeight + Math.abs(offsetY);
+        if (bottomSpace1 < needSpace1) {
+          // 下方空间不够，检查上方空间
+          var topSpace1 = containerAbsTop;
+          if (topSpace1 >= needSpace1) {
+            // 翻转到上方
+            actualPlacement = actualPlacement.replace(/^b/, 't');
+          }
         }
-        if (this.$wrapperContent) this.$wrapperContent.style.cssText += "\n          " + (right !== undefined ? "right: " + (right + (((_this__options_offset3 = this._options.offset) == null ? void 0 : _this__options_offset3[0]) || 0)) + "px;" : '') + "\n          " + (left !== undefined ? "left: " + (left + (((_this__options_offset4 = this._options.offset) == null ? void 0 : _this__options_offset4[0]) || 0)) + "px;" : '') + "\n          top: " + (bottom + (((_this__options_offset5 = this._options.offset) == null ? void 0 : _this__options_offset5[1]) || 0)) + "px;\n          z-index:" + this._options.zIndex + ";\n        ";
       }
+      // 计算初始 left 位置（相对于挂载容器）
+      var left = containerLeft + (containerWidth - wrapperWidth) / 2;
+      if (actualPlacement === 'tl' || actualPlacement === 'bl') {
+        left = containerLeft;
+      } else if (actualPlacement === 'tr' || actualPlacement === 'br') {
+        left = containerLeft + containerWidth - wrapperWidth;
+      }
+      // 计算初始 top 位置（相对于挂载容器）
+      var baseTop = /^t/.test(actualPlacement) ? containerTop - wrapperHeight : containerTop + containerHeight;
+      // 转换为浏览器可视窗口坐标系
+      var absLeft = Math.ceil($popupContainerRect.left) + left + offsetX;
+      var absTop = Math.ceil($popupContainerRect.top) + baseTop + offsetY;
+      // 边界裁剪（确保弹框在浏览器窗口内）
+      var clamp = function (value, min, max) {
+        return Math.min(Math.max(value, min), max);
+      };
+      var maxAbsLeft = Math.max(0, viewportWidth - wrapperWidth);
+      var maxAbsTop = Math.max(0, viewportHeight - wrapperHeight);
+      var clampedAbsLeft = clamp(absLeft, 0, maxAbsLeft);
+      var clampedAbsTop = clamp(absTop, 0, maxAbsTop);
+      // 转换回挂载容器坐标系
+      var nextLeft = clampedAbsLeft - Math.ceil($popupContainerRect.left);
+      var nextTop = clampedAbsTop - Math.ceil($popupContainerRect.top);
+      this.$wrapperContent.style.cssText += "\n      left: " + nextLeft + "px;\n      top: " + nextTop + "px;\n      z-index:" + this._options.zIndex + ";\n    ";
     };
     /**
     * 初始化内容样式
@@ -586,7 +610,7 @@
      * Picker.VERSION; // 输出版本号
      * ```
      */
-  Picker.VERSION = '1.1.8';
+  Picker.VERSION = '1.1.9';
 
   return Picker;
 
