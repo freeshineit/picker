@@ -1,4 +1,20 @@
+## v1.1.9 (2025-12-10)
+
+### Feat
+
+- add boundary detection
+
+## v1.1.8 (2025-12-13)
+
+### Chore
+
+- nothing
+
 ## v1.1.7 (2025-12-08)
+
+### Feat
+
+- support trigger click close
 
 ### Fixed
 
