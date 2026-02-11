@@ -403,64 +403,90 @@ class Picker {
     const $wrapperContentRect = this.$wrapperContent.getBoundingClientRect();
     const $popupContainerRect = this._$popupContainer.getBoundingClientRect();
 
+    const containerWidth = Math.ceil($containerRect.width);
+    const containerHeight = Math.ceil($containerRect.height);
+    const wrapperWidth = Math.ceil($wrapperContentRect.width);
+    const wrapperHeight = Math.ceil($wrapperContentRect.height);
+
+    const offsetX = this._options.offset?.[0] || 0;
+    const offsetY = this._options.offset?.[1] || 0;
+
     // 容器的坐标 - 挂载的容器的坐标差
-    // prettier-ignore
     const containerLeft = Math.ceil($containerRect.left) - Math.ceil($popupContainerRect.left);
-    const containerRight = -(Math.ceil($containerRect.right) - Math.ceil($popupContainerRect.right));
-    // prettier-ignore
     const containerTop = Math.ceil($containerRect.y) - Math.ceil($popupContainerRect.y);
 
-    let left: number | undefined = containerLeft + (Math.ceil($containerRect.width) - Math.ceil($wrapperContentRect.width)) / 2;
-    let right: number | undefined;
-    const top = containerTop - Math.ceil($wrapperContentRect.height);
-    const bottom = containerTop + Math.ceil($containerRect.height);
+    // 视口尺寸
+    const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
 
-    if (/^t/.test(this._options.placement)) {
-      switch (this._options.placement) {
-        case 'top':
-          right = undefined;
-          break;
-        case 'tl':
-          right = undefined;
-          left = containerLeft;
-          break;
-        case 'tr':
-          left = undefined;
-          right = containerRight;
-          break;
-        default:
-          break;
+    // 容器在视口中的绝对位置
+    const containerAbsTop = Math.ceil($containerRect.top);
+    const containerAbsBottom = Math.ceil($containerRect.bottom);
+
+    // 检测上下方向是否需要翻转
+    let actualPlacement = this._options.placement;
+    const isTopPlacement = /^t/.test(actualPlacement);
+
+    if (isTopPlacement) {
+      // 原本要放在上方，检查上方空间是否足够
+      const topSpace = containerAbsTop;
+      const needSpace = wrapperHeight + Math.abs(offsetY);
+
+      if (topSpace < needSpace) {
+        // 上方空间不够，检查下方空间
+        const bottomSpace = viewportHeight - containerAbsBottom;
+        if (bottomSpace >= needSpace) {
+          // 翻转到下方
+          actualPlacement = actualPlacement.replace(/^t/, 'b') as PickerPlacement;
+        }
       }
-      this.$wrapperContent.style.cssText += `
-        ${right !== undefined ? `right: ${right + (this._options.offset?.[0] || 0)}px;` : ''}
-        ${left !== undefined ? `left: ${left + (this._options.offset?.[0] || 0)}px;` : ''}
-        top: ${top + (this._options.offset?.[1] || 0)}px;
-        z-index:${this._options.zIndex};
-      `;
-    } else if (/^b/.test(this._options.placement)) {
-      switch (this._options.placement) {
-        case 'bottom':
-          right = undefined;
-          break;
-        case 'bl':
-          right = undefined;
-          left = containerLeft;
-          break;
-        case 'br':
-          left = undefined;
-          right = containerRight;
-          break;
-        default:
-          break;
+    } else {
+      // 原本要放在下方，检查下方空间是否足够
+      const bottomSpace = viewportHeight - containerAbsBottom;
+      const needSpace = wrapperHeight + Math.abs(offsetY);
+
+      if (bottomSpace < needSpace) {
+        // 下方空间不够，检查上方空间
+        const topSpace = containerAbsTop;
+        if (topSpace >= needSpace) {
+          // 翻转到上方
+          actualPlacement = actualPlacement.replace(/^b/, 't') as PickerPlacement;
+        }
       }
-      if (this.$wrapperContent)
-        this.$wrapperContent.style.cssText += `
-          ${right !== undefined ? `right: ${right + (this._options.offset?.[0] || 0)}px;` : ''}
-          ${left !== undefined ? `left: ${left + (this._options.offset?.[0] || 0)}px;` : ''}
-          top: ${bottom + (this._options.offset?.[1] || 0)}px;
-          z-index:${this._options.zIndex};
-        `;
     }
+
+    // 计算初始 left 位置（相对于挂载容器）
+    let left = containerLeft + (containerWidth - wrapperWidth) / 2;
+    if (actualPlacement === 'tl' || actualPlacement === 'bl') {
+      left = containerLeft;
+    } else if (actualPlacement === 'tr' || actualPlacement === 'br') {
+      left = containerLeft + containerWidth - wrapperWidth;
+    }
+
+    // 计算初始 top 位置（相对于挂载容器）
+    const baseTop = /^t/.test(actualPlacement) ? containerTop - wrapperHeight : containerTop + containerHeight;
+
+    // 转换为浏览器可视窗口坐标系
+    const absLeft = Math.ceil($popupContainerRect.left) + left + offsetX;
+    const absTop = Math.ceil($popupContainerRect.top) + baseTop + offsetY;
+
+    // 边界裁剪（确保弹框在浏览器窗口内）
+    const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+    const maxAbsLeft = Math.max(0, viewportWidth - wrapperWidth);
+    const maxAbsTop = Math.max(0, viewportHeight - wrapperHeight);
+
+    const clampedAbsLeft = clamp(absLeft, 0, maxAbsLeft);
+    const clampedAbsTop = clamp(absTop, 0, maxAbsTop);
+
+    // 转换回挂载容器坐标系
+    const nextLeft = clampedAbsLeft - Math.ceil($popupContainerRect.left);
+    const nextTop = clampedAbsTop - Math.ceil($popupContainerRect.top);
+
+    this.$wrapperContent.style.cssText += `
+      left: ${nextLeft}px;
+      top: ${nextTop}px;
+      z-index:${this._options.zIndex};
+    `;
   }
 
   /**
