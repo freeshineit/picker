@@ -72,8 +72,8 @@ devDependencies:
     specifier: ^9.38.0
     version: 9.39.1
   eslint-config-xx:
-    specifier: 2.0.0-beta.1
-    version: 2.0.0-beta.1
+    specifier: 2.1.0
+    version: 2.1.0
   jest:
     specifier: ^30.2.0
     version: 30.2.0
@@ -4444,8 +4444,8 @@ packages:
       eslint: 9.39.1
     dev: true
 
-  /eslint-config-xx@2.0.0-beta.1:
-    resolution: {integrity: sha512-90XB1q/oaQN6rgXk0uG2m80Bi7t1xkoa/yvI5eIKVY9+AP/Zed37rkFVGkby/cNrWW5v8PkpPdeMVuD5TF0F7g==}
+  /eslint-config-xx@2.1.0:
+    resolution: {integrity: sha512-iSYa58IxcRZAhZDxZ4wVLo0oGZVOc7X45biF/qIAPnLW8VBJrnXxb1WGFN4gvUchNwCihnxyQ5olO+BaZeV3Mg==}
     engines: {node: '>=18'}
     dependencies:
       '@eslint/js': 9.39.1
@@ -4676,7 +4676,7 @@ packages:
       eslint-config-prettier: 10.1.8(eslint@9.39.1)
       prettier: 3.6.2
       prettier-linter-helpers: 1.0.0
-      synckit: 0.11.11
+      synckit: 0.11.12
     dev: true
 
   /eslint-plugin-promise@7.2.1(eslint@9.39.1):
@@ -8178,13 +8178,6 @@ packages:
 
   /symbol-tree@3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
-    dev: true
-
-  /synckit@0.11.11:
-    resolution: {integrity: sha512-MeQTA1r0litLUf0Rp/iisCaL8761lKAZHaimlbGK4j0HysC4PLfqygQj9srcs0m2RdtDYnF8UuYyKpbjHYp7Jw==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    dependencies:
-      '@pkgr/core': 0.2.9
     dev: true
 
   /synckit@0.11.12:

@@ -29,7 +29,7 @@ describe('PickerProvider', () => {
   test('应该能移除 picker', () => {
     const picker = new Picker(container, {});
     expect(pickerProvider.pickers).toContain(picker);
-    
+
     pickerProvider.remove(picker);
     expect(pickerProvider.pickers).not.toContain(picker);
   });
@@ -37,7 +37,7 @@ describe('PickerProvider', () => {
   test('移除不存在的 picker 应该显示警告', () => {
     const picker = new Picker(container, {});
     pickerProvider.remove(picker);
-    
+
     const consoleSpy = jest.spyOn(console, 'warn');
     pickerProvider.remove(picker);
     expect(consoleSpy).toHaveBeenCalledWith('Picker not found in the provider.');

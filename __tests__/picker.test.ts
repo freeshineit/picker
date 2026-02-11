@@ -73,12 +73,12 @@ describe('Picker', () => {
   });
 
   describe('open 状态', () => {
-    test('应该能打开和关闭', (done) => {
+    test('应该能打开和关闭', done => {
       const picker = new Picker(container, {});
-      
+
       picker.open = true;
       expect(picker.open).toBe(true);
-      
+
       setTimeout(() => {
         picker.open = false;
         expect(picker.open).toBe(false);
@@ -86,16 +86,16 @@ describe('Picker', () => {
       }, 150);
     });
 
-    test('open 变化应该触发 onOpenChange 回调', (done) => {
+    test('open 变化应该触发 onOpenChange 回调', done => {
       const onOpenChange = jest.fn();
       const picker = new Picker(container, { onOpenChange });
-      
+
       picker.open = true;
-      
+
       setTimeout(() => {
         expect(onOpenChange).toHaveBeenCalledWith(true);
         picker.open = false;
-        
+
         setTimeout(() => {
           expect(onOpenChange).toHaveBeenCalledWith(false);
           done();
@@ -131,9 +131,8 @@ describe('Picker', () => {
   describe('setPlacement', () => {
     test('应该能设置有效的 placement', () => {
       const picker = new Picker(container, {});
-      const placements: Array<'top' | 'tl' | 'tr' | 'bottom' | 'bl' | 'br'> = 
-        ['top', 'tl', 'tr', 'bottom', 'bl', 'br'];
-      
+      const placements: Array<'top' | 'tl' | 'tr' | 'bottom' | 'bl' | 'br'> = ['top', 'tl', 'tr', 'bottom', 'bl', 'br'];
+
       placements.forEach(placement => {
         picker.setPlacement(placement);
         expect(picker.$wrapperContent).toBeTruthy();
@@ -143,7 +142,7 @@ describe('Picker', () => {
     test('无效的 placement 应该显示警告', () => {
       const picker = new Picker(container, {});
       const consoleSpy = jest.spyOn(console, 'warn');
-      
+
       // @ts-expect-error 测试无效值
       picker.setPlacement('invalid');
       expect(consoleSpy).toHaveBeenCalledWith('invalid is not a valid placement');
@@ -177,16 +176,16 @@ describe('Picker', () => {
     test('应该能销毁实例', () => {
       const picker = new Picker(container, {});
       const wrapperContent = picker.$wrapperContent;
-      
+
       picker.destroy();
-      
+
       expect(document.body.contains(wrapperContent)).toBe(false);
     });
 
     test('销毁后应该移除所有事件监听器', () => {
       const picker = new Picker(container, { trigger: 'click' });
       picker.destroy();
-      
+
       // 点击不应该有任何效果
       container.click();
       expect(picker.$wrapperContent).toBeFalsy();
@@ -194,39 +193,39 @@ describe('Picker', () => {
   });
 
   describe('触发方式', () => {
-    test('click 触发应该能打开弹窗', (done) => {
+    test('click 触发应该能打开弹窗', done => {
       const picker = new Picker(container, { trigger: 'click' });
-      
+
       container.click();
-      
+
       setTimeout(() => {
         expect(picker.open).toBe(true);
         done();
       }, 150);
     });
 
-    test('hover 触发应该能打开弹窗', (done) => {
+    test('hover 触发应该能打开弹窗', done => {
       const picker = new Picker(container, { trigger: 'hover' });
-      
+
       const event = new MouseEvent('mouseenter', { bubbles: true });
       container.dispatchEvent(event);
-      
+
       setTimeout(() => {
         expect(picker.open).toBe(true);
         done();
       }, 150);
     });
 
-    test('triggerClose 为 true 时点击容器应该关闭', (done) => {
-      const picker = new Picker(container, { 
+    test('triggerClose 为 true 时点击容器应该关闭', done => {
+      const picker = new Picker(container, {
         trigger: 'click',
         triggerClose: true,
-        open: true
+        open: true,
       });
-      
+
       setTimeout(() => {
         container.click();
-        
+
         setTimeout(() => {
           expect(picker.open).toBe(false);
           done();
@@ -239,40 +238,38 @@ describe('Picker', () => {
     test('应该支持自定义挂载容器', () => {
       const customContainer = document.createElement('div');
       document.body.appendChild(customContainer);
-      
+
       const picker = new Picker(container, {
-        getPopupContainer: () => customContainer
+        getPopupContainer: () => customContainer,
       });
-      
+
       expect(customContainer.contains(picker.$wrapperContent)).toBe(true);
     });
 
     test('不支持的容器类型应该回退到 body', () => {
       const input = document.createElement('input');
       document.body.appendChild(input);
-      
+
       const consoleSpy = jest.spyOn(console, 'warn');
       const picker = new Picker(container, {
-        getPopupContainer: () => input
+        getPopupContainer: () => input,
       });
-      
-      expect(consoleSpy).toHaveBeenCalledWith(
-        'popup container node does not support child elements, default body!'
-      );
+
+      expect(consoleSpy).toHaveBeenCalledWith('popup container node does not support child elements, default body!');
       expect(document.body.contains(picker.$wrapperContent)).toBe(true);
     });
   });
 
   describe('延迟配置', () => {
-    test('应该支持 mouseEnterDelay', (done) => {
-      const picker = new Picker(container, { 
+    test('应该支持 mouseEnterDelay', done => {
+      const picker = new Picker(container, {
         trigger: 'hover',
-        mouseEnterDelay: 0.2
+        mouseEnterDelay: 0.2,
       });
-      
+
       const event = new MouseEvent('mouseenter', { bubbles: true });
       container.dispatchEvent(event);
-      
+
       // 延迟后应该打开
       setTimeout(() => {
         expect(picker.open).toBe(true);
@@ -280,19 +277,19 @@ describe('Picker', () => {
       }, 250);
     });
 
-    test('应该支持 mouseLeaveDelay', (done) => {
-      const picker = new Picker(container, { 
+    test('应该支持 mouseLeaveDelay', done => {
+      const picker = new Picker(container, {
         trigger: 'hover',
-        mouseLeaveDelay: 0.2
+        mouseLeaveDelay: 0.2,
       });
-      
+
       // 先打开
       picker.open = true;
-      
+
       setTimeout(() => {
         const event = new MouseEvent('mouseleave', { bubbles: true });
         container.dispatchEvent(event);
-        
+
         // 延迟后应该关闭
         setTimeout(() => {
           expect(picker.open).toBe(false);
@@ -303,16 +300,16 @@ describe('Picker', () => {
   });
 
   describe('移动端模式', () => {
-    test('移动端模式应该添加 body 滚动锁定类', (done) => {
+    test('移动端模式应该添加 body 滚动锁定类', done => {
       const picker = new Picker(container, { isMobile: true });
-      
+
       picker.open = true;
-      
+
       setTimeout(() => {
         expect(document.body.classList.contains('epicker-body-noscroll')).toBe(true);
-        
+
         picker.open = false;
-        
+
         setTimeout(() => {
           expect(document.body.classList.contains('epicker-body-noscroll')).toBe(false);
           done();
@@ -321,11 +318,11 @@ describe('Picker', () => {
     });
 
     test('移动端模式应该强制使用 click 触发', () => {
-      const picker = new Picker(container, { 
+      const picker = new Picker(container, {
         isMobile: true,
-        trigger: 'hover'
+        trigger: 'hover',
       });
-      
+
       expect(picker.$wrapperContent.classList.contains('epicker-mobile')).toBe(true);
     });
   });
