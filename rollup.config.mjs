@@ -168,12 +168,18 @@ function generateConfig(pkg, configs) {
         }),
         entry.input === cssInput
           ? copy({
+              verbose: true,
+              // 在写入 bundle 后执行复制（推荐）
+              hook: 'writeBundle',
+              // 保持目录结构（默认就是 false，这里显式设定以免误解）
+              flatten: false,
+              // watch 模式下只复制一次（按需切换 true/false）
               copyOnce: true,
               targets: [
-                { src: 'src/style/**/*.scss', dest: 'dist/style' },
+                { src: ['src/style/**/*.scss', '!node_modules/**', '!public/**'], dest: 'dist' },
                 {
                   src: 'src/style/css.ts',
-                  dest: 'dist/style',
+                  dest: 'dist',
                   rename: 'index.js',
                 },
               ],
