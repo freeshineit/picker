@@ -2,7 +2,7 @@
  * picker component for js framework, support mobile and pc
  * 
  * @skax/picker v1.1.9
- * Copyright (c) 2026-02-19 ShineShao <xiaoshaoqq@gmail.com>
+ * Copyright (c) 2026-03-15 ShineShao <xiaoshaoqq@gmail.com>
  * 
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -319,12 +319,11 @@
       var _this_$container_getBoundingClientRect, _this_$container, _this__options_offset, _this__options_offset1;
       if (!this._open || this._options.isMobile || !this.$container) return;
       var $containerRect = (_this_$container = this.$container) == null ? void 0 : (_this_$container_getBoundingClientRect = _this_$container.getBoundingClientRect) == null ? void 0 : _this_$container_getBoundingClientRect.call(_this_$container);
-      var $wrapperContentRect = this.$wrapperContent.getBoundingClientRect();
       var $popupContainerRect = this._$popupContainer.getBoundingClientRect();
-      var containerWidth = Math.ceil($containerRect.width);
-      var containerHeight = Math.ceil($containerRect.height);
-      var wrapperWidth = Math.ceil($wrapperContentRect.width);
-      var wrapperHeight = Math.ceil($wrapperContentRect.height);
+      var containerWidth = Math.ceil(this.$container.clientWidth);
+      var containerHeight = Math.ceil(this.$container.clientHeight);
+      var wrapperWidth = Math.ceil(this.$wrapperContent.clientWidth);
+      var wrapperHeight = Math.ceil(this.$wrapperContent.clientHeight);
       var offsetX = ((_this__options_offset = this._options.offset) == null ? void 0 : _this__options_offset[0]) || 0;
       var offsetY = ((_this__options_offset1 = this._options.offset) == null ? void 0 : _this__options_offset1[1]) || 0;
       // 容器的坐标 - 挂载的容器的坐标差
