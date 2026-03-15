@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Picker</title>
+    <link rel="stylesheet" href="./common.css" />
+    <link rel="stylesheet" href="./style/css.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="demo-header">
+        <div>
+          <h1 class="demo-title">Picker Demo</h1>
+          <p class="demo-subtitle">精简结构、统一样式、集中配置，便于快速验证各类定位与触发方式。</p>
+        </div>
+        <div class="demo-badges">
+          <span class="demo-badge">Build: public/index.html</span>
+          <span class="demo-badge">Device: <span id="device-status">Detecting</span></span>
+        </div>
+      </header>
+      <main class="demo-main">
+        <section class="demo-section">
+          <h2>Rotated Mount</h2>
+          <p>挂载节点分别旋转 `0deg` , `90deg`, `180deg`, `270deg`, `360deg`, `450deg`, `-90deg`，用于手工验证旋转容器下的弹层定位。</p>
+          <div id="rotation-showcase" class="rotation-showcase"></div>
+        </section>
+      </main>
+    </div>
+    <script src="./index.umd.js"></script>
+    <script>
+      (function () {
+        const isMobile =
+          (window &&
+            /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone|Opera Mini)/i.test(navigator.userAgent)) ||
+          (/Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+
+        const statusEl = document.getElementById('device-status');
+        if (statusEl) {
+          statusEl.textContent = isMobile ? 'Mobile' : 'Desktop';
+        }
+
+        const popupContent = (label, placement) => {
+          return `
+            <div class="demo-popup">
+              <div class="demo-popup-item">
+                <div style="font-weight: 600; margin-bottom: 6px;">${label}</div>
+                <div>Placement: ${placement}</div>
+              </div>
+              <div class="demo-popup-item">
+                <div style="font-weight: 600; margin-bottom: 6px;">Tips</div>
+                <div>Hover/click to preview</div>
+              </div>
+            </div>
+          `;
+        };
+
+        const instances = new Map();
+
+        const placements = ['top', 'bottom', 'tl', 'tr', 'bl', 'br'];
+        const rotateAngles = [0, 90, 180, 270, 360, 450, -90];
+
+        const renderRotationShowcase = () => {
+          const root = document.getElementById('rotation-showcase');
+          if (!root) return;
+
+          root.innerHTML = rotateAngles
+            .map(angle => {
+              const key = String(angle);
+              const mountCls = `rotate-mount-${key}`;
+
+              return placements
+                .map(placement => {
+                  const targetId = `rotate-target-${placement}-${key}`;
+                  return `
+                    <div class="rotation-stage">
+                      <div class="rotation-caption">
+                        Mount: rotate(${angle}deg)
+                        Placement: ${placement}
+                      </div>
+                      <div class="rotation-mount ${mountCls}">
+                        <div class="rotation-grid">
+                          <button id="${targetId}" data-angle="${angle}" data-placement="${placement}" class="demo-target rotation-target">Rotate ${angle}</button>
+                        </div>
+                      </div>
+                    </div>
+                  `;
+                })
+                .join('');
+            })
+            .join('');
+
+          document.querySelectorAll('button[id^="rotate-target"]').forEach(target => {
+            const placement = target.getAttribute('data-placement');
+            const angle = target.getAttribute('data-angle');
+
+            const label = `Rotated: ${angle}deg`;
+            const picker = new Picker(target, {
+              trigger: 'click',
+              placement: placement,
+              wrapClassName: 'demo-wrapper',
+              isMobile,
+              getPopupContainer: () => target,
+            });
+
+            picker.innerHTML(popupContent(label, placement));
+            instances.set(target.id, picker);
+          });
+        };
+
+        renderRotationShowcase();
+      })();
+    </script>
+  </body>
+</html>

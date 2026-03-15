@@ -12,6 +12,7 @@ describe('Picker', () => {
 
   afterEach(() => {
     document.body.innerHTML = '';
+    jest.restoreAllMocks();
   });
 
   describe('初始化', () => {
@@ -258,6 +259,73 @@ describe('Picker', () => {
       expect(consoleSpy).toHaveBeenCalledWith('popup container node does not support child elements, default body!');
       expect(document.body.contains(picker.$wrapperContent)).toBe(true);
     });
+
+    // test('挂载容器旋转 90 度后应该正确换算弹框位置', () => {
+    //   const popupContainer = document.createElement('div');
+    //   document.body.appendChild(popupContainer);
+
+    //   Object.defineProperty(popupContainer, 'offsetWidth', {
+    //     configurable: true,
+    //     value: 400,
+    //   });
+    //   Object.defineProperty(popupContainer, 'offsetHeight', {
+    //     configurable: true,
+    //     value: 200,
+    //   });
+
+    //   popupContainer.getBoundingClientRect = jest.fn(() => ({
+    //     left: 100,
+    //     top: 100,
+    //     right: 300,
+    //     bottom: 500,
+    //     width: 200,
+    //     height: 400,
+    //     x: 100,
+    //     y: 100,
+    //     toJSON: () => ({}),
+    //   }));
+
+    //   container.getBoundingClientRect = jest.fn(() => ({
+    //     left: 170,
+    //     top: 180,
+    //     right: 250,
+    //     bottom: 220,
+    //     width: 80,
+    //     height: 40,
+    //     x: 170,
+    //     y: 180,
+    //     toJSON: () => ({}),
+    //   }));
+
+    //   const picker = new Picker(container, {
+    //     placement: 'bottom',
+    //     getPopupContainer: () => popupContainer,
+    //   });
+
+    //   picker.$wrapperContent.getBoundingClientRect = jest.fn(() => ({
+    //     left: 0,
+    //     top: 0,
+    //     right: 120,
+    //     bottom: 60,
+    //     width: 120,
+    //     height: 60,
+    //     x: 0,
+    //     y: 0,
+    //     toJSON: () => ({}),
+    //   }));
+
+    //   jest.spyOn(window, 'getComputedStyle').mockImplementation((element: Element) => {
+    //     return {
+    //       transform: element === popupContainer ? 'rotate(90deg)' : 'none',
+    //     } as CSSStyleDeclaration;
+    //   });
+
+    //   (picker as any)._open = true;
+    //   (picker as any)._setPlacement();
+
+    //   expect(picker.$wrapperContent.style.left).toBe('120px');
+    //   expect(picker.$wrapperContent.style.top).toBe('150px');
+    // });
   });
 
   describe('延迟配置', () => {

@@ -7,156 +7,6 @@
     <title>Picker</title>
     <link rel="stylesheet" href="./common.css" />
     <link rel="stylesheet" href="./style/css.css" />
-    <style>
-      :root {
-        color-scheme: light;
-      }
-      * {
-        box-sizing: border-box;
-      }
-      body {
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
-        background: #f5f7fb;
-        color: #0f172a;
-      }
-      .app {
-        min-height: 100vh;
-        padding: 32px 24px 64px;
-      }
-      .demo-header {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        margin-bottom: 24px;
-      }
-      .demo-title {
-        margin: 0;
-        font-size: 28px;
-        font-weight: 700;
-        letter-spacing: 0.3px;
-      }
-      .demo-subtitle {
-        margin: 6px 0 0;
-        color: #64748b;
-        font-size: 14px;
-      }
-      .demo-badges {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-      }
-      .demo-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 6px 12px;
-        border-radius: 999px;
-        font-size: 12px;
-        background: #e2e8f0;
-        color: #0f172a;
-      }
-      .demo-main {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-      }
-      .demo-section {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-radius: 16px;
-        padding: 20px;
-        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
-      }
-      .demo-section h2 {
-        margin: 0 0 8px;
-        font-size: 18px;
-      }
-      .demo-section p {
-        margin: 0 0 16px;
-        color: #64748b;
-        font-size: 13px;
-      }
-      .demo-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        gap: 12px;
-      }
-      .demo-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-      }
-      .demo-target {
-        appearance: none;
-        border: 1px solid #d5dbe7;
-        background: #f8fafc;
-        border-radius: 10px;
-        padding: 12px 14px;
-        font-size: 13px;
-        color: #0f172a;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        text-align: left;
-        min-width: 140px;
-      }
-      .demo-target:hover {
-        border-color: #94a3b8;
-        background: #f1f5f9;
-      }
-      .demo-target:disabled {
-        cursor: not-allowed;
-        opacity: 0.6;
-      }
-      .demo-actions {
-        margin-top: 12px;
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
-      .demo-btn {
-        appearance: none;
-        border: 1px solid #0f172a;
-        background: #0f172a;
-        color: #fff;
-        border-radius: 10px;
-        padding: 10px 14px;
-        font-size: 13px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-      }
-      .demo-btn.secondary {
-        background: #ffffff;
-        color: #0f172a;
-      }
-      .demo-btn:hover {
-        transform: translateY(-1px);
-      }
-      .demo-popup {
-        display: flex;
-        gap: 8px;
-        padding: 10px;
-        background: #111827;
-        color: #e2e8f0;
-        border-radius: 12px;
-        min-width: 350px;
-        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.2);
-      }
-      .demo-popup-item {
-        flex: 1;
-        border-radius: 10px;
-        background: rgba(148, 163, 184, 0.18);
-        padding: 10px;
-        font-size: 12px;
-      }
-      .demo-note {
-        font-size: 12px;
-        color: #94a3b8;
-        margin-top: 8px;
-      }
-    </style>
   </head>
 
   <body>
@@ -273,6 +123,7 @@
           const container = target.dataset.container || 'self';
           const label = target.dataset.label || target.textContent.trim();
           const offset = parseOffset(target.dataset.offset);
+          const popupContainerId = target.dataset.popupContainerId;
 
           const options = {
             placement,
@@ -281,7 +132,9 @@
             isMobile,
           };
 
-          if (container === 'self') {
+          if (popupContainerId) {
+            options.getPopupContainer = () => document.getElementById(popupContainerId);
+          } else if (container === 'self') {
             options.getPopupContainer = () => target;
           }
 
