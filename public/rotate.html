@@ -101,7 +101,7 @@
               placement: placement,
               wrapClassName: 'demo-wrapper',
               isMobile,
-              getPopupContainer: () => target,
+              getPopupContainer: () => (isMobile ? document.body : target),
             });
 
             picker.innerHTML(popupContent(label, placement));
