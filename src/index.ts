@@ -159,7 +159,7 @@ class Picker {
 
     this.$wrapperContent = document.createElement("div");
     this._initContentStyle();
-    
+
     if (typeof this._options.getPopupContainer === "function") {
       this._$popupContainer = this._options.getPopupContainer();
     } else {
@@ -208,7 +208,7 @@ class Picker {
       if (open) {
         // prettier-ignore
         this._timer = setTimeout(() => {
-            if (!this.$wrapperContent) return 
+            if (!this.$wrapperContent) return
             this.$wrapperContent.style.display = "inline-flex";
             this.$wrapperContent.style.pointerEvents = "";
             // prettier-ignore
@@ -229,7 +229,7 @@ class Picker {
       } else {
         // prettier-ignore
         this._timer = setTimeout(() => {
-          if (!this.$wrapperContent) return 
+          if (!this.$wrapperContent) return
             this.$wrapperContent.style.opacity = "0";
             this.$wrapperContent.style.pointerEvents = "none";
             // prettier-ignore
@@ -400,13 +400,12 @@ class Picker {
     if (!this._open || this._options.isMobile || !this.$container) return;
 
     const $containerRect = this.$container?.getBoundingClientRect?.();
-    const $wrapperContentRect = this.$wrapperContent.getBoundingClientRect();
     const $popupContainerRect = this._$popupContainer.getBoundingClientRect();
 
-    const containerWidth = Math.ceil($containerRect.width);
-    const containerHeight = Math.ceil($containerRect.height);
-    const wrapperWidth = Math.ceil($wrapperContentRect.width);
-    const wrapperHeight = Math.ceil($wrapperContentRect.height);
+    const containerWidth = Math.ceil(this.$container.clientWidth);
+    const containerHeight = Math.ceil(this.$container.clientHeight);
+    const wrapperWidth = Math.ceil(this.$wrapperContent.clientWidth);
+    const wrapperHeight = Math.ceil(this.$wrapperContent.clientHeight);
 
     const offsetX = this._options.offset?.[0] || 0;
     const offsetY = this._options.offset?.[1] || 0;
