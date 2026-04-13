@@ -36,9 +36,9 @@
             /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone|Opera Mini)/i.test(navigator.userAgent)) ||
           (/Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
 
-        const statusEl = document.getElementById('device-status');
+        const statusEl = document.getElementById("device-status");
         if (statusEl) {
-          statusEl.textContent = isMobile ? 'Mobile' : 'Desktop';
+          statusEl.textContent = isMobile ? "Mobile" : "Desktop";
         }
 
         const popupContent = (label, placement) => {
@@ -58,20 +58,20 @@
 
         const instances = new Map();
 
-        const placements = ['top', 'bottom', 'tl', 'tr', 'bl', 'br'];
+        const placements = ["top", "bottom", "tl", "tr", "bl", "br"];
         const rotateAngles = [0, 90, 180, 270, 360, 450, -90];
 
         const renderRotationShowcase = () => {
-          const root = document.getElementById('rotation-showcase');
+          const root = document.getElementById("rotation-showcase");
           if (!root) return;
 
           root.innerHTML = rotateAngles
-            .map(angle => {
+            .map((angle) => {
               const key = String(angle);
               const mountCls = `rotate-mount-${key}`;
 
               return placements
-                .map(placement => {
+                .map((placement) => {
                   const targetId = `rotate-target-${placement}-${key}`;
                   return `
                     <div class="rotation-stage">
@@ -87,19 +87,19 @@
                     </div>
                   `;
                 })
-                .join('');
+                .join("");
             })
-            .join('');
+            .join("");
 
-          document.querySelectorAll('button[id^="rotate-target"]').forEach(target => {
-            const placement = target.getAttribute('data-placement');
-            const angle = target.getAttribute('data-angle');
+          document.querySelectorAll('button[id^="rotate-target"]').forEach((target) => {
+            const placement = target.getAttribute("data-placement");
+            const angle = target.getAttribute("data-angle");
 
             const label = `Rotated: ${angle}deg`;
             const picker = new Picker(target, {
-              trigger: 'click',
+              trigger: "click",
               placement: placement,
-              wrapClassName: 'demo-wrapper',
+              wrapClassName: "demo-wrapper",
               isMobile,
               getPopupContainer: () => (isMobile ? document.body : target),
             });

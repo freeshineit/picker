@@ -1,4 +1,4 @@
-import pickerProvider from './provider';
+import pickerProvider from "./provider";
 
 /**
  * picker 位置
@@ -10,7 +10,7 @@ import pickerProvider from './provider';
  * @public
  */
 
-const _$PICKER_PLACEMENT$_ = ['top', 'tl', 'tr', 'bottom', 'bl', 'br'];
+const _$PICKER_PLACEMENT$_ = ["top", "tl", "tr", "bottom", "bl", "br"];
 /** 展示位置
  *
  * |   top    |     tl    |     tr    | bottom    |     bl     |     br     |
@@ -18,7 +18,7 @@ const _$PICKER_PLACEMENT$_ = ['top', 'tl', 'tr', 'bottom', 'bl', 'br'];
  * |  顶部中间  |  顶部左侧  |  顶部右侧  |   底部中间   |  底部左侧   |   底部右侧  |
  *
  */
-export type PickerPlacement = 'top' | 'tl' | 'tr' | 'bottom' | 'bl' | 'br';
+export type PickerPlacement = "top" | "tl" | "tr" | "bottom" | "bl" | "br";
 
 /**
  * Picker 配置项
@@ -43,7 +43,7 @@ export interface PickerOptions {
    * |:--------:|:--------:|
    * |   点击    |   悬停   |
    */
-  trigger?: 'click' | 'hover';
+  trigger?: "click" | "hover";
   /**
    * container 触发关闭行为, 默认 false
    * 当 trigger 为 click 时生效，点击 container 区域会关闭弹窗
@@ -67,7 +67,7 @@ export interface PickerOptions {
 /**
  * 默认样式前缀
  */
-const _$PICKER_PREFIX_CLS$_ = 'epicker';
+const _$PICKER_PREFIX_CLS$_ = "epicker";
 
 /**
  * Picker 默认值
@@ -75,13 +75,13 @@ const _$PICKER_PREFIX_CLS$_ = 'epicker';
 
 const __$PICKER_DEFAULT_OPTIONS$__ = {
   getPopupContainer: () => document.body,
-  wrapClassName: '',
+  wrapClassName: "",
   open: false,
-  placement: 'br',
+  placement: "br",
   offset: [0, 0],
   zIndex: 1000,
-  content: '',
-  trigger: 'click',
+  content: "",
+  trigger: "click",
   mouseLeaveDelay: 0.1,
   mouseEnterDelay: 0.1,
   isMobile: false,
@@ -119,7 +119,7 @@ class Picker {
    * Picker.VERSION; // 输出版本号
    * ```
    */
-  static VERSION = '__VERSION__';
+  static VERSION = "__VERSION__";
 
   /** 容器触发节点，当容器不存在，可以使用 picker.open 来触发打开 */
   $container: HTMLElement | null;
@@ -326,7 +326,7 @@ class Picker {
    */
   innerHTML(html?: string) {
     if (this.$body) {
-      this.$body.innerHTML = html || '';
+      this.$body.innerHTML = html || "";
       this._setPlacement();
     }
   }
@@ -357,29 +357,29 @@ class Picker {
    * 移除html
    */
   private _removeHtml() {
-    this.$wrapperContent?.removeEventListener('click', this._onContentClick);
-    this.$container?.removeEventListener?.('click', this._onContentClick);
-    if (this._options.trigger === 'click') this.$container?.removeEventListener?.('click', this._onContainerClick);
-    if (this._options.trigger === 'hover') {
-      this.$container?.removeEventListener?.('mouseenter', this._onShow);
-      this.$container?.removeEventListener?.('mouseover', this._onShow);
-      this.$container?.removeEventListener?.('mouseleave', this._onHide);
+    this.$wrapperContent?.removeEventListener("click", this._onContentClick);
+    this.$container?.removeEventListener?.("click", this._onContentClick);
+    if (this._options.trigger === "click") this.$container?.removeEventListener?.("click", this._onContainerClick);
+    if (this._options.trigger === "hover") {
+      this.$container?.removeEventListener?.("mouseenter", this._onShow);
+      this.$container?.removeEventListener?.("mouseover", this._onShow);
+      this.$container?.removeEventListener?.("mouseleave", this._onHide);
       // prettier-ignore
       this.$wrapperContent?.removeEventListener("mouseenter", this._onWrapperShow);
-      this.$wrapperContent?.removeEventListener('mouseleave', this._onHide);
+      this.$wrapperContent?.removeEventListener("mouseleave", this._onHide);
     }
     if (!this._options.isMobile) {
-      window.removeEventListener('blur', this._onHide);
+      window.removeEventListener("blur", this._onHide);
 
-      document.removeEventListener('visibilitychange', this._onHide);
+      document.removeEventListener("visibilitychange", this._onHide);
 
-      window.removeEventListener('resize', this._onHide);
+      window.removeEventListener("resize", this._onHide);
 
-      document.removeEventListener('click', this._onDocumentClick);
+      document.removeEventListener("click", this._onDocumentClick);
     }
 
     if (this._$mask) {
-      this._$mask.removeEventListener('click', this._onHide);
+      this._$mask.removeEventListener("click", this._onHide);
       this._$mask.remove();
 
       this._$mask = null!;
@@ -436,7 +436,7 @@ class Picker {
         const bottomSpace = viewportHeight - containerAbsBottom;
         if (bottomSpace >= needSpace) {
           // 翻转到下方
-          actualPlacement = actualPlacement.replace(/^t/, 'b') as PickerPlacement;
+          actualPlacement = actualPlacement.replace(/^t/, "b") as PickerPlacement;
         }
       }
     } else {
@@ -449,16 +449,16 @@ class Picker {
         const topSpace = containerAbsTop;
         if (topSpace >= needSpace) {
           // 翻转到上方
-          actualPlacement = actualPlacement.replace(/^b/, 't') as PickerPlacement;
+          actualPlacement = actualPlacement.replace(/^b/, "t") as PickerPlacement;
         }
       }
     }
 
     // 计算初始 left 位置（相对于挂载容器）
     let left = containerLeft + (containerWidth - wrapperWidth) / 2;
-    if (actualPlacement === 'tl' || actualPlacement === 'bl') {
+    if (actualPlacement === "tl" || actualPlacement === "bl") {
       left = containerLeft;
-    } else if (actualPlacement === 'tr' || actualPlacement === 'br') {
+    } else if (actualPlacement === "tr" || actualPlacement === "br") {
       left = containerLeft + containerWidth - wrapperWidth;
     }
 
@@ -496,25 +496,25 @@ class Picker {
     // prettier-ignore
     this.$wrapperContent.classList.add(`${_$PICKER_PREFIX_CLS$_}`,`${_$PICKER_PREFIX_CLS$_}-wrapper`, `${_$PICKER_PREFIX_CLS$_}-${this._options.placement}`);
     // 提升优先级
-    this.$wrapperContent.style.display = 'none';
+    this.$wrapperContent.style.display = "none";
     if (this._options.isMobile) {
       this.$wrapperContent.classList.add(`${_$PICKER_PREFIX_CLS$_}-mobile`);
-      this._$mask = document.createElement('div');
+      this._$mask = document.createElement("div");
       this._$mask.classList.add(`${_$PICKER_PREFIX_CLS$_}-mask`);
       this.$wrapperContent.appendChild(this._$mask);
     }
-    this.$body = document.createElement('div');
+    this.$body = document.createElement("div");
     this.$body.classList.add(`${_$PICKER_PREFIX_CLS$_}-body`);
     this.$wrapperContent.appendChild(this.$body);
 
-    if (typeof this._options.content === 'string') {
+    if (typeof this._options.content === "string") {
       this.innerHTML(this._options.content);
-    } else if (typeof this._options.content === 'function') {
+    } else if (typeof this._options.content === "function") {
       this.innerHTML(this._options.content?.());
     }
-    if (typeof this._options.wrapClassName === 'string') {
+    if (typeof this._options.wrapClassName === "string") {
       try {
-        this.$wrapperContent?.classList.add(...this._options.wrapClassName.split(' '));
+        this.$wrapperContent?.classList.add(...this._options.wrapClassName.split(" "));
       } catch (_error) {
         //
       }
@@ -525,26 +525,26 @@ class Picker {
    * 绑定事件
    */
   private _eventListener() {
-    this.$wrapperContent.addEventListener('click', this._onContentClick);
-    this.$container?.addEventListener?.('click', this._onContentClick);
+    this.$wrapperContent.addEventListener("click", this._onContentClick);
+    this.$container?.addEventListener?.("click", this._onContentClick);
     //
-    if (this._options.trigger === 'click') this.$container?.addEventListener?.('click', this._onContainerClick);
-    if (this._options.trigger === 'hover') {
-      this.$container?.addEventListener?.('mouseenter', this._onShow);
-      this.$container?.addEventListener?.('mouseover', this._onShow);
-      this.$container?.addEventListener?.('mouseleave', this._onHide);
-      this.$wrapperContent.addEventListener('mouseenter', this._onWrapperShow);
-      this.$wrapperContent.addEventListener('mouseleave', this._onHide);
+    if (this._options.trigger === "click") this.$container?.addEventListener?.("click", this._onContainerClick);
+    if (this._options.trigger === "hover") {
+      this.$container?.addEventListener?.("mouseenter", this._onShow);
+      this.$container?.addEventListener?.("mouseover", this._onShow);
+      this.$container?.addEventListener?.("mouseleave", this._onHide);
+      this.$wrapperContent.addEventListener("mouseenter", this._onWrapperShow);
+      this.$wrapperContent.addEventListener("mouseleave", this._onHide);
     }
-    if (this._$mask) this._$mask.addEventListener('click', this._onHide);
+    if (this._$mask) this._$mask.addEventListener("click", this._onHide);
     if (!this._options.isMobile) {
-      window.addEventListener('blur', this._onHide);
+      window.addEventListener("blur", this._onHide);
 
-      document.addEventListener('visibilitychange', this._onHide);
+      document.addEventListener("visibilitychange", this._onHide);
 
-      window.addEventListener('resize', this._onHide);
+      window.addEventListener("resize", this._onHide);
 
-      document.addEventListener('click', this._onDocumentClick);
+      document.addEventListener("click", this._onDocumentClick);
     }
   }
 
@@ -566,7 +566,7 @@ class Picker {
     // wrapper contain
     const contain = this.$wrapperContent?.contains?.(event.target as HTMLElement) || this.$wrapperContent === event.target;
     // open 状态下触发关闭
-    if (this._options.triggerClose && this._options.trigger === 'click' && !contain) {
+    if (this._options.triggerClose && this._options.trigger === "click" && !contain) {
       this.open = !this.open;
     } else {
       this.open = true;

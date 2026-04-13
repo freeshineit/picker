@@ -114,18 +114,18 @@
             /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone|Opera Mini)/i.test(navigator.userAgent)) ||
           (/Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
 
-        document.body.addEventListener('click', function (e) {
-          console.log('body click');
+        document.body.addEventListener("click", function (e) {
+          console.log("body click");
         });
 
-        let containerTop = new Picker(document.getElementById('container-top'), {
-          getPopupContainer: () => document.getElementById('container-top'),
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        let containerTop = new Picker(document.getElementById("container-top"), {
+          getPopupContainer: () => document.getElementById("container-top"),
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          placement: 'top', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          placement: "top", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           isMobile: isMobile,
           disabled: true,
           // offset: [0, 40],
@@ -135,7 +135,7 @@
           <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
         </div>`);
 
-        document.getElementById('container-top-destroy').addEventListener('click', e => {
+        document.getElementById("container-top-destroy").addEventListener("click", (e) => {
           if (containerTop) {
             containerTop.destroy();
             containerTop = null;
@@ -144,14 +144,14 @@
 
         window.containerTop = containerTop;
 
-        const containerTL = new Picker(document.getElementById('container-tl'), {
-          getPopupContainer: () => document.getElementById('container-tl'),
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const containerTL = new Picker(document.getElementById("container-tl"), {
+          getPopupContainer: () => document.getElementById("container-tl"),
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          placement: 'tl', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          placement: "tl", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           // offset: [0, 40],
           isMobile: isMobile,
         });
@@ -160,14 +160,14 @@
           <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
         </div>`);
 
-        const containerTR = new Picker(document.getElementById('container-tr'), {
-          getPopupContainer: () => document.getElementById('container-tr'),
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const containerTR = new Picker(document.getElementById("container-tr"), {
+          getPopupContainer: () => document.getElementById("container-tr"),
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          placement: 'tr', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          placement: "tr", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           // offset: [0, 40],
           isMobile: isMobile,
         });
@@ -176,14 +176,14 @@
           <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
         </div>`);
 
-        const containerBottom = new Picker(document.getElementById('container-bottom'), {
-          getPopupContainer: () => document.getElementById('container-bottom'),
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const containerBottom = new Picker(document.getElementById("container-bottom"), {
+          getPopupContainer: () => document.getElementById("container-bottom"),
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          placement: 'bottom', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          placement: "bottom", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           // offset: [0, 40],
           // isMobile: true,
           isMobile: isMobile,
@@ -192,14 +192,14 @@
           <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
           <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
         </div>`);
-        const containerBL = new Picker(document.getElementById('container-bl'), {
-          getPopupContainer: () => document.getElementById('container-bl'),
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const containerBL = new Picker(document.getElementById("container-bl"), {
+          getPopupContainer: () => document.getElementById("container-bl"),
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          placement: 'bl', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          placement: "bl", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           // offset: [0, 40],
           // isMobile: true,
           isMobile: isMobile,
@@ -209,14 +209,14 @@
           <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
         </div>`);
 
-        const containerBR = new Picker(document.getElementById('container-br'), {
-          getPopupContainer: () => document.getElementById('container-br'),
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const containerBR = new Picker(document.getElementById("container-br"), {
+          getPopupContainer: () => document.getElementById("container-br"),
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          placement: 'br', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          placement: "br", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           // offset: [0, 40],
           // isMobile: true,
           isMobile: isMobile,
@@ -227,15 +227,15 @@
         </div>`);
 
         // hover
-        const containerHoverTop = new Picker(() => document.getElementById('container-hover-top'), {
-          getPopupContainer: () => document.getElementById('container-hover-top'),
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const containerHoverTop = new Picker(() => document.getElementById("container-hover-top"), {
+          getPopupContainer: () => document.getElementById("container-hover-top"),
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          trigger: 'hover',
-          placement: 'top', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          trigger: "hover",
+          placement: "top", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           // offset: [0, 40],
           // isMobile: true,
           isMobile: isMobile,
@@ -245,15 +245,15 @@
           <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
         </div>`);
         window.containerHoverTop = containerHoverTop;
-        const containerHoverTL = new Picker(() => document.getElementById('container-hover-tl'), {
-          getPopupContainer: () => document.getElementById('container-hover-tl'),
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const containerHoverTL = new Picker(() => document.getElementById("container-hover-tl"), {
+          getPopupContainer: () => document.getElementById("container-hover-tl"),
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          trigger: 'hover',
-          placement: 'tl', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          trigger: "hover",
+          placement: "tl", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           offset: [0, -20],
           // isMobile: true,
           isMobile: isMobile,
@@ -264,15 +264,15 @@
           <button id="container-hover-tl-button">123</button>
         </div>`);
 
-        const containerHoverTLButton = new Picker(() => document.getElementById('container-hover-tl-button'), {
-          getPopupContainer: () => document.getElementById('container-hover-tl-button'),
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const containerHoverTLButton = new Picker(() => document.getElementById("container-hover-tl-button"), {
+          getPopupContainer: () => document.getElementById("container-hover-tl-button"),
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          trigger: 'hover',
-          placement: 'tr', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          trigger: "hover",
+          placement: "tr", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           offset: [0, -10],
           // isMobile: true,
           isMobile: isMobile,
@@ -282,20 +282,20 @@
           <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
         </div>`);
 
-        containerHoverTLButton.$wrapperContent.querySelector('#containerHoverTLButton')?.addEventListener('click', e => {
-          console.log('containerHoverTLButton click');
+        containerHoverTLButton.$wrapperContent.querySelector("#containerHoverTLButton")?.addEventListener("click", (e) => {
+          console.log("containerHoverTLButton click");
           e.stopPropagation();
         });
 
-        const containerHoverTR = new Picker(() => document.getElementById('container-hover-tr'), {
-          getPopupContainer: () => document.getElementById('container-hover-tr'),
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const containerHoverTR = new Picker(() => document.getElementById("container-hover-tr"), {
+          getPopupContainer: () => document.getElementById("container-hover-tr"),
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          trigger: 'hover',
-          placement: 'tr', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          trigger: "hover",
+          placement: "tr", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           // offset: [0, 40],
           // isMobile: true,
           isMobile: isMobile,
@@ -304,15 +304,15 @@
           <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
           <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
         </div>`);
-        const containerHoverBottom = new Picker(() => document.getElementById('container-hover-bottom'), {
-          getPopupContainer: () => document.getElementById('container-hover-bottom'),
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const containerHoverBottom = new Picker(() => document.getElementById("container-hover-bottom"), {
+          getPopupContainer: () => document.getElementById("container-hover-bottom"),
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          trigger: 'hover',
-          placement: 'bottom', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          trigger: "hover",
+          placement: "bottom", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           // offset: [0, 40],
           // isMobile: true,
           isMobile: isMobile,
@@ -321,15 +321,15 @@
           <div style="flex: 1 1 auto; background-color: blue; height: 40px;">container 123413 tl</div>
           <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
         </div>`);
-        const containerHoverBL = new Picker(() => document.getElementById('container-hover-bl'), {
-          getPopupContainer: () => document.getElementById('container-hover-bl'),
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const containerHoverBL = new Picker(() => document.getElementById("container-hover-bl"), {
+          getPopupContainer: () => document.getElementById("container-hover-bl"),
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          trigger: 'hover',
-          placement: 'bl', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          trigger: "hover",
+          placement: "bl", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           // offset: [0, 40],
           // isMobile: true,
           isMobile: isMobile,
@@ -339,15 +339,15 @@
           <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
         </div>`);
 
-        const containerHoverBR = new Picker(() => document.getElementById('container-hover-br'), {
-          getPopupContainer: () => document.getElementById('container-hover-br'),
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const containerHoverBR = new Picker(() => document.getElementById("container-hover-br"), {
+          getPopupContainer: () => document.getElementById("container-hover-br"),
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          trigger: 'hover',
-          placement: 'br', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          trigger: "hover",
+          placement: "br", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           // offset: [0, 40],
           // isMobile: true,
           isMobile: isMobile,
@@ -358,14 +358,14 @@
         </div>`);
 
         // body hover
-        const containerBodyHoverTop = new Picker(() => document.getElementById('container-body-hover-top'), {
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const containerBodyHoverTop = new Picker(() => document.getElementById("container-body-hover-top"), {
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          trigger: 'hover',
-          placement: 'top', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          trigger: "hover",
+          placement: "top", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           // offset: [0, 40],
           // isMobile: true,
           isMobile: isMobile,
@@ -375,14 +375,14 @@
           <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
         </div>`);
         window.containerBodyHoverTop = containerBodyHoverTop;
-        const containerBodyHoverTL = new Picker(() => document.getElementById('container-body-hover-tl'), {
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const containerBodyHoverTL = new Picker(() => document.getElementById("container-body-hover-tl"), {
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          trigger: 'hover',
-          placement: 'tl', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          trigger: "hover",
+          placement: "tl", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           // offset: [0, 40],
           // isMobile: true,
           isMobile: isMobile,
@@ -392,14 +392,14 @@
           <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
         </div>`);
         window.containerBodyHoverTL = containerBodyHoverTL;
-        const containerBodyHoverTR = new Picker(() => document.getElementById('container-body-hover-tr'), {
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const containerBodyHoverTR = new Picker(() => document.getElementById("container-body-hover-tr"), {
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          trigger: 'hover',
-          placement: 'tr', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          trigger: "hover",
+          placement: "tr", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           // offset: [0, 40],
           // isMobile: true,
           isMobile: isMobile,
@@ -409,14 +409,14 @@
           <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
         </div>`);
         window.containerBodyHoverTR = containerBodyHoverTR;
-        const containerBodyHoverBottom = new Picker(() => document.getElementById('container-body-hover-bottom'), {
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const containerBodyHoverBottom = new Picker(() => document.getElementById("container-body-hover-bottom"), {
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          trigger: 'hover',
-          placement: 'bottom', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          trigger: "hover",
+          placement: "bottom", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           // offset: [0, 40],
           // isMobile: true,
           isMobile: isMobile,
@@ -426,14 +426,14 @@
           <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
         </div>`);
         window.containerBodyHoverBottom = containerBodyHoverBottom;
-        const containerBodyHoverBL = new Picker(() => document.getElementById('container-body-hover-bl'), {
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const containerBodyHoverBL = new Picker(() => document.getElementById("container-body-hover-bl"), {
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          trigger: 'hover',
-          placement: 'bl', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          trigger: "hover",
+          placement: "bl", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           // offset: [0, 40],
           // isMobile: true,
           isMobile: isMobile,
@@ -443,14 +443,14 @@
           <div style="flex: 1 1 auto; background-color: green; height: 40px;">container 123413 tl</div>
         </div>`);
         window.containerBodyHoverBL = containerBodyHoverBL;
-        const containerBodyHoverBR = new Picker(() => document.getElementById('container-body-hover-br'), {
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const containerBodyHoverBR = new Picker(() => document.getElementById("container-body-hover-br"), {
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          trigger: 'hover',
-          placement: 'br', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          trigger: "hover",
+          placement: "br", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           // offset: [0, 40],
           // isMobile: true,
           isMobile: isMobile,
@@ -462,14 +462,14 @@
         window.containerBodyHoverBR = containerBodyHoverBR;
         // end body hover
 
-        const bodyHover = new Picker(() => document.getElementById('bodyHover'), {
-          onOpenChange: open => {
-            console.log('bodyHover onOpenChange open:', open);
+        const bodyHover = new Picker(() => document.getElementById("bodyHover"), {
+          onOpenChange: (open) => {
+            console.log("bodyHover onOpenChange open:", open);
           },
-          placement: 'tr',
+          placement: "tr",
           // open: true,
-          wrapClassName: 'xxxx-hover-body',
-          trigger: 'hover',
+          wrapClassName: "xxxx-hover-body",
+          trigger: "hover",
           isMobile: isMobile,
 
           // offset: [0, 40],
@@ -479,15 +479,15 @@
         </div>`,
         });
 
-        const containerOffsetHover = new Picker(() => document.getElementById('containerOffsetHover'), {
-          getPopupContainer: () => document.getElementById('containerOffsetHover'),
-          onOpenChange: open => {
-            console.log('containerOffsetHover onOpenChange open:', open);
+        const containerOffsetHover = new Picker(() => document.getElementById("containerOffsetHover"), {
+          getPopupContainer: () => document.getElementById("containerOffsetHover"),
+          onOpenChange: (open) => {
+            console.log("containerOffsetHover onOpenChange open:", open);
           },
-          placement: 'top',
+          placement: "top",
           // open: true,
-          wrapClassName: 'xxxx-offset-hover-body',
-          trigger: 'hover',
+          wrapClassName: "xxxx-offset-hover-body",
+          trigger: "hover",
           offset: [0, -20],
           isMobile: isMobile,
 
@@ -497,14 +497,14 @@
         </div>`,
         });
 
-        const bodyOffsetHover = new Picker(() => document.getElementById('bodyOffsetHover'), {
-          onOpenChange: open => {
-            console.log('bodyOffsetHover onOpenChange open:', open);
+        const bodyOffsetHover = new Picker(() => document.getElementById("bodyOffsetHover"), {
+          onOpenChange: (open) => {
+            console.log("bodyOffsetHover onOpenChange open:", open);
           },
-          placement: 'top',
+          placement: "top",
           // open: true,
-          wrapClassName: 'xxxx-offset-hover-body',
-          trigger: 'hover',
+          wrapClassName: "xxxx-offset-hover-body",
+          trigger: "hover",
           offset: [0, -20],
           isMobile: isMobile,
 

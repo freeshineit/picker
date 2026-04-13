@@ -13,7 +13,7 @@
       }
 
       body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         background-color: #f5f5f5;
       }
 
@@ -165,11 +165,11 @@
             ...options,
           };
 
-          this.container = document.getElementById('pickerContainer');
-          this.overlay = document.getElementById('pickerOverlay');
-          this.wheel = document.getElementById('pickerWheel');
-          this.confirmBtn = document.getElementById('pickerConfirm');
-          this.cancelBtn = document.getElementById('pickerCancel');
+          this.container = document.getElementById("pickerContainer");
+          this.overlay = document.getElementById("pickerOverlay");
+          this.wheel = document.getElementById("pickerWheel");
+          this.confirmBtn = document.getElementById("pickerConfirm");
+          this.cancelBtn = document.getElementById("pickerCancel");
 
           this.currentIndex = 0;
           this.startY = 0;
@@ -192,11 +192,11 @@
         }
 
         renderItems() {
-          this.wheel.innerHTML = '';
+          this.wheel.innerHTML = "";
 
           this.options.data.forEach((item, index) => {
-            const div = document.createElement('div');
-            div.className = 'picker-item';
+            const div = document.createElement("div");
+            div.className = "picker-item";
             div.textContent = item.label || item;
             div.dataset.index = index;
             this.wheel.appendChild(div);
@@ -207,7 +207,7 @@
           let initialIndex = 0;
 
           if (this.options.defaultValue !== null) {
-            const index = this.options.data.findIndex(item => (item.value || item) === this.options.defaultValue);
+            const index = this.options.data.findIndex((item) => (item.value || item) === this.options.defaultValue);
             if (index !== -1) initialIndex = index;
           }
 
@@ -217,16 +217,16 @@
         }
 
         bindEvents() {
-          this.wheel.addEventListener('touchstart', this.handleTouchStart.bind(this));
-          this.wheel.addEventListener('touchmove', this.handleTouchMove.bind(this));
-          this.wheel.addEventListener('touchend', this.handleTouchEnd.bind(this));
-          this.wheel.addEventListener('mousedown', this.handleMouseDown.bind(this));
-          document.addEventListener('mousemove', this.handleMouseMove.bind(this));
-          document.addEventListener('mouseup', this.handleMouseUp.bind(this));
+          this.wheel.addEventListener("touchstart", this.handleTouchStart.bind(this));
+          this.wheel.addEventListener("touchmove", this.handleTouchMove.bind(this));
+          this.wheel.addEventListener("touchend", this.handleTouchEnd.bind(this));
+          this.wheel.addEventListener("mousedown", this.handleMouseDown.bind(this));
+          document.addEventListener("mousemove", this.handleMouseMove.bind(this));
+          document.addEventListener("mouseup", this.handleMouseUp.bind(this));
 
-          this.confirmBtn.addEventListener('click', this.handleConfirm.bind(this));
-          this.cancelBtn.addEventListener('click', this.handleCancel.bind(this));
-          this.overlay.addEventListener('click', this.handleCancel.bind(this));
+          this.confirmBtn.addEventListener("click", this.handleConfirm.bind(this));
+          this.cancelBtn.addEventListener("click", this.handleCancel.bind(this));
+          this.overlay.addEventListener("click", this.handleCancel.bind(this));
         }
 
         handleTouchStart(e) {
@@ -309,12 +309,12 @@
         }
 
         updateSelectedItem() {
-          const items = this.wheel.querySelectorAll('.picker-item');
+          const items = this.wheel.querySelectorAll(".picker-item");
           items.forEach((item, index) => {
             if (index === this.currentIndex) {
-              item.classList.add('selected');
+              item.classList.add("selected");
             } else {
-              item.classList.remove('selected');
+              item.classList.remove("selected");
             }
           });
         }
@@ -330,7 +330,7 @@
           const startTime = performance.now();
           const friction = 0.95;
 
-          const animate = currentTime => {
+          const animate = (currentTime) => {
             const elapsed = currentTime - startTime;
 
             if (Math.abs(this.velocity) > 0.1) {
@@ -353,7 +353,7 @@
           const startY = this.currentY;
           const startTime = performance.now();
 
-          const animate = currentTime => {
+          const animate = (currentTime) => {
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
             const easeProgress = this.easeOutCubic(progress);
@@ -397,39 +397,39 @@
         }
 
         show() {
-          this.container.classList.add('show');
-          this.overlay.classList.add('show');
-          document.body.style.overflow = 'hidden';
+          this.container.classList.add("show");
+          this.overlay.classList.add("show");
+          document.body.style.overflow = "hidden";
         }
 
         hide() {
-          this.container.classList.remove('show');
-          this.overlay.classList.remove('show');
-          document.body.style.overflow = '';
+          this.container.classList.remove("show");
+          this.overlay.classList.remove("show");
+          document.body.style.overflow = "";
         }
       }
 
       // 使用示例
-      document.getElementById('openPicker').addEventListener('click', () => {
+      document.getElementById("openPicker").addEventListener("click", () => {
         const picker = new Picker({
           data: [
-            { label: '选项1', value: 'value1' },
-            { label: '选项2', value: 'value2' },
-            { label: '选项3', value: 'value3' },
-            { label: '选项4', value: 'value4' },
-            { label: '选项5', value: 'value5' },
-            { label: '选项6', value: 'value6' },
-            { label: '选项7', value: 'value7' },
-            { label: '选项8', value: 'value8' },
-            { label: '选项9', value: 'value9' },
-            { label: '选项10', value: 'value10' },
+            { label: "选项1", value: "value1" },
+            { label: "选项2", value: "value2" },
+            { label: "选项3", value: "value3" },
+            { label: "选项4", value: "value4" },
+            { label: "选项5", value: "value5" },
+            { label: "选项6", value: "value6" },
+            { label: "选项7", value: "value7" },
+            { label: "选项8", value: "value8" },
+            { label: "选项9", value: "value9" },
+            { label: "选项10", value: "value10" },
           ],
-          defaultValue: 'value3',
+          defaultValue: "value3",
           onConfirm: (value, index) => {
-            console.log('选择了:', value, '索引:', index);
+            console.log("选择了:", value, "索引:", index);
           },
           onCancel: () => {
-            console.log('选择已取消');
+            console.log("选择已取消");
           },
         });
 

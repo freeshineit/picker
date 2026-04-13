@@ -86,9 +86,9 @@
             /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone|Opera Mini)/i.test(navigator.userAgent)) ||
           (/Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
 
-        const statusEl = document.getElementById('device-status');
+        const statusEl = document.getElementById("device-status");
         if (statusEl) {
-          statusEl.textContent = isMobile ? 'Mobile' : 'Desktop';
+          statusEl.textContent = isMobile ? "Mobile" : "Desktop";
         }
 
         const popupContent = (label, placement) => {
@@ -108,19 +108,19 @@
 
         const instances = new Map();
 
-        const parseOffset = value => {
+        const parseOffset = (value) => {
           if (!value) return null;
-          const parts = value.split(',').map(item => Number(item.trim()));
+          const parts = value.split(",").map((item) => Number(item.trim()));
           if (parts.length !== 2 || parts.some(Number.isNaN)) {
             return null;
           }
           return parts;
         };
 
-        const createPicker = target => {
-          const placement = target.dataset.placement || 'bottom';
-          const trigger = target.dataset.trigger || 'click';
-          const container = target.dataset.container || 'self';
+        const createPicker = (target) => {
+          const placement = target.dataset.placement || "bottom";
+          const trigger = target.dataset.trigger || "click";
+          const container = target.dataset.container || "self";
           const label = target.dataset.label || target.textContent.trim();
           const offset = parseOffset(target.dataset.offset);
           const popupContainerId = target.dataset.popupContainerId;
@@ -128,13 +128,13 @@
           const options = {
             placement,
             trigger,
-            wrapClassName: 'demo-wrapper',
+            wrapClassName: "demo-wrapper",
             isMobile,
           };
 
           if (popupContainerId) {
             options.getPopupContainer = () => document.getElementById(popupContainerId);
-          } else if (container === 'self') {
+          } else if (container === "self") {
             options.getPopupContainer = () => target;
           }
 
@@ -148,18 +148,18 @@
           return picker;
         };
 
-        document.querySelectorAll('[data-picker]').forEach(el => {
+        document.querySelectorAll("[data-picker]").forEach((el) => {
           createPicker(el);
         });
 
-        const destroyBtn = document.getElementById('destroy-container-top');
-        destroyBtn?.addEventListener('click', () => {
-          const instance = instances.get('container-top');
+        const destroyBtn = document.getElementById("destroy-container-top");
+        destroyBtn?.addEventListener("click", () => {
+          const instance = instances.get("container-top");
           if (instance) {
             instance.destroy();
-            instances.delete('container-top');
+            instances.delete("container-top");
             destroyBtn.disabled = true;
-            destroyBtn.textContent = 'Destroyed';
+            destroyBtn.textContent = "Destroyed";
           }
         });
       })();

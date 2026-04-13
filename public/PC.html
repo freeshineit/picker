@@ -29,19 +29,19 @@
             /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone|Opera Mini)/i.test(navigator.userAgent)) ||
           (/Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
 
-        document.body.addEventListener('click', function (e) {
-          console.log('body click');
+        document.body.addEventListener("click", function (e) {
+          console.log("body click");
         });
 
-        const containerHoverTL = new Picker(() => document.getElementById('container-hover-tl'), {
-          getPopupContainer: () => document.getElementById('container-hover-tl'),
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const containerHoverTL = new Picker(() => document.getElementById("container-hover-tl"), {
+          getPopupContainer: () => document.getElementById("container-hover-tl"),
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          trigger: 'hover',
-          placement: 'tl', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          trigger: "hover",
+          placement: "tl", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           offset: [0, -20],
           // isMobile: true,
           isMobile: isMobile,
@@ -54,15 +54,15 @@
 
         window.containerHoverTL = containerHoverTL;
 
-        const containerHoverTLButton = new Picker(() => document.getElementById('container-hover-tl-button'), {
-          getPopupContainer: () => document.getElementById('container-hover-tl-button'),
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const containerHoverTLButton = new Picker(() => document.getElementById("container-hover-tl-button"), {
+          getPopupContainer: () => document.getElementById("container-hover-tl-button"),
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
-          trigger: 'hover',
-          placement: 'tr', // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
+          trigger: "hover",
+          placement: "tr", // "top" | "tl" | "tr" | "bottom" | "bl" | "br"
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           offset: [0, -10],
           // isMobile: true,
           isMobile: isMobile,
@@ -73,7 +73,7 @@
           <span id="button">点击关闭</span>
         </div>`);
 
-        containerHoverTLButton.$body.querySelector('#button')?.addEventListener('click', () => {
+        containerHoverTLButton.$body.querySelector("#button")?.addEventListener("click", () => {
           containerHoverTLButton.open = false;
         });
       })();

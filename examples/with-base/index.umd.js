@@ -8,13 +8,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined'
+  typeof exports === "object" && typeof module !== "undefined"
     ? (module.exports = factory())
-    : typeof define === 'function' && define.amd
+    : typeof define === "function" && define.amd
       ? define(factory)
-      : ((global = typeof globalThis !== 'undefined' ? globalThis : global || self), (global.Picker = factory()));
+      : ((global = typeof globalThis !== "undefined" ? globalThis : global || self), (global.Picker = factory()));
 })(this, function () {
-  'use strict';
+  "use strict";
 
   function _array_like_to_array(arr, len) {
     if (len == null || len > arr.length) len = arr.length;
@@ -23,14 +23,14 @@
   }
   function _unsupported_iterable_to_array(o, minLen) {
     if (!o) return;
-    if (typeof o === 'string') return _array_like_to_array(o, minLen);
+    if (typeof o === "string") return _array_like_to_array(o, minLen);
     var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === 'Object' && o.constructor) n = o.constructor.name;
-    if (n === 'Map' || n === 'Set') return Array.from(n);
-    if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _array_like_to_array(o, minLen);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(n);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _array_like_to_array(o, minLen);
   }
   function _create_for_of_iterator_helper_loose(o, allowArrayLike) {
-    var it = (typeof Symbol !== 'undefined' && o[Symbol.iterator]) || o['@@iterator'];
+    var it = (typeof Symbol !== "undefined" && o[Symbol.iterator]) || o["@@iterator"];
     if (it) return (it = it.call(o)).next.bind(it);
     if (Array.isArray(o) || (it = _unsupported_iterable_to_array(o)) || allowArrayLike) {
       if (it) o = it;
@@ -47,7 +47,7 @@
         };
       };
     }
-    throw new TypeError('Invalid attempt to iterate non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.');
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
   /**
    * PickerProvider 单例类
@@ -73,7 +73,7 @@
       if (index > -1) {
         this.pickers.splice(index, 1);
       } else {
-        console.warn('Picker not found in the provider.');
+        console.warn("Picker not found in the provider.");
       }
     };
     /**
@@ -120,7 +120,7 @@
       var descriptor = props[i];
       descriptor.enumerable = descriptor.enumerable || false;
       descriptor.configurable = true;
-      if ('value' in descriptor) descriptor.writable = true;
+      if ("value" in descriptor) descriptor.writable = true;
       Object.defineProperty(target, descriptor.key, descriptor);
     }
   }
@@ -137,11 +137,11 @@
    *
    * @public
    */
-  var _$PICKER_PLACEMENT$_ = ['top', 'tl', 'tr', 'bottom', 'bl', 'br'];
+  var _$PICKER_PLACEMENT$_ = ["top", "tl", "tr", "bottom", "bl", "br"];
   /**
    * 默认样式前缀
    */
-  var _$PICKER_PREFIX_CLS$_ = 'epicker';
+  var _$PICKER_PREFIX_CLS$_ = "epicker";
   /**
    * Picker 默认值
    */
@@ -149,13 +149,13 @@
     getPopupContainer: function () {
       return document.body;
     },
-    wrapClassName: '',
+    wrapClassName: "",
     open: false,
-    placement: 'br',
+    placement: "br",
     offset: [0, 0],
     zIndex: 1000,
-    content: '',
-    trigger: 'click',
+    content: "",
+    trigger: "click",
     mouseLeaveDelay: 0.1,
     mouseEnterDelay: 0.1,
     isMobile: false,
@@ -195,22 +195,22 @@
       // prettier-ignore
       this._options = Object.assign({}, __$PICKER_DEFAULT_OPTIONS$__, options || {});
       // 移动端模式强制使用 click 触发
-      if (this._options.isMobile) this._options.trigger = 'click';
+      if (this._options.isMobile) this._options.trigger = "click";
       pickerProvider.add(this);
-      if (typeof container === 'function') this.$container = container();
+      if (typeof container === "function") this.$container = container();
       else this.$container = container;
-      this.$wrapperContent = document.createElement('div');
+      this.$wrapperContent = document.createElement("div");
       this._initContentStyle();
-      if (typeof this._options.getPopupContainer === 'function') {
+      if (typeof this._options.getPopupContainer === "function") {
         this._$popupContainer = this._options.getPopupContainer();
       } else {
         this._$popupContainer = document.body;
       }
-      if (['INPUT', 'CANVAS', 'VIDEO', 'IMG'].includes((_this__$popupContainer = this._$popupContainer) == null ? void 0 : _this__$popupContainer.tagName)) {
-        console.warn('popup container node does not support child elements, default body!');
+      if (["INPUT", "CANVAS", "VIDEO", "IMG"].includes((_this__$popupContainer = this._$popupContainer) == null ? void 0 : _this__$popupContainer.tagName)) {
+        console.warn("popup container node does not support child elements, default body!");
         this._$popupContainer = document.body;
       }
-      if (this._$popupContainer !== document.body) this._$popupContainer.style.position = 'relative';
+      if (this._$popupContainer !== document.body) this._$popupContainer.style.position = "relative";
       (_this__$popupContainer1 = this._$popupContainer) == null ? void 0 : _this__$popupContainer1.appendChild(this.$wrapperContent);
       this._onContentClick = this._onContentClick.bind(this);
       this._onShow = this._onShow.bind(this);
@@ -239,7 +239,7 @@
       if (_$PICKER_PLACEMENT$_.includes(placement)) {
         this._options.placement = placement;
       } else {
-        console.warn('' + placement + ' is not a valid placement');
+        console.warn("" + placement + " is not a valid placement");
       }
       this._setPlacement();
     };
@@ -266,7 +266,7 @@
      */
     _proto.innerHTML = function innerHTML(html) {
       if (this.$body) {
-        this.$body.innerHTML = html || '';
+        this.$body.innerHTML = html || "";
         this._setPlacement();
       }
     };
@@ -294,19 +294,19 @@
      */
     _proto._removeHtml = function _removeHtml() {
       var _this_$wrapperContent, _this_$container_removeEventListener, _this_$container, _this_$container_removeEventListener1, _this_$container1;
-      (_this_$wrapperContent = this.$wrapperContent) == null ? void 0 : _this_$wrapperContent.removeEventListener('click', this._onContentClick);
+      (_this_$wrapperContent = this.$wrapperContent) == null ? void 0 : _this_$wrapperContent.removeEventListener("click", this._onContentClick);
       (_this_$container = this.$container) == null
         ? void 0
         : (_this_$container_removeEventListener = _this_$container.removeEventListener) == null
           ? void 0
-          : _this_$container_removeEventListener.call(_this_$container, 'click', this._onContentClick);
-      if (this._options.trigger === 'click')
+          : _this_$container_removeEventListener.call(_this_$container, "click", this._onContentClick);
+      if (this._options.trigger === "click")
         (_this_$container1 = this.$container) == null
           ? void 0
           : (_this_$container_removeEventListener1 = _this_$container1.removeEventListener) == null
             ? void 0
-            : _this_$container_removeEventListener1.call(_this_$container1, 'click', this._onShow);
-      if (this._options.trigger === 'hover') {
+            : _this_$container_removeEventListener1.call(_this_$container1, "click", this._onShow);
+      if (this._options.trigger === "hover") {
         var _this_$container_removeEventListener2,
           _this_$container2,
           _this_$container_removeEventListener3,
@@ -320,32 +320,32 @@
           ? void 0
           : (_this_$container_removeEventListener2 = _this_$container2.removeEventListener) == null
             ? void 0
-            : _this_$container_removeEventListener2.call(_this_$container2, 'mouseenter', this._onShow);
+            : _this_$container_removeEventListener2.call(_this_$container2, "mouseenter", this._onShow);
         (_this_$container3 = this.$container) == null
           ? void 0
           : (_this_$container_removeEventListener3 = _this_$container3.removeEventListener) == null
             ? void 0
-            : _this_$container_removeEventListener3.call(_this_$container3, 'mouseover', this._onShow);
+            : _this_$container_removeEventListener3.call(_this_$container3, "mouseover", this._onShow);
         (_this_$container4 = this.$container) == null
           ? void 0
           : (_this_$container_removeEventListener4 = _this_$container4.removeEventListener) == null
             ? void 0
-            : _this_$container_removeEventListener4.call(_this_$container4, 'mouseleave', this._onHide);
-        (_this_$wrapperContent1 = this.$wrapperContent) == null ? void 0 : _this_$wrapperContent1.removeEventListener('mouseenter', this._onWrapperShow);
-        (_this_$wrapperContent2 = this.$wrapperContent) == null ? void 0 : _this_$wrapperContent2.removeEventListener('mouseleave', this._onHide);
+            : _this_$container_removeEventListener4.call(_this_$container4, "mouseleave", this._onHide);
+        (_this_$wrapperContent1 = this.$wrapperContent) == null ? void 0 : _this_$wrapperContent1.removeEventListener("mouseenter", this._onWrapperShow);
+        (_this_$wrapperContent2 = this.$wrapperContent) == null ? void 0 : _this_$wrapperContent2.removeEventListener("mouseleave", this._onHide);
       }
       if (!this._options.isMobile) {
-        window.removeEventListener('blur', this._onHide);
-        document.removeEventListener('visibilitychange', this._onHide);
-        window.removeEventListener('resize', this._onHide);
-        document.removeEventListener('click', this._onDocumentClick);
+        window.removeEventListener("blur", this._onHide);
+        document.removeEventListener("visibilitychange", this._onHide);
+        window.removeEventListener("resize", this._onHide);
+        document.removeEventListener("click", this._onDocumentClick);
       }
       if (this._$mask) {
-        this._$mask.removeEventListener('click', this._onHide);
+        this._$mask.removeEventListener("click", this._onHide);
         this._$mask.remove();
         this._$mask = null;
       }
-      if (this._options.isMobile) document.body.classList.remove('' + _$PICKER_PREFIX_CLS$_ + '-body-noscroll');
+      if (this._options.isMobile) document.body.classList.remove("" + _$PICKER_PREFIX_CLS$_ + "-body-noscroll");
       if (this.$wrapperContent) {
         this.$wrapperContent.remove();
         this.$wrapperContent = null;
@@ -378,54 +378,54 @@
       if (/^t/.test(this._options.placement)) {
         var _this__options_offset, _this__options_offset1, _this__options_offset2;
         switch (this._options.placement) {
-          case 'top':
+          case "top":
             right = undefined;
             break;
-          case 'tl':
+          case "tl":
             right = undefined;
             left = containerLeft;
             break;
-          case 'tr':
+          case "tr":
             left = undefined;
             right = containerRight;
             break;
         }
         this.$wrapperContent.style.cssText +=
-          '\n        ' +
-          (right !== undefined ? 'right: ' + (right + (((_this__options_offset = this._options.offset) == null ? void 0 : _this__options_offset[0]) || 0)) + 'px;' : '') +
-          '\n        ' +
-          (left !== undefined ? 'left: ' + (left + (((_this__options_offset1 = this._options.offset) == null ? void 0 : _this__options_offset1[0]) || 0)) + 'px;' : '') +
-          '\n        top: ' +
+          "\n        " +
+          (right !== undefined ? "right: " + (right + (((_this__options_offset = this._options.offset) == null ? void 0 : _this__options_offset[0]) || 0)) + "px;" : "") +
+          "\n        " +
+          (left !== undefined ? "left: " + (left + (((_this__options_offset1 = this._options.offset) == null ? void 0 : _this__options_offset1[0]) || 0)) + "px;" : "") +
+          "\n        top: " +
           (top + (((_this__options_offset2 = this._options.offset) == null ? void 0 : _this__options_offset2[1]) || 0)) +
-          'px;\n        z-index:' +
+          "px;\n        z-index:" +
           this._options.zIndex +
-          ';\n      ';
+          ";\n      ";
       } else if (/^b/.test(this._options.placement)) {
         var _this__options_offset3, _this__options_offset4, _this__options_offset5;
         switch (this._options.placement) {
-          case 'bottom':
+          case "bottom":
             right = undefined;
             break;
-          case 'bl':
+          case "bl":
             right = undefined;
             left = containerLeft;
             break;
-          case 'br':
+          case "br":
             left = undefined;
             right = containerRight;
             break;
         }
         if (this.$wrapperContent)
           this.$wrapperContent.style.cssText +=
-            '\n          ' +
-            (right !== undefined ? 'right: ' + (right + (((_this__options_offset3 = this._options.offset) == null ? void 0 : _this__options_offset3[0]) || 0)) + 'px;' : '') +
-            '\n          ' +
-            (left !== undefined ? 'left: ' + (left + (((_this__options_offset4 = this._options.offset) == null ? void 0 : _this__options_offset4[0]) || 0)) + 'px;' : '') +
-            '\n          top: ' +
+            "\n          " +
+            (right !== undefined ? "right: " + (right + (((_this__options_offset3 = this._options.offset) == null ? void 0 : _this__options_offset3[0]) || 0)) + "px;" : "") +
+            "\n          " +
+            (left !== undefined ? "left: " + (left + (((_this__options_offset4 = this._options.offset) == null ? void 0 : _this__options_offset4[0]) || 0)) + "px;" : "") +
+            "\n          top: " +
             (bottom + (((_this__options_offset5 = this._options.offset) == null ? void 0 : _this__options_offset5[1]) || 0)) +
-            'px;\n          z-index:' +
+            "px;\n          z-index:" +
             this._options.zIndex +
-            ';\n        ';
+            ";\n        ";
       }
     };
     /**
@@ -436,28 +436,28 @@
       // prettier-ignore
       this.$wrapperContent.classList.add("" + _$PICKER_PREFIX_CLS$_, "" + _$PICKER_PREFIX_CLS$_ + "-wrapper", _$PICKER_PREFIX_CLS$_ + "-" + this._options.placement);
       // 提升优先级
-      this.$wrapperContent.style.display = 'none';
+      this.$wrapperContent.style.display = "none";
       if (this._options.isMobile) {
-        this.$wrapperContent.classList.add('' + _$PICKER_PREFIX_CLS$_ + '-mobile');
-        this._$mask = document.createElement('div');
-        this._$mask.classList.add('' + _$PICKER_PREFIX_CLS$_ + '-mask');
+        this.$wrapperContent.classList.add("" + _$PICKER_PREFIX_CLS$_ + "-mobile");
+        this._$mask = document.createElement("div");
+        this._$mask.classList.add("" + _$PICKER_PREFIX_CLS$_ + "-mask");
         this.$wrapperContent.appendChild(this._$mask);
       }
-      this.$body = document.createElement('div');
-      this.$body.classList.add('' + _$PICKER_PREFIX_CLS$_ + '-body');
+      this.$body = document.createElement("div");
+      this.$body.classList.add("" + _$PICKER_PREFIX_CLS$_ + "-body");
       this.$wrapperContent.appendChild(this.$body);
-      if (typeof this._options.content === 'string') {
+      if (typeof this._options.content === "string") {
         this.innerHTML(this._options.content);
-      } else if (typeof this._options.content === 'function') {
+      } else if (typeof this._options.content === "function") {
         this.innerHTML(this._options.content == null ? void 0 : this._options.content.call(this._options));
       }
-      if (typeof this._options.wrapClassName === 'string') {
+      if (typeof this._options.wrapClassName === "string") {
         try {
           var _this_$wrapperContent_classList;
           var _this_$wrapperContent;
           (_this_$wrapperContent = this.$wrapperContent) == null
             ? void 0
-            : (_this_$wrapperContent_classList = _this_$wrapperContent.classList).add.apply(_this_$wrapperContent_classList, [].concat(this._options.wrapClassName.split(' ')));
+            : (_this_$wrapperContent_classList = _this_$wrapperContent.classList).add.apply(_this_$wrapperContent_classList, [].concat(this._options.wrapClassName.split(" ")));
         } catch (_error) {
           //
         }
@@ -468,45 +468,45 @@
      */
     _proto._eventListener = function _eventListener() {
       var _this_$container_addEventListener, _this_$container, _this_$container_addEventListener1, _this_$container1;
-      this.$wrapperContent.addEventListener('click', this._onContentClick);
+      this.$wrapperContent.addEventListener("click", this._onContentClick);
       (_this_$container = this.$container) == null
         ? void 0
         : (_this_$container_addEventListener = _this_$container.addEventListener) == null
           ? void 0
-          : _this_$container_addEventListener.call(_this_$container, 'click', this._onContentClick);
+          : _this_$container_addEventListener.call(_this_$container, "click", this._onContentClick);
       //
-      if (this._options.trigger === 'click')
+      if (this._options.trigger === "click")
         (_this_$container1 = this.$container) == null
           ? void 0
           : (_this_$container_addEventListener1 = _this_$container1.addEventListener) == null
             ? void 0
-            : _this_$container_addEventListener1.call(_this_$container1, 'click', this._onShow);
-      if (this._options.trigger === 'hover') {
+            : _this_$container_addEventListener1.call(_this_$container1, "click", this._onShow);
+      if (this._options.trigger === "hover") {
         var _this_$container_addEventListener2, _this_$container2, _this_$container_addEventListener3, _this_$container3, _this_$container_addEventListener4, _this_$container4;
         (_this_$container2 = this.$container) == null
           ? void 0
           : (_this_$container_addEventListener2 = _this_$container2.addEventListener) == null
             ? void 0
-            : _this_$container_addEventListener2.call(_this_$container2, 'mouseenter', this._onShow);
+            : _this_$container_addEventListener2.call(_this_$container2, "mouseenter", this._onShow);
         (_this_$container3 = this.$container) == null
           ? void 0
           : (_this_$container_addEventListener3 = _this_$container3.addEventListener) == null
             ? void 0
-            : _this_$container_addEventListener3.call(_this_$container3, 'mouseover', this._onShow);
+            : _this_$container_addEventListener3.call(_this_$container3, "mouseover", this._onShow);
         (_this_$container4 = this.$container) == null
           ? void 0
           : (_this_$container_addEventListener4 = _this_$container4.addEventListener) == null
             ? void 0
-            : _this_$container_addEventListener4.call(_this_$container4, 'mouseleave', this._onHide);
-        this.$wrapperContent.addEventListener('mouseenter', this._onWrapperShow);
-        this.$wrapperContent.addEventListener('mouseleave', this._onHide);
+            : _this_$container_addEventListener4.call(_this_$container4, "mouseleave", this._onHide);
+        this.$wrapperContent.addEventListener("mouseenter", this._onWrapperShow);
+        this.$wrapperContent.addEventListener("mouseleave", this._onHide);
       }
-      if (this._$mask) this._$mask.addEventListener('click', this._onHide);
+      if (this._$mask) this._$mask.addEventListener("click", this._onHide);
       if (!this._options.isMobile) {
-        window.addEventListener('blur', this._onHide);
-        document.addEventListener('visibilitychange', this._onHide);
-        window.addEventListener('resize', this._onHide);
-        document.addEventListener('click', this._onDocumentClick);
+        window.addEventListener("blur", this._onHide);
+        document.addEventListener("visibilitychange", this._onHide);
+        window.addEventListener("resize", this._onHide);
+        document.addEventListener("click", this._onDocumentClick);
       }
     };
     /**
@@ -558,7 +558,7 @@
     };
     _create_class(Picker, [
       {
-        key: 'open',
+        key: "open",
         get:
           /**
            * 获取当前打开状态
@@ -630,7 +630,7 @@
         },
       },
       {
-        key: 'disabled',
+        key: "disabled",
         get:
           /**
            * 获取或设置禁用状态
@@ -653,7 +653,7 @@
                 ? void 0
                 : (_this_$container_classList_add = _this_$container_classList.add) == null
                   ? void 0
-                  : _this_$container_classList_add.call(_this_$container_classList, '' + _$PICKER_PREFIX_CLS$_ + '-disabled');
+                  : _this_$container_classList_add.call(_this_$container_classList, "" + _$PICKER_PREFIX_CLS$_ + "-disabled");
           } else {
             var _this_$container_classList_remove, _this_$container_classList1, _this_$container1;
             (_this_$container1 = this.$container) == null
@@ -662,7 +662,7 @@
                 ? void 0
                 : (_this_$container_classList_remove = _this_$container_classList1.remove) == null
                   ? void 0
-                  : _this_$container_classList_remove.call(_this_$container_classList1, '' + _$PICKER_PREFIX_CLS$_ + '-disabled');
+                  : _this_$container_classList_remove.call(_this_$container_classList1, "" + _$PICKER_PREFIX_CLS$_ + "-disabled");
           }
           this._disabled = disabled;
         },
@@ -677,7 +677,7 @@
    * Picker.VERSION; // 输出版本号
    * ```
    */
-  Picker.VERSION = '1.1.5';
+  Picker.VERSION = "1.1.5";
 
   return Picker;
 });

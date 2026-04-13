@@ -39,13 +39,13 @@
     <script src="./index.umd.js"></script>
     <script>
       (function () {
-        const picker = new Picker(() => document.getElementById('container'), {
-          getPopupContainer: () => document.getElementById('container'),
-          onOpenChange: open => {
-            console.log('container onOpenChange open:', open);
+        const picker = new Picker(() => document.getElementById("container"), {
+          getPopupContainer: () => document.getElementById("container"),
+          onOpenChange: (open) => {
+            console.log("container onOpenChange open:", open);
           },
           // open: true,
-          wrapClassName: 'xxxx-container',
+          wrapClassName: "xxxx-container",
           isMobile: true,
         });
         picker.innerHTML(`<div id="xxxxx" style="width: 500px;display: flex;">

@@ -1,4 +1,4 @@
-import type Picker from '.';
+import type Picker from ".";
 
 /**
  * PickerProvider 单例类
@@ -39,7 +39,7 @@ class PickerProvider {
     if (index > -1) {
       this.pickers.splice(index, 1);
     } else {
-      console.warn('Picker not found in the provider.');
+      console.warn("Picker not found in the provider.");
     }
   }
 

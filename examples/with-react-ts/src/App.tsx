@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import '@skax/picker/dist/style/index';
-import Picker from '@skax/picker';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import "@skax/picker/dist/style/index";
+import Picker from "@skax/picker";
+import logo from "./logo.svg";
+import "./App.css";
 
 console.log(Picker);
 
@@ -12,12 +12,12 @@ function App() {
 
   useEffect(() => {
     pickerRef.current = new Picker($containerRef.current, {
-      content: '<p>123</p>',
-      placement: 'bottom',
-      trigger: 'click',
+      content: "<p>123</p>",
+      placement: "bottom",
+      trigger: "click",
       triggerClose: true,
-      onOpenChange: open => {
-        console.log('open:', open);
+      onOpenChange: (open) => {
+        console.log("open:", open);
       },
     });
     return () => {
