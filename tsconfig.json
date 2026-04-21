@@ -6,7 +6,7 @@
     "allowJs": true,
     "jsx": "react-jsx",
     "outDir": "dist",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
