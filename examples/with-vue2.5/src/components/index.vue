@@ -5,13 +5,13 @@
 </template>
 
 <script>
-import '@skax/picker/dist/style/css.css';
-import Picker from '@skax/picker';
+import "@skax/picker/dist/style/css.js";
+import Picker from "@skax/picker";
 
 let picker;
 
 export default {
-  name: 'Picker',
+  name: "Picker",
   data() {
     return {};
   },
@@ -20,12 +20,12 @@ export default {
       picker.destroy();
       picker = null;
     }
-    picker = new Picker(() => document.getElementById('picker'), {
-      content: '<p>123</p>',
-      placement: 'bottom',
-      trigger: 'click',
-      onOpenChange: open => {
-        console.log('open:', open);
+    picker = new Picker(() => document.getElementById("picker"), {
+      content: "<p>123</p>",
+      placement: "bottom",
+      trigger: "click",
+      onOpenChange: (open) => {
+        console.log("open:", open);
       },
     });
 
