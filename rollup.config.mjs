@@ -70,10 +70,10 @@ function generateConfig(pkg, configs) {
       input,
       output: [
         {
-          file: "dist/index.js",
+          file: "dist/index.cjs",
           format: "cjs",
           // https://www.rollupjs.com/configuration-options/#output-exports
-          // exports: 'named',
+          exports: "named",
           sourcemap: isDev,
           banner,
         },
