@@ -23,7 +23,7 @@
     "docs": "rimraf docs && typedoc --out docs src/index.ts",
     "clean": "rimraf dist docs temp",
     "lint": "eslint --fix \"./src/*.{ts,tsx,js,jsx,mjs}\"",
-    "fmt": "prettier --write \"./**/*.{ts,tsx,js,mjs,jsx,html,scss,sass}\" \"./*.{ts,tsx,js,mjs,jsx,html,scss,sass}\"",
+    "fmt": "prettier --write \"./**/*.{ts,tsx,js,mjs,jsx,html,scss,sass,.vue}\" \"./*.{ts,tsx,js,mjs,jsx,html,scss,sass,vue}\"",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
