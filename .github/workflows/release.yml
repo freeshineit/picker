@@ -4,7 +4,7 @@ name: Release
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 
 permissions:
   id-token: write # Required for OIDC
@@ -40,7 +40,7 @@ jobs:
 
       - name: Check file versions
         run: |
-          files="dist/index.js dist/index.mjs dist/index.umd.js package.json"
+          files="dist/index.cjs dist/index.mjs dist/index.umd.js package.json"
 
           version=""
           inconsistent=false
