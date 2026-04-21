@@ -9,7 +9,7 @@
     "preinstall": "npx only-allow yarn"
   },
   "dependencies": {
-    "@skax/picker": "1.1.5",
+    "@skax/picker": "1.1.8",
     "vue": "^2.5.17"
   },
   "devDependencies": {
