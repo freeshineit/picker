@@ -2,9 +2,9 @@ name: build-yarn-demos
 
 on:
   push:
-    branches: ['main', 'develop']
+    branches: ["main", "develop"]
   pull_request:
-    branches: ['main']
+    branches: ["main"]
 
 jobs:
   build:
@@ -15,14 +15,14 @@ jobs:
         node-version: [16.x, 18.x, 20.x, 21.x, 22.x] # not support node >= 23.x and node<=16.x
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
 
       - name: Build with-vue2.5
         working-directory: ./examples/with-vue2.5
         run: |
-          yarn install 
+          yarn install
           yarn run build
