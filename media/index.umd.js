@@ -2,7 +2,7 @@
  * picker component for js framework, support mobile and pc
  *
  * @skax/picker v2.0.0-beta.1
- * Copyright (c) 2026-04-21 ShineShao <xiaoshaoqq@gmail.com>
+ * Copyright (c) 2026-04-24 ShineShao <xiaoshaoqq@gmail.com>
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
