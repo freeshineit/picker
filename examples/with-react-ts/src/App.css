@@ -1,43 +1,113 @@
-.App {
-  text-align: center;
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  background: #fafafa;
+  color: #111;
+  font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.demo-page {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 24px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.control-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.control-panel label {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.check-item {
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  min-height: 66px;
 }
 
-.App-link {
-  color: #61dafb;
+.check-item input {
+  margin-right: 6px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.content-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.content-label textarea,
+.control-panel input,
+.control-panel select {
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.button-row button,
+.target-btn {
+  border: 1px solid #111;
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 8px 12px;
+}
+
+.preview-area {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.state {
+  display: flex;
+  gap: 14px;
+  font-size: 13px;
+  color: #333;
+}
+
+.log-panel {
+  border: 1px solid #ececec;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.log-title {
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: #666;
+}
+
+.log-panel ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.log-panel li {
+  font-size: 12px;
+  line-height: 1.6;
 }
 
 .epicker-body {
-  padding: 20px;
-  background: #fff;
+  padding: 14px;
+  background-color: #fff;
 }
