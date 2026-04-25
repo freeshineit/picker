@@ -1,11 +1,4 @@
 <script setup lang="ts">
-import Store from "@ak2021/store";
-
-const store = new Store();
-store.on("test", (data: unknown) => {
-  console.warn("test", data);
-});
-
 defineProps<{ msg: string }>();
 </script>
 

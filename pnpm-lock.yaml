@@ -141,12 +141,9 @@ importers:
 
   examples/with-vue2.7:
     dependencies:
-      '@ak2021/store':
-        specifier: ^1.0.2-beta.5
-        version: 1.0.2-beta.5
-      '@ak2021/web-components':
-        specifier: ^0.0.3-beta.5
-        version: 0.0.3-beta.5
+      '@skax/picker':
+        specifier: ^2.0.0-alpha.2
+        version: link:../../packages/picker
       core-js:
         specifier: ^3.38.1
         version: 3.49.0
@@ -169,12 +166,9 @@ importers:
 
   examples/with-vue3:
     dependencies:
-      '@ak2021/store':
-        specifier: ^1.0.2-beta.5
-        version: 1.0.2-beta.5
-      '@ak2021/web-components':
-        specifier: ^0.0.3-beta.5
-        version: 0.0.3-beta.5
+      '@skax/picker':
+        specifier: ^2.0.0-alpha.2
+        version: link:../../packages/picker
       vue:
         specifier: ^3.5.10
         version: 3.5.33(typescript@5.3.3)
@@ -216,16 +210,6 @@ packages:
       event-pubsub: 4.3.0
       js-message: 1.0.7
     dev: true
-
-  /@ak2021/store@1.0.2-beta.5:
-    resolution: {integrity: sha512-Ng+R120s9Sc2wtSuQg7+2nRWYlcLfMC924IhRShbF7MRg7FVm0k/0fa9a3gd2Y1ujqDClO+FX6OmKQ8bQnGwiw==}
-    dev: false
-
-  /@ak2021/web-components@0.0.3-beta.5:
-    resolution: {integrity: sha512-KAmU2QNnUS0L0FMt+0ZE2okYU41QYmscxPeHzobA6KA5P1n6PwBL+SsY9wWcRw6eF25qQxrfcDNuG97AnDclug==}
-    dependencies:
-      '@webcomponents/webcomponentsjs': 2.8.0
-    dev: false
 
   /@alloc/quick-lru@5.2.0:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
@@ -6124,10 +6108,6 @@ packages:
     dependencies:
       '@webassemblyjs/ast': 1.14.1
       '@xtuc/long': 4.2.2
-
-  /@webcomponents/webcomponentsjs@2.8.0:
-    resolution: {integrity: sha512-loGD63sacRzOzSJgQnB9ZAhaQGkN7wl2Zuw7tsphI5Isa0irijrRo6EnJii/GgjGefIFO8AIO7UivzRhFaEk9w==}
-    dev: false
 
   /@xtuc/ieee754@1.2.0:
     resolution: {integrity: sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA==}
