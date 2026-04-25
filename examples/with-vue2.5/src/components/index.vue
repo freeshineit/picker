@@ -195,7 +195,6 @@ export default {
 }
 
 .check-item {
-  justify-content: center;
   min-height: 66px;
 }
 
@@ -275,4 +274,10 @@ export default {
   padding: 14px;
   background-color: #fff;
 }
+
+.check-item {
+  flex-direction: row !important;
+  align-items: center;
+}
+
 </style>
