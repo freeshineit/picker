@@ -1,4 +1,4 @@
-name: build-react16-demos
+name: build-react17-demos
 
 on:
   push:
