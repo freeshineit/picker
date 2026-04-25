@@ -29,3 +29,15 @@ jobs:
         run: |
           pnpm install
           pnpm run build
+
+      - name: Build with-react17-ts
+        working-directory: ./examples/with-react17-ts
+        run: |
+          pnpm install
+          pnpm run build
+
+      - name: Build with-react18-ts
+        working-directory: ./examples/with-react18-ts
+        run: |
+          pnpm install
+          pnpm run build
