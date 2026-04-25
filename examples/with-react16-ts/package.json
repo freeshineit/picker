@@ -9,7 +9,7 @@
     "@types/react-dom": "^16",
     "react": "^16",
     "react-dom": "^16",
-    "react-scripts": "3",
+    "react-scripts": "^3",
     "typescript": "^3"
   },
   "scripts": {
