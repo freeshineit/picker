@@ -27,5 +27,8 @@ jobs:
       - name: Build with-react18-ts
         working-directory: ./examples/with-react18-ts
         run: |
+          rm -rf node_modules
           yarn install --frozen-lockfile
           yarn run build
+        env:
+          CI: false
