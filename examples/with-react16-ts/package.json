@@ -33,9 +33,9 @@
     "sass": "^1.94.2"
   },
   "resolutions": {
-    "minimatch": "3"
+    "minimatch": "5"
   },
   "overrides": {
-    "minimatch": "3"
+    "minimatch": "5"
   }
 }
