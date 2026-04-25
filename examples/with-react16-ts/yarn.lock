@@ -1597,10 +1597,10 @@
     "@parcel/watcher-win32-ia32" "2.5.6"
     "@parcel/watcher-win32-x64" "2.5.6"
 
-"@skax/picker@2.0.0-beta.1":
-  version "2.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@skax/picker/-/picker-2.0.0-beta.1.tgz#00a9d481cccf4013edc6050cd6a98f86d6e59228"
-  integrity sha512-Ld5SbFRaTSAf18Am1ggsby/IECNksNsWEMR1WDL+Fe7/HHZFBUJWS+jdzplJX/7GqW2nuWCt0GD1fCs4PCIukw==
+"@skax/picker@2.0.0-beta.2":
+  version "2.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@skax/picker/-/picker-2.0.0-beta.2.tgz#3f308ad7a58c7c5bbbfa5efa3e70a4f093e3a3d3"
+  integrity sha512-ROhfUavFM6A13RqnbmmqxAHedrGx98WazqRaOkKW0A4vm8EJCgBEc0HPaX55tlRZJwgqWWdVCu7jcysjIuTqwQ==
 
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
   version "4.2.0"
