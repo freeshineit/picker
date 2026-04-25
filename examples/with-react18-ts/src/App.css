@@ -1,0 +1,112 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #fafafa;
+  color: #111;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+.demo-page {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.control-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.control-panel label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.check-item {
+  min-height: 66px;
+}
+
+.check-item input {
+  margin-right: 6px;
+}
+
+.content-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.content-label textarea,
+.control-panel input,
+.control-panel select {
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.button-row button,
+.target-btn {
+  border: 1px solid #111;
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 8px 12px;
+}
+
+.preview-area {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.state {
+  display: flex;
+  gap: 14px;
+  font-size: 13px;
+  color: #333;
+}
+
+.log-panel {
+  border: 1px solid #ececec;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.log-title {
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: #666;
+}
+
+.log-panel ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.log-panel li {
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.epicker-body {
+  padding: 14px;
+  background-color: #fff;
+}
