@@ -1,6 +1,6 @@
 {
-  "name": "@skax/pnpm-workspace",
-  "version": "0.0.19",
+  "name": "picker",
+  "version": "0.0.0",
   "description": "pnpm workspace",
   "type": "module",
   "scripts": {
