@@ -29,4 +29,5 @@ jobs:
       - name: Build with-react16-ts
         working-directory: ./examples/with-react16-ts
         run: |
-          pnpm run build
+          yarn install
+          yarn run build
