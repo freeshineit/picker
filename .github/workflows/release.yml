@@ -32,7 +32,7 @@ jobs:
           version: 10
 
       - name: pnpm Install dependencies
-        run: pnpm install && pnpm run build
+        run: pnpm install && pnpm run build:picker
 
       - name: Get Changed Packages and Publish
         # env:

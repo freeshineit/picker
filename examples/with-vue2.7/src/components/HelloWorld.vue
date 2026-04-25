@@ -16,7 +16,6 @@
       </li>
     </ul>
     <h3>Essential Links</h3>
-    <wc-button>1234123</wc-button>
     <ul>
       <li>
         <a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a>
@@ -56,10 +55,6 @@
 </template>
 
 <script>
-import "@ak2021/web-components/dist/style/css.js";
-import "@ak2021/web-components";
-import Store from "@ak2021/store";
-
 export default {
   name: "HelloWorld",
   props: {
@@ -69,11 +64,11 @@ export default {
     return {};
   },
   mounted() {
-    const store = new Store();
-    console.log("init ", store);
-    store.on("test", (data) => {
-      console.warn("test", data);
-    });
+    // const store = new Store();
+    // console.log("init ", store);
+    // store.on("test", (data) => {
+    //   console.warn("test", data);
+    // });
   },
 };
 </script>

@@ -1,6 +1,6 @@
 ## pnpm workspace
 
-![CI](https://github.com/freeshineit/pnpm-workspace/workflows/build/badge.svg)
+![CI](https://github.com/freeshineit/picker/workflows/build/badge.svg)
 
 一个基于 pnpm workspace + lerna 的 monorepo 项目模板，包含多个包和示例站点。
 

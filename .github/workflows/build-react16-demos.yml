@@ -28,7 +28,7 @@ jobs:
         working-directory: ./examples/with-react16-ts
         run: |
           rm -rf node_modules
-          yarn install --frozen-lockfile
+          yarn --frozen-lockfile
           yarn run build
         env:
           CI: false

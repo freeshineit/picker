@@ -1,11 +1,7 @@
-/**
- * picker component for js framework, support mobile and pc
- *
- * @skax/picker v2.0.0-alpha.1
- * Copyright (c) 2026-04-21 ShineShao <xiaoshaoqq@gmail.com>
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+/*
+ * @skax/picker v2.0.0-beta.2
+ * Copyright (c) 2026-04-26 ShineShao <xiaoshaoqq@gmail.com>
+ * Released under the MIT License.
  */
 (function (global, factory) {
   typeof exports === "object" && typeof module !== "undefined"
@@ -51,8 +47,7 @@
   }
   /**
    * PickerProvider 单例类
-   */
-  var PickerProvider = /*#__PURE__*/ (function () {
+   */ var PickerProvider = /*#__PURE__*/ (function () {
     function PickerProvider() {
       this.pickers = [];
     }
@@ -60,15 +55,13 @@
     /**
      * 添加picker
      * @param picker Picker 实例
-     */
-    _proto.add = function add(picker) {
+     */ _proto.add = function add(picker) {
       this.pickers.push(picker);
     };
     /**
      * 移除picker
      * @param picker Picker 实例
-     */
-    _proto.remove = function remove(picker) {
+     */ _proto.remove = function remove(picker) {
       var index = this.pickers.indexOf(picker);
       if (index > -1) {
         this.pickers.splice(index, 1);
@@ -79,8 +72,7 @@
     /**
      * 关闭其他picker
      * @param e 事件
-     */
-    _proto.closeOther = function closeOther(e) {
+     */ _proto.closeOther = function closeOther(e) {
       for (var _iterator = _create_for_of_iterator_helper_loose(this.pickers), _step; !(_step = _iterator()).done; ) {
         var p = _step.value;
         var _p_$container_contains, _p_$container, _p_$wrapperContent_contains, _p_$wrapperContent;
@@ -104,8 +96,7 @@
     /**
      * 获取单例实例
      * @returns Picker 实例
-     */
-    PickerProvider.getInstance = function getInstance() {
+     */ PickerProvider.getInstance = function getInstance() {
       if (!PickerProvider.instance) {
         PickerProvider.instance = new PickerProvider();
       }
@@ -136,17 +127,14 @@
    * |  顶部中间 |  顶部左侧   |  顶部右侧  |   底部中间   |  底部左侧   |   底部右侧  |
    *
    * @public
-   */
-  var _$PICKER_PLACEMENT$_ = ["top", "tl", "tr", "bottom", "bl", "br"];
+   */ var _$PICKER_PLACEMENT$_ = ["top", "tl", "tr", "bottom", "bl", "br"];
   /**
    * 默认样式前缀
-   */
-  var _$PICKER_PREFIX_CLS$_ = "epicker";
+   */ var _$PICKER_PREFIX_CLS$_ = "epicker";
   /**
    * Picker 默认值
-   */
-  var __$PICKER_DEFAULT_OPTIONS$__ = {
-    getPopupContainer: function () {
+   */ var __$PICKER_DEFAULT_OPTIONS$__ = {
+    getPopupContainer: function getPopupContainer() {
       return document.body;
     },
     wrapClassName: "",
@@ -183,12 +171,10 @@
    * picker.innerHTML('<div>新内容</div>'); // 设置弹窗内容（会覆盖之前的内容）
    * picker.destroy(); // 销毁弹窗
    * ```
-   */
-  var Picker = /*#__PURE__*/ (function () {
+   */ var Picker = /*#__PURE__*/ (function () {
     function Picker(container, options) {
       var _this__$popupContainer, _this__$popupContainer1;
-      /** 是否打开 */
-      this._open = false;
+      /** 是否打开 */ this._open = false;
       this._OpenChange = false;
       this._animationTimer = null;
       this._disabled = false;
@@ -235,8 +221,7 @@
      * picker.setPlacement("bl");
      * picker.setPlacement("br");
      * ```
-     */
-    _proto.setPlacement = function setPlacement(placement) {
+     */ _proto.setPlacement = function setPlacement(placement) {
       if (this._disabled) return;
       if (_$PICKER_PLACEMENT$_.includes(placement)) {
         this._options.placement = placement;
@@ -251,8 +236,7 @@
      * ```ts
      * picker.destroy();
      * ```
-     */
-    _proto.destroy = function destroy() {
+     */ _proto.destroy = function destroy() {
       this._animationTimerClear();
       this._removeHtml();
       pickerProvider.remove(this);
@@ -265,8 +249,7 @@
      * ```ts
      * picker.innerHTML('<div>内容</div>');
      * ```
-     */
-    _proto.innerHTML = function innerHTML(html) {
+     */ _proto.innerHTML = function innerHTML(html) {
       if (this.$body) {
         this.$body.innerHTML = html || "";
         this._setPlacement();
@@ -278,14 +261,12 @@
     /**
      * picker 面板展开或关闭变化时触发
      * @param open - true: 展开, false:关闭
-     */
-    _proto._onOpenChange = function _onOpenChange(open) {
+     */ _proto._onOpenChange = function _onOpenChange(open) {
       this._options.onOpenChange == null ? void 0 : this._options.onOpenChange.call(this._options, !!open);
     };
     /**
      * 移除动画定时器
-     */
-    _proto._animationTimerClear = function _animationTimerClear() {
+     */ _proto._animationTimerClear = function _animationTimerClear() {
       if (this._animationTimer) {
         clearTimeout(this._animationTimer);
         this._animationTimer = null;
@@ -293,8 +274,7 @@
     };
     /**
      * 移除html
-     */
-    _proto._removeHtml = function _removeHtml() {
+     */ _proto._removeHtml = function _removeHtml() {
       var _this_$wrapperContent, _this_$container_removeEventListener, _this_$container, _this_$container_removeEventListener1, _this_$container1;
       (_this_$wrapperContent = this.$wrapperContent) == null ? void 0 : _this_$wrapperContent.removeEventListener("click", this._onContentClick);
       (_this_$container = this.$container) == null
@@ -314,8 +294,7 @@
           _this_$container_removeEventListener3,
           _this_$container3,
           _this_$container_removeEventListener4,
-          _this_$container4,
-          // prettier-ignore
+          _this_$container4, // prettier-ignore
           _this_$wrapperContent1,
           _this_$wrapperContent2;
         (_this_$container2 = this.$container) == null
@@ -355,8 +334,7 @@
     };
     /**
      * 现实位置
-     */
-    _proto._setPlacement = function _setPlacement() {
+     */ _proto._setPlacement = function _setPlacement() {
       var _this_$container_getBoundingClientRect, _this_$container, _this__options_offset, _this__options_offset1;
       if (!this._open || this._options.isMobile || !this.$container) return;
       var $containerRect =
@@ -422,7 +400,7 @@
       var absLeft = Math.ceil($popupContainerRect.left) + left + offsetX;
       var absTop = Math.ceil($popupContainerRect.top) + baseTop + offsetY;
       // 边界裁剪（确保弹框在浏览器窗口内）
-      var clamp = function (value, min, max) {
+      var clamp = function clamp(value, min, max) {
         return Math.min(Math.max(value, min), max);
       };
       var maxAbsLeft = Math.max(0, viewportWidth - wrapperWidth);
@@ -436,8 +414,7 @@
     };
     /**
      * 初始化内容样式
-     */
-    _proto._initContentStyle = function _initContentStyle() {
+     */ _proto._initContentStyle = function _initContentStyle() {
       if (!this.$wrapperContent) return;
       // prettier-ignore
       this.$wrapperContent.classList.add("" + _$PICKER_PREFIX_CLS$_, "" + _$PICKER_PREFIX_CLS$_ + "-wrapper", _$PICKER_PREFIX_CLS$_ + "-" + this._options.placement);
@@ -471,8 +448,7 @@
     };
     /**
      * 绑定事件
-     */
-    _proto._eventListener = function _eventListener() {
+     */ _proto._eventListener = function _eventListener() {
       var _this_$container_addEventListener, _this_$container, _this_$container_addEventListener1, _this_$container1;
       this.$wrapperContent.addEventListener("click", this._onContentClick);
       (_this_$container = this.$container) == null
@@ -518,16 +494,14 @@
     /**
      * $wrapperContent click event
      * @param e - 内容点击事件
-     */
-    _proto._onContentClick = function _onContentClick(e) {
+     */ _proto._onContentClick = function _onContentClick(e) {
       pickerProvider.closeOther(e);
     };
     /**
      * $container click event
      * @param event - 鼠标点击事件
      * @returns
-     */
-    _proto._onContainerClick = function _onContainerClick(event) {
+     */ _proto._onContainerClick = function _onContainerClick(event) {
       var _this_$wrapperContent_contains, _this_$wrapperContent;
       if (this._disabled) return;
       // wrapper contain
@@ -546,22 +520,19 @@
     };
     /**
      * 显示事件
-     */
-    _proto._onShow = function _onShow() {
+     */ _proto._onShow = function _onShow() {
       if (this._disabled) return;
       this.open = true;
     };
     /**
      * $wrapperContent 显示事件（输入进入前 为 false 阻止设置为 true）
-     */
-    _proto._onWrapperShow = function _onWrapperShow() {
+     */ _proto._onWrapperShow = function _onWrapperShow() {
       if (this._disabled) return;
       this._onShow();
     };
     /**
      * 隐藏事件
-     */
-    _proto._onHide = function _onHide(e) {
+     */ _proto._onHide = function _onHide(e) {
       if (!this._open || this._disabled) return;
       if ((e == null ? void 0 : e.target) === this._$mask) e == null ? void 0 : e.stopPropagation();
       this.open = false;
@@ -569,8 +540,7 @@
     /**
      * document 点击事件
      * @param event - 鼠标点击事件
-     */
-    _proto._onDocumentClick = function _onDocumentClick(event) {
+     */ _proto._onDocumentClick = function _onDocumentClick(event) {
       var _this_$container;
       if (
         !(
@@ -587,19 +557,17 @@
     _create_class(Picker, [
       {
         key: "open",
-        get:
-          /**
-           * 获取当前打开状态
-           * @example
-           * ```ts
-           * console.log(picker.open); // 获取当前打开状态
-           * picker.open = true; // 打开
-           * picker.open = false; // 关闭
-           * ```
-           */
-          function get() {
-            return this._open;
-          },
+        get: /**
+         * 获取当前打开状态
+         * @example
+         * ```ts
+         * console.log(picker.open); // 获取当前打开状态
+         * picker.open = true; // 打开
+         * picker.open = false; // 关闭
+         * ```
+         */ function get() {
+          return this._open;
+        },
         set: function set(open) {
           var _this = this;
           if (this._disabled) return;
@@ -611,41 +579,39 @@
             }
             if (open) {
               // prettier-ignore
-              this._timer = setTimeout(function () {
-              if (!_this.$wrapperContent) return;
-              _this.$wrapperContent.style.display = "inline-flex";
-              _this.$wrapperContent.style.pointerEvents = "";
-              // prettier-ignore
-              if (_this._options.isMobile) document.body.classList.add("" + _$PICKER_PREFIX_CLS$_ + "-body-noscroll");
-              _this._animationTimer = setTimeout(function () {
-                _this._animationTimerClear();
-                _this.$wrapperContent.style.opacity = "1";
-              }, 0);
-              requestAnimationFrame(function () {
-                _this._setPlacement();
-              });
-              _this._OpenChange = open;
-              _this._onOpenChange(open);
-            },
-            // prettier-ignore
-            (this._options.mouseEnterDelay < 0 ? 0 : this._options.mouseEnterDelay) * 1000);
+              this._timer = window.setTimeout(function() {
+                              if (!_this.$wrapperContent) return;
+                              _this.$wrapperContent.style.display = "inline-flex";
+                              _this.$wrapperContent.style.pointerEvents = "";
+                              // prettier-ignore
+                              if (_this._options.isMobile) document.body.classList.add("" + _$PICKER_PREFIX_CLS$_ + "-body-noscroll");
+                              _this._animationTimer = window.setTimeout(function() {
+                                  _this._animationTimerClear();
+                                  _this.$wrapperContent.style.opacity = "1";
+                              }, 0);
+                              requestAnimationFrame(function() {
+                                  _this._setPlacement();
+                              });
+                              _this._OpenChange = open;
+                              _this._onOpenChange(open);
+                          }, // prettier-ignore
+                          (this._options.mouseEnterDelay < 0 ? 0 : this._options.mouseEnterDelay) * 1000);
             } else {
               // prettier-ignore
-              this._timer = setTimeout(function () {
-              if (!_this.$wrapperContent) return;
-              _this.$wrapperContent.style.opacity = "0";
-              _this.$wrapperContent.style.pointerEvents = "none";
-              // prettier-ignore
-              if (_this._options.isMobile) document.body.classList.remove("" + _$PICKER_PREFIX_CLS$_ + "-body-noscroll");
-              _this._animationTimer = setTimeout(function () {
-                _this._animationTimerClear();
-                _this.$wrapperContent.style.display = "none";
-              }, 301); // css 动画是 300ms
-              _this._OpenChange = open;
-              _this._onOpenChange(open);
-            },
-            // prettier-ignore
-            (this._options.mouseLeaveDelay < 0 ? 0 : this._options.mouseLeaveDelay) * 1000);
+              this._timer = window.setTimeout(function() {
+                              if (!_this.$wrapperContent) return;
+                              _this.$wrapperContent.style.opacity = "0";
+                              _this.$wrapperContent.style.pointerEvents = "none";
+                              // prettier-ignore
+                              if (_this._options.isMobile) document.body.classList.remove("" + _$PICKER_PREFIX_CLS$_ + "-body-noscroll");
+                              _this._animationTimer = window.setTimeout(function() {
+                                  _this._animationTimerClear();
+                                  _this.$wrapperContent.style.display = "none";
+                              }, 301); // css 动画是 300ms
+                              _this._OpenChange = open;
+                              _this._onOpenChange(open);
+                          }, // prettier-ignore
+                          (this._options.mouseLeaveDelay < 0 ? 0 : this._options.mouseLeaveDelay) * 1000);
             }
             if (this._OpenChange === open) {
               if (this._timer) {
@@ -659,19 +625,17 @@
       },
       {
         key: "disabled",
-        get:
-          /**
-           * 获取或设置禁用状态
-           * @example
-           * ```ts
-           * picker.disabled = true; // 禁用
-           * picker.disabled = false; // 启用
-           * console.log(picker.disabled); // 获取禁用状态
-           * ```
-           */
-          function get() {
-            return this._disabled;
-          },
+        get: /**
+         * 获取或设置禁用状态
+         * @example
+         * ```ts
+         * picker.disabled = true; // 禁用
+         * picker.disabled = false; // 启用
+         * console.log(picker.disabled); // 获取禁用状态
+         * ```
+         */ function get() {
+          return this._disabled;
+        },
         set: function set(disabled) {
           if (disabled) {
             var _this_$container_classList_add, _this_$container_classList, _this_$container;
@@ -704,8 +668,7 @@
    * ```ts
    * Picker.VERSION; // 输出版本号
    * ```
-   */
-  Picker.VERSION = "2.0.0-alpha.1";
+   */ Picker.VERSION = "2.0.0-beta.2";
 
   return Picker;
 });
