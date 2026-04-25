@@ -23,21 +23,23 @@ jobs:
       - uses: pnpm/action-setup@v5
         with:
           version: 8
+      - run: pnpm install
+      - run: pnpm run lint
+      - run: pnpm run test
+      - run: pnpm run docs
+      - run: pnpm run build
 
       - name: Build with-react-ts
         working-directory: ./examples/with-react-ts
         run: |
-          pnpm install
           pnpm run build
 
       - name: Build with-react17-ts
         working-directory: ./examples/with-react17-ts
         run: |
-          pnpm install
           pnpm run build
 
       - name: Build with-react18-ts
         working-directory: ./examples/with-react18-ts
         run: |
-          pnpm install
           pnpm run build
