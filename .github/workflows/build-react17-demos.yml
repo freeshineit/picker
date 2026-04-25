@@ -1,4 +1,4 @@
-name: build-demos
+name: build-react16-demos
 
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 19.x, 20.x, 21.x, 22.x, 23.x, 24.x, 25.x]
+        node-version: [16.x, 18.x, 19.x, 20.x, 21.x, 22.x, 23.x, 24.x, 25.x]
 
     steps:
       - uses: actions/checkout@v6
@@ -23,11 +23,9 @@ jobs:
       - uses: pnpm/action-setup@v5
         with:
           version: 8
-      - run: pnpm install
-      - run: pnpm run lint
-      - run: pnpm run build
 
-      - name: Build with-react-ts
-        working-directory: ./examples/with-react-ts
+      - name: Build with-react17-ts
+        working-directory: ./examples/with-react17-ts
         run: |
-          pnpm run build
+          yarn install --frozen-lockfile
+          yarn run build

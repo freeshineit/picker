@@ -23,11 +23,9 @@ jobs:
       - uses: pnpm/action-setup@v5
         with:
           version: 8
-      - run: pnpm install
-      - run: pnpm run build:picker
 
       - name: Build with-react16-ts
         working-directory: ./examples/with-react16-ts
         run: |
-          yarn install
+          yarn install --frozen-lockfile
           yarn run build

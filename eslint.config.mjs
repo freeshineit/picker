@@ -5,4 +5,13 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import configs from "eslint-config-xx";
 
-export default defineConfig([globalIgnores(["dist", "build"]), ...configs]);
+export default defineConfig([
+  globalIgnores(["dist", "build"]),
+  ...configs,
+  {
+    files: ["examples/**/*.tsx"],
+    rules: {
+      "react/no-deprecated": "off",
+    },
+  },
+]);
