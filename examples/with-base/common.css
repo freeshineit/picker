@@ -31,7 +31,6 @@ body {
 }
 
 .check-item {
-  justify-content: center;
   min-height: 66px;
 }
 
@@ -111,3 +110,9 @@ body {
   padding: 14px;
   background-color: #fff;
 }
+
+.check-item {
+  flex-direction: row !important;
+  align-items: center;
+}
+
