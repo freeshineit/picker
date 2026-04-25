@@ -1,5 +1,5 @@
-import pickerProvider from "../packages/picker/src/provider";
-import Picker from "../packages/picker/src/index";
+import pickerProvider from "../src/provider";
+import Picker from "../src/index";
 
 describe("PickerProvider", () => {
   let container: HTMLElement;

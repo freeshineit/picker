@@ -207,13 +207,13 @@ class Picker {
 
       if (open) {
         // prettier-ignore
-        this._timer = setTimeout(() => {
+        this._timer = window.setTimeout(() => {
             if (!this.$wrapperContent) return
             this.$wrapperContent.style.display = "inline-flex";
             this.$wrapperContent.style.pointerEvents = "";
             // prettier-ignore
             if (this._options.isMobile) document.body.classList.add(`${_$PICKER_PREFIX_CLS$_}-body-noscroll`);
-            this._animationTimer = setTimeout(() => {
+            this._animationTimer = window.setTimeout(() => {
               this._animationTimerClear();
               this.$wrapperContent.style.opacity = "1";
             }, 0);
@@ -228,13 +228,13 @@ class Picker {
         );
       } else {
         // prettier-ignore
-        this._timer = setTimeout(() => {
+        this._timer = window.setTimeout(() => {
           if (!this.$wrapperContent) return
             this.$wrapperContent.style.opacity = "0";
             this.$wrapperContent.style.pointerEvents = "none";
             // prettier-ignore
             if (this._options.isMobile) document.body.classList.remove(`${_$PICKER_PREFIX_CLS$_}-body-noscroll`);
-            this._animationTimer = setTimeout(() => {
+            this._animationTimer = window.setTimeout(() => {
               this._animationTimerClear();
               this.$wrapperContent.style.display = "none";
             }, 301); // css 动画是 300ms

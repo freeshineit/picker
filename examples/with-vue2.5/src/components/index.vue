@@ -100,8 +100,7 @@ export default {
         disabled: false,
         offsetX: 0,
         offsetY: 8,
-        contentHtml:
-          "<div><strong>Picker Content</strong><p>You can edit this HTML in the textarea.</p></div>",
+        contentHtml: "<div><strong>Picker Content</strong><p>You can edit this HTML in the textarea.</p></div>",
       },
     };
   },
@@ -124,10 +123,7 @@ export default {
         trigger: this.form.trigger,
         triggerClose: this.form.triggerClose,
         isMobile: this.form.isMobile,
-        offset: [
-          Number(this.form.offsetX) || 0,
-          Number(this.form.offsetY) || 0,
-        ],
+        offset: [Number(this.form.offsetX) || 0, Number(this.form.offsetY) || 0],
         content: this.form.contentHtml,
         onOpenChange: (open) => {
           this.pickerOpen = !!open;
@@ -279,5 +275,4 @@ export default {
   flex-direction: row !important;
   align-items: center;
 }
-
 </style>

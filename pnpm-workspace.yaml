@@ -1,0 +1,7 @@
+packages:
+  - "packages/*"
+  - "site/*"
+  - "!site/with-vue2.5"
+  - "!**/test/**"
+  - "!**/dist/**"
+  - "!**/build/**"

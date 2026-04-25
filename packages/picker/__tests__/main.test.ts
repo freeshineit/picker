@@ -1,5 +1,5 @@
-import Picker from "../packages/picker/src/main";
-import PickerIndex from "../packages/picker/src/index";
+import Picker from "../src/main";
+import PickerIndex from "../src/index";
 
 describe("main.ts", () => {
   test("应该正确导出 Picker", () => {

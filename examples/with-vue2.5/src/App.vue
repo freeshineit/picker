@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import Picker from './components';
+import Picker from "./components";
 export default {
-  name: 'app',
+  name: "app",
   components: {
     Picker,
   },
