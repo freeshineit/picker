@@ -6,22 +6,12 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import configs from "eslint-config-xx";
 
 export default defineConfig([
-  globalIgnores(["dist", "examples/with-base/index.umd.js"]),
+  globalIgnores(["dist", "build"]),
   ...configs,
-  // {
-  //   files: ['**/*.{js,jsx}'],
-  //   extends: [js.configs.recommended, reactHooks.configs['recommended-latest'], reactRefresh.configs.vite],
-  //   languageOptions: {
-  //     ecmaVersion: 2020,
-  //     globals: globals.browser,
-  //     parserOptions: {
-  //       ecmaVersion: 'latest',
-  //       ecmaFeatures: { jsx: true },
-  //       sourceType: 'module',
-  //     },
-  //   },
-  //   rules: {
-  //     'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
-  //   },
-  // },
+  {
+    files: ["examples/**/*.tsx"],
+    rules: {
+      "react/no-deprecated": "off",
+    },
+  },
 ]);

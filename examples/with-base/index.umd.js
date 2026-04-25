@@ -8,10 +8,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Picker = factory());
-})(this, (function () { 'use strict';
+  typeof exports === "object" && typeof module !== "undefined"
+    ? (module.exports = factory())
+    : typeof define === "function" && define.amd
+      ? define(factory)
+      : ((global = typeof globalThis !== "undefined" ? globalThis : global || self), (global.Picker = factory()));
+})(this, function () {
+  "use strict";
 
   function _array_like_to_array(arr, len) {
     if (len == null || len > arr.length) len = arr.length;
@@ -27,7 +30,7 @@
     if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _array_like_to_array(o, minLen);
   }
   function _create_for_of_iterator_helper_loose(o, allowArrayLike) {
-    var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
+    var it = (typeof Symbol !== "undefined" && o[Symbol.iterator]) || o["@@iterator"];
     if (it) return (it = it.call(o)).next.bind(it);
     if (Array.isArray(o) || (it = _unsupported_iterable_to_array(o)) || allowArrayLike) {
       if (it) o = it;
@@ -35,12 +38,12 @@
       return function () {
         if (i >= o.length) {
           return {
-            done: true
+            done: true,
           };
         }
         return {
           done: false,
-          value: o[i++]
+          value: o[i++],
         };
       };
     }
@@ -49,23 +52,22 @@
   /**
    * PickerProvider 单例类
    */
-  var PickerProvider = /*#__PURE__*/function () {
-
+  var PickerProvider = /*#__PURE__*/ (function () {
     function PickerProvider() {
       this.pickers = [];
     }
     var _proto = PickerProvider.prototype;
     /**
-    * 添加picker
-    * @param picker Picker 实例
-    */
+     * 添加picker
+     * @param picker Picker 实例
+     */
     _proto.add = function add(picker) {
       this.pickers.push(picker);
     };
     /**
-    * 移除picker
-    * @param picker Picker 实例
-    */
+     * 移除picker
+     * @param picker Picker 实例
+     */
     _proto.remove = function remove(picker) {
       var index = this.pickers.indexOf(picker);
       if (index > -1) {
@@ -75,22 +77,34 @@
       }
     };
     /**
-    * 关闭其他picker
-    * @param e 事件
-    */
+     * 关闭其他picker
+     * @param e 事件
+     */
     _proto.closeOther = function closeOther(e) {
-      for (var _iterator = _create_for_of_iterator_helper_loose(this.pickers), _step; !(_step = _iterator()).done;) {
+      for (var _iterator = _create_for_of_iterator_helper_loose(this.pickers), _step; !(_step = _iterator()).done; ) {
         var p = _step.value;
         var _p_$container_contains, _p_$container, _p_$wrapperContent_contains, _p_$wrapperContent;
-        if (p && !(e.target === p.$container || ((_p_$container = p.$container) == null ? void 0 : (_p_$container_contains = _p_$container.contains) == null ? void 0 : _p_$container_contains.call(_p_$container, e.target)) || e.target === p.$wrapperContent || ((_p_$wrapperContent = p.$wrapperContent) == null ? void 0 : (_p_$wrapperContent_contains = _p_$wrapperContent.contains) == null ? void 0 : _p_$wrapperContent_contains.call(_p_$wrapperContent, e.target)))) {
+        if (
+          p &&
+          !(
+            e.target === p.$container ||
+            ((_p_$container = p.$container) == null ? void 0 : (_p_$container_contains = _p_$container.contains) == null ? void 0 : _p_$container_contains.call(_p_$container, e.target)) ||
+            e.target === p.$wrapperContent ||
+            ((_p_$wrapperContent = p.$wrapperContent) == null
+              ? void 0
+              : (_p_$wrapperContent_contains = _p_$wrapperContent.contains) == null
+                ? void 0
+                : _p_$wrapperContent_contains.call(_p_$wrapperContent, e.target))
+          )
+        ) {
           p.open = false;
         }
       }
     };
     /**
-    * 获取单例实例
-    * @returns Picker 实例
-    */
+     * 获取单例实例
+     * @returns Picker 实例
+     */
     PickerProvider.getInstance = function getInstance() {
       if (!PickerProvider.instance) {
         PickerProvider.instance = new PickerProvider();
@@ -98,7 +112,7 @@
       return PickerProvider.instance;
     };
     return PickerProvider;
-  }();
+  })();
   var pickerProvider = PickerProvider.getInstance();
 
   function _defineProperties(target, props) {
@@ -145,7 +159,7 @@
     mouseLeaveDelay: 0.1,
     mouseEnterDelay: 0.1,
     isMobile: false,
-    triggerClose: false
+    triggerClose: false,
   };
   /**
    * Picker 弹窗, 支持 PC 和移动端
@@ -170,8 +184,7 @@
    * picker.destroy(); // 销毁弹窗
    * ```
    */
-  var Picker = /*#__PURE__*/function () {
-
+  var Picker = /*#__PURE__*/ (function () {
     function Picker(container, options) {
       var _this__$popupContainer, _this__$popupContainer1;
       /** 是否打开 */
@@ -185,7 +198,8 @@
       // 移动端模式强制使用 click 触发
       if (this._options.isMobile) this._options.trigger = "click";
       pickerProvider.add(this);
-      if (typeof container === "function") this.$container = container();else this.$container = container;
+      if (typeof container === "function") this.$container = container();
+      else this.$container = container;
       this.$wrapperContent = document.createElement("div");
       this._initContentStyle();
       if (typeof this._options.getPopupContainer === "function") {
@@ -210,18 +224,18 @@
     }
     var _proto = Picker.prototype;
     /**
-    * 设置弹出位置(移动端不生效)
-    * @param placement - 弹出位置
-    * @example
-    * ```ts
-    * picker.setPlacement("top");
-    * picker.setPlacement("tl");
-    * picker.setPlacement("tr");
-    * picker.setPlacement("bottom");
-    * picker.setPlacement("bl");
-    * picker.setPlacement("br");
-    * ```
-    */
+     * 设置弹出位置(移动端不生效)
+     * @param placement - 弹出位置
+     * @example
+     * ```ts
+     * picker.setPlacement("top");
+     * picker.setPlacement("tl");
+     * picker.setPlacement("tr");
+     * picker.setPlacement("bottom");
+     * picker.setPlacement("bl");
+     * picker.setPlacement("br");
+     * ```
+     */
     _proto.setPlacement = function setPlacement(placement) {
       if (this._disabled) return;
       if (_$PICKER_PLACEMENT$_.includes(placement)) {
@@ -232,12 +246,12 @@
       this._setPlacement();
     };
     /**
-    * 销毁
-    * @example
-    * ```ts
-    * picker.destroy();
-    * ```
-    */
+     * 销毁
+     * @example
+     * ```ts
+     * picker.destroy();
+     * ```
+     */
     _proto.destroy = function destroy() {
       this._animationTimerClear();
       this._removeHtml();
@@ -245,13 +259,13 @@
       // this._$popupContainer 的 position 样式不会被移除
     };
     /**
-    * 设置内容（会覆盖之前内容）
-    * @param html - html 字符串内容
-    * @example
-    * ```ts
-    * picker.innerHTML('<div>内容</div>');
-    * ```
-    */
+     * 设置内容（会覆盖之前内容）
+     * @param html - html 字符串内容
+     * @example
+     * ```ts
+     * picker.innerHTML('<div>内容</div>');
+     * ```
+     */
     _proto.innerHTML = function innerHTML(html) {
       if (this.$body) {
         this.$body.innerHTML = html || "";
@@ -262,15 +276,15 @@
     // Private methods
     // --------------------------------------------------------------------------
     /**
-    * picker 面板展开或关闭变化时触发
-    * @param open - true: 展开, false:关闭
-    */
+     * picker 面板展开或关闭变化时触发
+     * @param open - true: 展开, false:关闭
+     */
     _proto._onOpenChange = function _onOpenChange(open) {
       this._options.onOpenChange == null ? void 0 : this._options.onOpenChange.call(this._options, !!open);
     };
     /**
-    * 移除动画定时器
-    */
+     * 移除动画定时器
+     */
     _proto._animationTimerClear = function _animationTimerClear() {
       if (this._animationTimer) {
         clearTimeout(this._animationTimer);
@@ -278,20 +292,47 @@
       }
     };
     /**
-    * 移除html
-    */
+     * 移除html
+     */
     _proto._removeHtml = function _removeHtml() {
       var _this_$wrapperContent, _this_$container_removeEventListener, _this_$container, _this_$container_removeEventListener1, _this_$container1;
       (_this_$wrapperContent = this.$wrapperContent) == null ? void 0 : _this_$wrapperContent.removeEventListener("click", this._onContentClick);
-      (_this_$container = this.$container) == null ? void 0 : (_this_$container_removeEventListener = _this_$container.removeEventListener) == null ? void 0 : _this_$container_removeEventListener.call(_this_$container, "click", this._onContentClick);
-      if (this._options.trigger === "click") (_this_$container1 = this.$container) == null ? void 0 : (_this_$container_removeEventListener1 = _this_$container1.removeEventListener) == null ? void 0 : _this_$container_removeEventListener1.call(_this_$container1, "click", this._onContainerClick);
+      (_this_$container = this.$container) == null
+        ? void 0
+        : (_this_$container_removeEventListener = _this_$container.removeEventListener) == null
+          ? void 0
+          : _this_$container_removeEventListener.call(_this_$container, "click", this._onContentClick);
+      if (this._options.trigger === "click")
+        (_this_$container1 = this.$container) == null
+          ? void 0
+          : (_this_$container_removeEventListener1 = _this_$container1.removeEventListener) == null
+            ? void 0
+            : _this_$container_removeEventListener1.call(_this_$container1, "click", this._onContainerClick);
       if (this._options.trigger === "hover") {
-        var _this_$container_removeEventListener2, _this_$container2, _this_$container_removeEventListener3, _this_$container3, _this_$container_removeEventListener4, _this_$container4,
+        var _this_$container_removeEventListener2,
+          _this_$container2,
+          _this_$container_removeEventListener3,
+          _this_$container3,
+          _this_$container_removeEventListener4,
+          _this_$container4,
           // prettier-ignore
-          _this_$wrapperContent1, _this_$wrapperContent2;
-        (_this_$container2 = this.$container) == null ? void 0 : (_this_$container_removeEventListener2 = _this_$container2.removeEventListener) == null ? void 0 : _this_$container_removeEventListener2.call(_this_$container2, "mouseenter", this._onShow);
-        (_this_$container3 = this.$container) == null ? void 0 : (_this_$container_removeEventListener3 = _this_$container3.removeEventListener) == null ? void 0 : _this_$container_removeEventListener3.call(_this_$container3, "mouseover", this._onShow);
-        (_this_$container4 = this.$container) == null ? void 0 : (_this_$container_removeEventListener4 = _this_$container4.removeEventListener) == null ? void 0 : _this_$container_removeEventListener4.call(_this_$container4, "mouseleave", this._onHide);
+          _this_$wrapperContent1,
+          _this_$wrapperContent2;
+        (_this_$container2 = this.$container) == null
+          ? void 0
+          : (_this_$container_removeEventListener2 = _this_$container2.removeEventListener) == null
+            ? void 0
+            : _this_$container_removeEventListener2.call(_this_$container2, "mouseenter", this._onShow);
+        (_this_$container3 = this.$container) == null
+          ? void 0
+          : (_this_$container_removeEventListener3 = _this_$container3.removeEventListener) == null
+            ? void 0
+            : _this_$container_removeEventListener3.call(_this_$container3, "mouseover", this._onShow);
+        (_this_$container4 = this.$container) == null
+          ? void 0
+          : (_this_$container_removeEventListener4 = _this_$container4.removeEventListener) == null
+            ? void 0
+            : _this_$container_removeEventListener4.call(_this_$container4, "mouseleave", this._onHide);
         (_this_$wrapperContent1 = this.$wrapperContent) == null ? void 0 : _this_$wrapperContent1.removeEventListener("mouseenter", this._onWrapperShow);
         (_this_$wrapperContent2 = this.$wrapperContent) == null ? void 0 : _this_$wrapperContent2.removeEventListener("mouseleave", this._onHide);
       }
@@ -313,12 +354,17 @@
       }
     };
     /**
-    * 现实位置
-    */
+     * 现实位置
+     */
     _proto._setPlacement = function _setPlacement() {
       var _this_$container_getBoundingClientRect, _this_$container, _this__options_offset, _this__options_offset1;
       if (!this._open || this._options.isMobile || !this.$container) return;
-      var $containerRect = (_this_$container = this.$container) == null ? void 0 : (_this_$container_getBoundingClientRect = _this_$container.getBoundingClientRect) == null ? void 0 : _this_$container_getBoundingClientRect.call(_this_$container);
+      var $containerRect =
+        (_this_$container = this.$container) == null
+          ? void 0
+          : (_this_$container_getBoundingClientRect = _this_$container.getBoundingClientRect) == null
+            ? void 0
+            : _this_$container_getBoundingClientRect.call(_this_$container);
       var $popupContainerRect = this._$popupContainer.getBoundingClientRect();
       var containerWidth = Math.ceil(this.$container.clientWidth);
       var containerHeight = Math.ceil(this.$container.clientHeight);
@@ -389,8 +435,8 @@
       this.$wrapperContent.style.cssText += "\n      left: " + nextLeft + "px;\n      top: " + nextTop + "px;\n      z-index:" + this._options.zIndex + ";\n    ";
     };
     /**
-    * 初始化内容样式
-    */
+     * 初始化内容样式
+     */
     _proto._initContentStyle = function _initContentStyle() {
       if (!this.$wrapperContent) return;
       // prettier-ignore
@@ -415,26 +461,49 @@
         try {
           var _this_$wrapperContent_classList;
           var _this_$wrapperContent;
-          (_this_$wrapperContent = this.$wrapperContent) == null ? void 0 : (_this_$wrapperContent_classList = _this_$wrapperContent.classList).add.apply(_this_$wrapperContent_classList, [].concat(this._options.wrapClassName.split(" ")));
+          (_this_$wrapperContent = this.$wrapperContent) == null
+            ? void 0
+            : (_this_$wrapperContent_classList = _this_$wrapperContent.classList).add.apply(_this_$wrapperContent_classList, [].concat(this._options.wrapClassName.split(" ")));
         } catch (_error) {
           //
         }
       }
     };
     /**
-    * 绑定事件
-    */
+     * 绑定事件
+     */
     _proto._eventListener = function _eventListener() {
       var _this_$container_addEventListener, _this_$container, _this_$container_addEventListener1, _this_$container1;
       this.$wrapperContent.addEventListener("click", this._onContentClick);
-      (_this_$container = this.$container) == null ? void 0 : (_this_$container_addEventListener = _this_$container.addEventListener) == null ? void 0 : _this_$container_addEventListener.call(_this_$container, "click", this._onContentClick);
+      (_this_$container = this.$container) == null
+        ? void 0
+        : (_this_$container_addEventListener = _this_$container.addEventListener) == null
+          ? void 0
+          : _this_$container_addEventListener.call(_this_$container, "click", this._onContentClick);
       //
-      if (this._options.trigger === "click") (_this_$container1 = this.$container) == null ? void 0 : (_this_$container_addEventListener1 = _this_$container1.addEventListener) == null ? void 0 : _this_$container_addEventListener1.call(_this_$container1, "click", this._onContainerClick);
+      if (this._options.trigger === "click")
+        (_this_$container1 = this.$container) == null
+          ? void 0
+          : (_this_$container_addEventListener1 = _this_$container1.addEventListener) == null
+            ? void 0
+            : _this_$container_addEventListener1.call(_this_$container1, "click", this._onContainerClick);
       if (this._options.trigger === "hover") {
         var _this_$container_addEventListener2, _this_$container2, _this_$container_addEventListener3, _this_$container3, _this_$container_addEventListener4, _this_$container4;
-        (_this_$container2 = this.$container) == null ? void 0 : (_this_$container_addEventListener2 = _this_$container2.addEventListener) == null ? void 0 : _this_$container_addEventListener2.call(_this_$container2, "mouseenter", this._onShow);
-        (_this_$container3 = this.$container) == null ? void 0 : (_this_$container_addEventListener3 = _this_$container3.addEventListener) == null ? void 0 : _this_$container_addEventListener3.call(_this_$container3, "mouseover", this._onShow);
-        (_this_$container4 = this.$container) == null ? void 0 : (_this_$container_addEventListener4 = _this_$container4.addEventListener) == null ? void 0 : _this_$container_addEventListener4.call(_this_$container4, "mouseleave", this._onHide);
+        (_this_$container2 = this.$container) == null
+          ? void 0
+          : (_this_$container_addEventListener2 = _this_$container2.addEventListener) == null
+            ? void 0
+            : _this_$container_addEventListener2.call(_this_$container2, "mouseenter", this._onShow);
+        (_this_$container3 = this.$container) == null
+          ? void 0
+          : (_this_$container_addEventListener3 = _this_$container3.addEventListener) == null
+            ? void 0
+            : _this_$container_addEventListener3.call(_this_$container3, "mouseover", this._onShow);
+        (_this_$container4 = this.$container) == null
+          ? void 0
+          : (_this_$container_addEventListener4 = _this_$container4.addEventListener) == null
+            ? void 0
+            : _this_$container_addEventListener4.call(_this_$container4, "mouseleave", this._onHide);
         this.$wrapperContent.addEventListener("mouseenter", this._onWrapperShow);
         this.$wrapperContent.addEventListener("mouseleave", this._onHide);
       }
@@ -447,22 +516,27 @@
       }
     };
     /**
-    * $wrapperContent click event
-    * @param e - 内容点击事件
-    */
+     * $wrapperContent click event
+     * @param e - 内容点击事件
+     */
     _proto._onContentClick = function _onContentClick(e) {
       pickerProvider.closeOther(e);
     };
     /**
-    * $container click event
-    * @param event - 鼠标点击事件
-    * @returns
-    */
+     * $container click event
+     * @param event - 鼠标点击事件
+     * @returns
+     */
     _proto._onContainerClick = function _onContainerClick(event) {
       var _this_$wrapperContent_contains, _this_$wrapperContent;
       if (this._disabled) return;
       // wrapper contain
-      var contain = ((_this_$wrapperContent = this.$wrapperContent) == null ? void 0 : (_this_$wrapperContent_contains = _this_$wrapperContent.contains) == null ? void 0 : _this_$wrapperContent_contains.call(_this_$wrapperContent, event.target)) || this.$wrapperContent === event.target;
+      var contain =
+        ((_this_$wrapperContent = this.$wrapperContent) == null
+          ? void 0
+          : (_this_$wrapperContent_contains = _this_$wrapperContent.contains) == null
+            ? void 0
+            : _this_$wrapperContent_contains.call(_this_$wrapperContent, event.target)) || this.$wrapperContent === event.target;
       // open 状态下触发关闭
       if (this._options.triggerClose && this._options.trigger === "click" && !contain) {
         this.open = !this.open;
@@ -471,65 +545,73 @@
       }
     };
     /**
-    * 显示事件
-    */
+     * 显示事件
+     */
     _proto._onShow = function _onShow() {
       if (this._disabled) return;
       this.open = true;
     };
     /**
-    * $wrapperContent 显示事件（输入进入前 为 false 阻止设置为 true）
-    */
+     * $wrapperContent 显示事件（输入进入前 为 false 阻止设置为 true）
+     */
     _proto._onWrapperShow = function _onWrapperShow() {
       if (this._disabled) return;
       this._onShow();
     };
     /**
-    * 隐藏事件
-    */
+     * 隐藏事件
+     */
     _proto._onHide = function _onHide(e) {
       if (!this._open || this._disabled) return;
       if ((e == null ? void 0 : e.target) === this._$mask) e == null ? void 0 : e.stopPropagation();
       this.open = false;
     };
     /**
-    * document 点击事件
-    * @param event - 鼠标点击事件
-    */
+     * document 点击事件
+     * @param event - 鼠标点击事件
+     */
     _proto._onDocumentClick = function _onDocumentClick(event) {
       var _this_$container;
-      if (!(this.$wrapperContent.contains(event.target) || this.$wrapperContent === event.target || ((_this_$container = this.$container) == null ? void 0 : _this_$container.contains(event.target)) || this.$container === event.target)) {
+      if (
+        !(
+          this.$wrapperContent.contains(event.target) ||
+          this.$wrapperContent === event.target ||
+          ((_this_$container = this.$container) == null ? void 0 : _this_$container.contains(event.target)) ||
+          this.$container === event.target
+        )
+      ) {
         if (this._disabled) return;
         this._onHide();
       }
     };
-    _create_class(Picker, [{
-      key: "open",
-      get:
-      /**
-      * 获取当前打开状态
-      * @example
-      * ```ts
-      * console.log(picker.open); // 获取当前打开状态
-      * picker.open = true; // 打开
-      * picker.open = false; // 关闭
-      * ```
-      */
-      function get() {
-        return this._open;
-      },
-      set: function set(open) {
-        var _this = this;
-        if (this._disabled) return;
-        if (this._open !== !!open) {
-          this._animationTimerClear();
-          if (this._timer) {
-            clearTimeout(this._timer);
-            this._timer = null;
-          }
-          if (open) {
-            // prettier-ignore
-            this._timer = setTimeout(function () {
+    _create_class(Picker, [
+      {
+        key: "open",
+        get:
+          /**
+           * 获取当前打开状态
+           * @example
+           * ```ts
+           * console.log(picker.open); // 获取当前打开状态
+           * picker.open = true; // 打开
+           * picker.open = false; // 关闭
+           * ```
+           */
+          function get() {
+            return this._open;
+          },
+        set: function set(open) {
+          var _this = this;
+          if (this._disabled) return;
+          if (this._open !== !!open) {
+            this._animationTimerClear();
+            if (this._timer) {
+              clearTimeout(this._timer);
+              this._timer = null;
+            }
+            if (open) {
+              // prettier-ignore
+              this._timer = setTimeout(function () {
               if (!_this.$wrapperContent) return;
               _this.$wrapperContent.style.display = "inline-flex";
               _this.$wrapperContent.style.pointerEvents = "";
@@ -547,9 +629,9 @@
             },
             // prettier-ignore
             (this._options.mouseEnterDelay < 0 ? 0 : this._options.mouseEnterDelay) * 1000);
-          } else {
-            // prettier-ignore
-            this._timer = setTimeout(function () {
+            } else {
+              // prettier-ignore
+              this._timer = setTimeout(function () {
               if (!_this.$wrapperContent) return;
               _this.$wrapperContent.style.opacity = "0";
               _this.$wrapperContent.style.pointerEvents = "none";
@@ -564,53 +646,66 @@
             },
             // prettier-ignore
             (this._options.mouseLeaveDelay < 0 ? 0 : this._options.mouseLeaveDelay) * 1000);
-          }
-          if (this._OpenChange === open) {
-            if (this._timer) {
-              clearTimeout(this._timer);
-              this._timer = null;
             }
+            if (this._OpenChange === open) {
+              if (this._timer) {
+                clearTimeout(this._timer);
+                this._timer = null;
+              }
+            }
+            this._open = !!open;
           }
-          this._open = !!open;
-        }
-      }
-    }, {
-      key: "disabled",
-      get:
-      /**
-      * 获取或设置禁用状态
-      * @example
-      * ```ts
-      * picker.disabled = true; // 禁用
-      * picker.disabled = false; // 启用
-      * console.log(picker.disabled); // 获取禁用状态
-      * ```
-      */
-      function get() {
-        return this._disabled;
+        },
       },
-      set: function set(disabled) {
-        if (disabled) {
-          var _this_$container_classList_add, _this_$container_classList, _this_$container;
-          (_this_$container = this.$container) == null ? void 0 : (_this_$container_classList = _this_$container.classList) == null ? void 0 : (_this_$container_classList_add = _this_$container_classList.add) == null ? void 0 : _this_$container_classList_add.call(_this_$container_classList, "" + _$PICKER_PREFIX_CLS$_ + "-disabled");
-        } else {
-          var _this_$container_classList_remove, _this_$container_classList1, _this_$container1;
-          (_this_$container1 = this.$container) == null ? void 0 : (_this_$container_classList1 = _this_$container1.classList) == null ? void 0 : (_this_$container_classList_remove = _this_$container_classList1.remove) == null ? void 0 : _this_$container_classList_remove.call(_this_$container_classList1, "" + _$PICKER_PREFIX_CLS$_ + "-disabled");
-        }
-        this._disabled = disabled;
-      }
-    }]);
+      {
+        key: "disabled",
+        get:
+          /**
+           * 获取或设置禁用状态
+           * @example
+           * ```ts
+           * picker.disabled = true; // 禁用
+           * picker.disabled = false; // 启用
+           * console.log(picker.disabled); // 获取禁用状态
+           * ```
+           */
+          function get() {
+            return this._disabled;
+          },
+        set: function set(disabled) {
+          if (disabled) {
+            var _this_$container_classList_add, _this_$container_classList, _this_$container;
+            (_this_$container = this.$container) == null
+              ? void 0
+              : (_this_$container_classList = _this_$container.classList) == null
+                ? void 0
+                : (_this_$container_classList_add = _this_$container_classList.add) == null
+                  ? void 0
+                  : _this_$container_classList_add.call(_this_$container_classList, "" + _$PICKER_PREFIX_CLS$_ + "-disabled");
+          } else {
+            var _this_$container_classList_remove, _this_$container_classList1, _this_$container1;
+            (_this_$container1 = this.$container) == null
+              ? void 0
+              : (_this_$container_classList1 = _this_$container1.classList) == null
+                ? void 0
+                : (_this_$container_classList_remove = _this_$container_classList1.remove) == null
+                  ? void 0
+                  : _this_$container_classList_remove.call(_this_$container_classList1, "" + _$PICKER_PREFIX_CLS$_ + "-disabled");
+          }
+          this._disabled = disabled;
+        },
+      },
+    ]);
     return Picker;
-  }();
+  })();
   /**
-     * 版本号
-     * @example
-     * ```ts
-     * Picker.VERSION; // 输出版本号
-     * ```
-     */
+   * 版本号
+   * @example
+   * ```ts
+   * Picker.VERSION; // 输出版本号
+   * ```
+   */
   Picker.VERSION = "2.0.0-alpha.1";
 
   return Picker;
-
-}));
+});

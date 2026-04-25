@@ -1,0 +1,10 @@
+packages:
+  - "packages/*"
+  - "examples/*"
+  - "!examples/with-vue2.5"
+  - "!examples/with-react16-ts"
+  - "!examples/with-react17-ts"
+  - "!examples/with-react18-ts"
+  - "!**/test/**"
+  - "!**/dist/**"
+  - "!**/build/**"

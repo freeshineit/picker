@@ -1,25 +1,57 @@
+# Dependencies
 node_modules
-packages/docs
-dist
+.pnpm-store
+
+# Build outputs
+dist/
+build/
+docs/
+*.tsbuildinfo
+
+# Logs
 logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 pnpm-debug.log*
 lerna-debug.log*
-.dumi
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea
+*.swp
+*.swo
+*~
+
+# OS
 .DS_Store
-.rollup.cache
-temp/
-docs/
+.DS_Store?
+._*
+Thumbs.db
+
+# Testing
+coverage
+.nyc_output
+
+# Misc
+.dumi
 .dumi/tmp
 .dumi/tmp-production
+.rollup.cache
 rollup.config-*.cjs
-*.js.map
-*.mjs.map
-*.css.map
+packages/docs
 
-build/
-coverage/
+build
+dist
 
+# Temp files
+*.tmp
+.cache
+
+# Playwright
+playwright-report
+test-results
+test-results.json
 

@@ -2,12 +2,11 @@
   "compilerOptions": {
     "composite": true,
     "module": "ESNext",
-    "target": "ES2015",
-    "lib": ["ES5", "ES6", "dom", "ES2015", "ES2016", "ES2017", "dom.iterable", "esnext"],
+    "lib": ["es6", "dom", "ES2015", "es2016", "es2017", "dom.iterable", "esnext"],
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["__tests__", "eslint.config.mjs", ".prettier.js", "commitlint.config.js", "babel.config.json"],
+  "include": ["__tests__", ".eslintrc.js", ".prettier.js", "commitlint.config.js"],
   "exclude": ["node_modules", "dist", "coverage", "docs", "examples", "build"]
 }

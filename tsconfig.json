@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "module": "esnext",
-    "target": "ES2015",
-    "lib": ["ES5", "ES6", "dom", "ES2015", "ES2016", "ES2017", "dom.iterable", "es2015.collection", "esnext"],
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "allowJs": true,
     "jsx": "react-jsx",
     "outDir": "dist",
@@ -16,11 +16,29 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "composite": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
     "baseUrl": ".",
-    "rootDir": "."
+    "rootDir": ".",
+    "incremental": true,
+    "composite": true
   },
-  "include": ["__tests__", "eslint.config.mjs", ".prettier.js", "commitlint.config.js", "src", "babel.config.json"],
+  "include": [
+    "packages/*/src/**/*.{ts,tsx,js,jsx,mjs}",
+    "common/*/src/**/*.{ts,tsx,js,jsx,mjs}",
+    "site/**/*.{ts,tsx,js,jsx,mjs}",
+    "config/**/*.{ts,tsx,js,jsx,mjs}",
+    "scripts/**/*.{ts,tsx,js,jsx,mjs}",
+    "__tests__",
+    "eslint.config.mjs",
+    "prettier.config.mjs",
+    "commitlint.config.mjs",
+    "src/**/*.{ts,tsx,js,jsx,mjs}",
+    "src/*.{ts,tsx,js,jsx,mjs}"
+  ],
   "exclude": ["node_modules", "dist", "coverage", "docs", "example", "site/**/*.{vue}", "site/with-vue3/src/main.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

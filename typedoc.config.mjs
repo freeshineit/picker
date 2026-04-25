@@ -1,8 +1,13 @@
 export default {
-  entryPoints: ["./src/index.ts"],
+  entryPointStrategy: "packages",
+  entryPoints: ["./packages/picker"],
+  packageOptions: {
+    entryPoints: ["src/index.ts"],
+    exclude: ["**/__tests__/**/*", "**/e2e/**/*", "**/node_modules/**/*"],
+  },
   out: "docs",
   plugin: ["typedoc-plugin-rename-defaults", "typedoc-plugin-mdn-links", "typedoc-plugin-replace-text"],
-  exclude: ["node_modules"],
+  exclude: ["node_modules", "__tests__/**/*", "packages/*/{__tests__,e2e}/**/*"],
   includeVersion: true,
   hideGenerator: true,
   disableSources: false,
@@ -23,7 +28,7 @@ export default {
     ],
   },
   navigationLinks: {
-    Examples: "https://github.com/freeshineit/picker/tree/main/examples",
-    Github: "https://github.com/freeshineit/picker",
+    Examples: "https://github.com/freeshineit/pnpm-workspace/tree/main/site",
+    Github: "https://github.com/freeshineit/pnpm-workspace",
   },
 };
