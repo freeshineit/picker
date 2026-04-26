@@ -30,7 +30,7 @@ export default {
     ],
   },
   navigationLinks: {
-    Examples: "https://github.com/freeshineit/picker/tree/main/site",
+    Examples: "https://github.com/freeshineit/picker/tree/main/examples",
     Github: "https://github.com/freeshineit/picker",
   },
 };
