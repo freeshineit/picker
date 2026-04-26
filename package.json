@@ -4,7 +4,7 @@
   "description": "pnpm workspace",
   "type": "module",
   "scripts": {
-    "dev": "pnpm run --parallel --filter '*' dev",
+    "dev": "pnpm run --parallel --filter @skax/picker dev",
     "build": "pnpm run --filter '*' build",
     "build:picker": "pnpm run --filter @skax/picker build",
     "clean": "pnpm run --parallel --filter '*' clean && rimraf node_modules",
