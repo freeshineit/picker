@@ -5,11 +5,10 @@
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "preinstall": "npx only-allow yarn"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@skax/picker": "^2.0.0-alpha.2",
+    "@skax/picker": "^2.0.0-alpha.3",
     "vue": "^2.5.17"
   },
   "devDependencies": {

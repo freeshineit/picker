@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "vue": "^3.5.10",
-    "@skax/picker": "^2.0.0-alpha.2"
+    "@skax/picker": "^2.0.0-alpha.3"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",

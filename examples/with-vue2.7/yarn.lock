@@ -11,18 +11,6 @@
     event-pubsub "4.3.0"
     js-message "1.0.7"
 
-"@ak2021/store@^1.0.2-beta.5":
-  version "1.0.2-beta.5"
-  resolved "https://registry.yarnpkg.com/@ak2021/store/-/store-1.0.2-beta.5.tgz#deac700da82180fdf68788d00939077dc5605d66"
-  integrity sha512-Ng+R120s9Sc2wtSuQg7+2nRWYlcLfMC924IhRShbF7MRg7FVm0k/0fa9a3gd2Y1ujqDClO+FX6OmKQ8bQnGwiw==
-
-"@ak2021/web-components@^0.0.3-beta.5":
-  version "0.0.3-beta.5"
-  resolved "https://registry.yarnpkg.com/@ak2021/web-components/-/web-components-0.0.3-beta.5.tgz#4656dbf1843b3ed100e66172cfc2f95beb0ec75e"
-  integrity sha512-KAmU2QNnUS0L0FMt+0ZE2okYU41QYmscxPeHzobA6KA5P1n6PwBL+SsY9wWcRw6eF25qQxrfcDNuG97AnDclug==
-  dependencies:
-    "@webcomponents/webcomponentsjs" "^2.8.0"
-
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.27.1", "@babel/code-frame@^7.28.6", "@babel/code-frame@^7.29.0":
   version "7.29.0"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.29.0.tgz#7cd7a59f15b3cc0dcd803038f7792712a7d0b15c"
@@ -974,6 +962,11 @@
   resolved "https://registry.yarnpkg.com/@sideway/pinpoint/-/pinpoint-2.0.0.tgz#cff8ffadc372ad29fd3f78277aeb29e632cc70df"
   integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
 
+"@skax/picker@^2.0.0-alpha.3":
+  version "2.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@skax/picker/-/picker-2.0.0-beta.3.tgz#c27ea2a92ea2626fab655e362b2258758fc9f5bb"
+  integrity sha512-bGwaSdVdpjRy8F9jYA17KWHbkACEdkBWT6yy0Rt19SXeI9/wwqi3WqcTuO7yJJ6S2YZlebsYg4zWK4wOuCs2ug==
+
 "@soda/friendly-errors-webpack-plugin@^1.8.0":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@soda/friendly-errors-webpack-plugin/-/friendly-errors-webpack-plugin-1.8.1.tgz#4d4fbb1108993aaa362116247c3d18188a2c6c85"
@@ -1654,11 +1647,6 @@
   dependencies:
     "@webassemblyjs/ast" "1.14.1"
     "@xtuc/long" "4.2.2"
-
-"@webcomponents/webcomponentsjs@^2.8.0":
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/@webcomponents/webcomponentsjs/-/webcomponentsjs-2.8.0.tgz#ab21f027594fa827c1889e8b646da7be27c7908a"
-  integrity sha512-loGD63sacRzOzSJgQnB9ZAhaQGkN7wl2Zuw7tsphI5Isa0irijrRo6EnJii/GgjGefIFO8AIO7UivzRhFaEk9w==
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"

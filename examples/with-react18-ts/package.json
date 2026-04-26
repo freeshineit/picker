@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@skax/picker": "2.0.0-beta.2",
+    "@skax/picker": "2.0.0-beta.3",
     "@types/node": "^16.18.126",
     "@types/react": "^18",
     "@types/react-dom": "^18",

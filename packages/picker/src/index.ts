@@ -410,9 +410,16 @@ class Picker {
     const offsetX = this._options.offset?.[0] || 0;
     const offsetY = this._options.offset?.[1] || 0;
 
-    // 容器的坐标 - 挂载的容器的坐标差
-    const containerLeft = Math.ceil($containerRect.left) - Math.ceil($popupContainerRect.left);
-    const containerTop = Math.ceil($containerRect.y) - Math.ceil($popupContainerRect.y);
+    // 获取挂载容器的 padding 和 margin
+    const popupContainerStyle = window.getComputedStyle?.(this._$popupContainer);
+    const popupPaddingLeft = parseFloat(popupContainerStyle?.paddingLeft || "0");
+    const popupPaddingTop = parseFloat(popupContainerStyle?.paddingTop || "0");
+    const popupMarginLeft = parseFloat(popupContainerStyle?.marginLeft || "0");
+    const popupMarginTop = parseFloat(popupContainerStyle?.marginTop || "0");
+
+    // 容器的坐标 - 挂载的容器的坐标差（考虑挂载容器的 padding 和 margin）
+    const containerLeft = Math.ceil($containerRect.left) - Math.ceil($popupContainerRect.left) + popupPaddingLeft + popupMarginLeft;
+    const containerTop = Math.ceil($containerRect.y) - Math.ceil($popupContainerRect.y) + popupPaddingTop + popupMarginTop;
 
     // 视口尺寸
     const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
@@ -466,8 +473,8 @@ class Picker {
     const baseTop = /^t/.test(actualPlacement) ? containerTop - wrapperHeight : containerTop + containerHeight;
 
     // 转换为浏览器可视窗口坐标系
-    const absLeft = Math.ceil($popupContainerRect.left) + left + offsetX;
-    const absTop = Math.ceil($popupContainerRect.top) + baseTop + offsetY;
+    const absLeft = Math.ceil($popupContainerRect.left) + popupMarginLeft + left + offsetX;
+    const absTop = Math.ceil($popupContainerRect.top) + popupMarginTop + baseTop + offsetY;
 
     // 边界裁剪（确保弹框在浏览器窗口内）
     const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
@@ -477,9 +484,9 @@ class Picker {
     const clampedAbsLeft = clamp(absLeft, 0, maxAbsLeft);
     const clampedAbsTop = clamp(absTop, 0, maxAbsTop);
 
-    // 转换回挂载容器坐标系
-    const nextLeft = clampedAbsLeft - Math.ceil($popupContainerRect.left);
-    const nextTop = clampedAbsTop - Math.ceil($popupContainerRect.top);
+    // 转换回挂载容器坐标系（需要考虑 padding）
+    const nextLeft = clampedAbsLeft - Math.ceil($popupContainerRect.left) - popupMarginLeft - popupPaddingLeft;
+    const nextTop = clampedAbsTop - Math.ceil($popupContainerRect.top) - popupMarginTop - popupPaddingTop;
 
     this.$wrapperContent.style.cssText += `
       left: ${nextLeft}px;
