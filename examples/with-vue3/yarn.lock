@@ -2,18 +2,6 @@
 # yarn lockfile v1
 
 
-"@ak2021/store@1.0.2-beta.5":
-  version "1.0.2-beta.5"
-  resolved "https://registry.yarnpkg.com/@ak2021/store/-/store-1.0.2-beta.5.tgz#deac700da82180fdf68788d00939077dc5605d66"
-  integrity sha512-Ng+R120s9Sc2wtSuQg7+2nRWYlcLfMC924IhRShbF7MRg7FVm0k/0fa9a3gd2Y1ujqDClO+FX6OmKQ8bQnGwiw==
-
-"@ak2021/web-components@0.0.3-beta.5":
-  version "0.0.3-beta.5"
-  resolved "https://registry.yarnpkg.com/@ak2021/web-components/-/web-components-0.0.3-beta.5.tgz#4656dbf1843b3ed100e66172cfc2f95beb0ec75e"
-  integrity sha512-KAmU2QNnUS0L0FMt+0ZE2okYU41QYmscxPeHzobA6KA5P1n6PwBL+SsY9wWcRw6eF25qQxrfcDNuG97AnDclug==
-  dependencies:
-    "@webcomponents/webcomponentsjs" "^2.8.0"
-
 "@babel/helper-string-parser@^7.27.1":
   version "7.27.1"
   resolved "https://registry.yarnpkg.com/@babel/helper-string-parser/-/helper-string-parser-7.27.1.tgz#54da796097ab19ce67ed9f88b47bb2ec49367687"
@@ -284,6 +272,11 @@
   resolved "https://registry.yarnpkg.com/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.60.2.tgz#3418dcf1388f2abd6b0ccc08fe1ef205ae76d696"
   integrity sha512-Nd/SgG27WoA9e+/TdK74KnHz852TLa94ovOYySo/yMPuTmpckK/jIF2jSwS3g7ELSKXK13/cVdmg1Z/DaCWKxA==
 
+"@skax/picker@^2.0.0-alpha.3":
+  version "2.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@skax/picker/-/picker-2.0.0-beta.3.tgz#c27ea2a92ea2626fab655e362b2258758fc9f5bb"
+  integrity sha512-bGwaSdVdpjRy8F9jYA17KWHbkACEdkBWT6yy0Rt19SXeI9/wwqi3WqcTuO7yJJ6S2YZlebsYg4zWK4wOuCs2ug==
+
 "@tsconfig/node20@^20.1.4":
   version "20.1.9"
   resolved "https://registry.yarnpkg.com/@tsconfig/node20/-/node20-20.1.9.tgz#29716bc9ce538f0e5b5fea30b6481a0b0b7955df"
@@ -433,11 +426,6 @@
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/@vue/tsconfig/-/tsconfig-0.5.1.tgz#3124ec16cc0c7e04165b88dc091e6b97782fffa9"
   integrity sha512-VcZK7MvpjuTPx2w6blwnwZAu5/LgBUtejFOi3pPGQFXQN5Ela03FUtd2Qtg4yWGGissVL0dr6Ro1LfOFh+PCuQ==
-
-"@webcomponents/webcomponentsjs@^2.8.0":
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/@webcomponents/webcomponentsjs/-/webcomponentsjs-2.8.0.tgz#ab21f027594fa827c1889e8b646da7be27c7908a"
-  integrity sha512-loGD63sacRzOzSJgQnB9ZAhaQGkN7wl2Zuw7tsphI5Isa0irijrRo6EnJii/GgjGefIFO8AIO7UivzRhFaEk9w==
 
 alien-signals@^1.0.3:
   version "1.0.13"
