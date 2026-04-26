@@ -3,6 +3,8 @@ export default {
   entryPoints: ["./packages/picker"],
   packageOptions: {
     entryPoints: ["src/index.ts"],
+    readme: "README.md",
+    includeVersion: true,
     exclude: ["**/__tests__/**/*", "**/e2e/**/*", "**/node_modules/**/*"],
   },
   out: "docs",
@@ -28,7 +30,7 @@ export default {
     ],
   },
   navigationLinks: {
-    Examples: "https://github.com/freeshineit/pnpm-workspace/tree/main/site",
-    Github: "https://github.com/freeshineit/pnpm-workspace",
+    Examples: "https://github.com/freeshineit/picker/tree/main/site",
+    Github: "https://github.com/freeshineit/picker",
   },
 };
