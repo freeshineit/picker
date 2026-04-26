@@ -1,5 +1,5 @@
 /*
-* @skax/picker v2.0.0-beta.2
+* @skax/picker v2.0.0-beta.3
 * Copyright (c) 2026-04-26 ShineShao <xiaoshaoqq@gmail.com>
 * Released under the MIT License.
 */
@@ -318,9 +318,15 @@
           var wrapperHeight = Math.ceil(this.$wrapperContent.clientHeight);
           var offsetX = ((_this__options_offset = this._options.offset) == null ? void 0 : _this__options_offset[0]) || 0;
           var offsetY = ((_this__options_offset1 = this._options.offset) == null ? void 0 : _this__options_offset1[1]) || 0;
-          // 容器的坐标 - 挂载的容器的坐标差
-          var containerLeft = Math.ceil($containerRect.left) - Math.ceil($popupContainerRect.left);
-          var containerTop = Math.ceil($containerRect.y) - Math.ceil($popupContainerRect.y);
+          // 获取挂载容器的 padding 和 margin
+          var popupContainerStyle = window.getComputedStyle == null ? void 0 : window.getComputedStyle.call(window, this._$popupContainer);
+          var popupPaddingLeft = parseFloat((popupContainerStyle == null ? void 0 : popupContainerStyle.paddingLeft) || "0");
+          var popupPaddingTop = parseFloat((popupContainerStyle == null ? void 0 : popupContainerStyle.paddingTop) || "0");
+          var popupMarginLeft = parseFloat((popupContainerStyle == null ? void 0 : popupContainerStyle.marginLeft) || "0");
+          var popupMarginTop = parseFloat((popupContainerStyle == null ? void 0 : popupContainerStyle.marginTop) || "0");
+          // 容器的坐标 - 挂载的容器的坐标差（考虑挂载容器的 padding 和 margin）
+          var containerLeft = Math.ceil($containerRect.left) - Math.ceil($popupContainerRect.left) + popupPaddingLeft + popupMarginLeft;
+          var containerTop = Math.ceil($containerRect.y) - Math.ceil($popupContainerRect.y) + popupPaddingTop + popupMarginTop;
           // 视口尺寸
           var viewportWidth = window.innerWidth || document.documentElement.clientWidth;
           var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
@@ -365,8 +371,8 @@
           // 计算初始 top 位置（相对于挂载容器）
           var baseTop = /^t/.test(actualPlacement) ? containerTop - wrapperHeight : containerTop + containerHeight;
           // 转换为浏览器可视窗口坐标系
-          var absLeft = Math.ceil($popupContainerRect.left) + left + offsetX;
-          var absTop = Math.ceil($popupContainerRect.top) + baseTop + offsetY;
+          var absLeft = Math.ceil($popupContainerRect.left) + popupMarginLeft + left + offsetX;
+          var absTop = Math.ceil($popupContainerRect.top) + popupMarginTop + baseTop + offsetY;
           // 边界裁剪（确保弹框在浏览器窗口内）
           var clamp = function clamp(value, min, max) {
               return Math.min(Math.max(value, min), max);
@@ -375,9 +381,9 @@
           var maxAbsTop = Math.max(0, viewportHeight - wrapperHeight);
           var clampedAbsLeft = clamp(absLeft, 0, maxAbsLeft);
           var clampedAbsTop = clamp(absTop, 0, maxAbsTop);
-          // 转换回挂载容器坐标系
-          var nextLeft = clampedAbsLeft - Math.ceil($popupContainerRect.left);
-          var nextTop = clampedAbsTop - Math.ceil($popupContainerRect.top);
+          // 转换回挂载容器坐标系（需要考虑 padding）
+          var nextLeft = clampedAbsLeft - Math.ceil($popupContainerRect.left) - popupMarginLeft - popupPaddingLeft;
+          var nextTop = clampedAbsTop - Math.ceil($popupContainerRect.top) - popupMarginTop - popupPaddingTop;
           this.$wrapperContent.style.cssText += "\n      left: " + nextLeft + "px;\n      top: " + nextTop + "px;\n      z-index:" + this._options.zIndex + ";\n    ";
       };
       /**
@@ -589,7 +595,7 @@
      * ```ts
      * Picker.VERSION; // 输出版本号
      * ```
-     */ Picker.VERSION = "2.0.0-beta.2";
+     */ Picker.VERSION = "2.0.0-beta.3";
 
   return Picker;
 
