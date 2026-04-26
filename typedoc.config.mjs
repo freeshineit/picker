@@ -10,7 +10,7 @@ export default {
   out: "docs",
   plugin: ["typedoc-plugin-rename-defaults", "typedoc-plugin-mdn-links", "typedoc-plugin-replace-text"],
   exclude: ["node_modules", "__tests__/**/*", "packages/*/{__tests__,e2e}/**/*"],
-  includeVersion: true,
+  // includeVersion: true,
   hideGenerator: true,
   disableSources: false,
   tsconfig: "tsconfig.json",
