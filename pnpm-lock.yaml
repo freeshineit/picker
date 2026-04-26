@@ -142,7 +142,7 @@ importers:
   examples/with-vue2.7:
     dependencies:
       '@skax/picker':
-        specifier: ^2.0.0-alpha.2
+        specifier: ^2.0.0-alpha.3
         version: link:../../packages/picker
       core-js:
         specifier: ^3.38.1
@@ -167,7 +167,7 @@ importers:
   examples/with-vue3:
     dependencies:
       '@skax/picker':
-        specifier: ^2.0.0-alpha.2
+        specifier: ^2.0.0-alpha.3
         version: link:../../packages/picker
       vue:
         specifier: ^3.5.10
