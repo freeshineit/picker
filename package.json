@@ -34,7 +34,7 @@
   "author": "ShineShao <xiaoshaoqq@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@skax/rollup-config": "^0.1.0",
+    "@skax/rollup-config": "^0.1.1-beta.3",
     "@babel/preset-env": "^7.27.2",
     "@commitlint/cli": "^20.2.0",
     "@commitlint/config-conventional": "^20.2.0",
