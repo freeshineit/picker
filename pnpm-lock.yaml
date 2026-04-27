@@ -24,8 +24,8 @@ importers:
         specifier: ^1.58.2
         version: 1.59.1
       '@skax/rollup-config':
-        specifier: ^0.1.0
-        version: 0.1.0(ts-node@10.9.2)
+        specifier: ^0.1.1-beta.3
+        version: 0.1.1-beta.3(eslint@9.39.4)(ts-node@10.9.2)
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
@@ -3885,7 +3885,22 @@ packages:
       smob: 1.6.1
     dev: true
 
-  /@rollup/plugin-typescript@11.1.6(rollup@4.60.2)(typescript@5.3.3):
+  /@rollup/plugin-terser@0.4.4(rollup@4.60.2):
+    resolution: {integrity: sha512-XHeJC5Bgvs8LfukDwWZp7yeqin6ns8RTl2B9avbejt6tZqsqvVoWI7ZTQrcNsfKEDWBTnTxM8nMDkO2IFFbd0A==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+    dependencies:
+      rollup: 4.60.2
+      serialize-javascript: 6.0.2
+      smob: 1.6.1
+      terser: 5.46.2
+    dev: true
+
+  /@rollup/plugin-typescript@11.1.6(rollup@4.60.2)(typescript@5.9.3):
     resolution: {integrity: sha512-R92yOmIACgYdJ7dJ97p4K69I8gg6IEHt8M7dUBxN3W6nrO8uUxX5ixl0yU/N3aZTi8WhPuICvOHXQvF6FaykAA==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -3901,7 +3916,7 @@ packages:
       '@rollup/pluginutils': 5.3.0(rollup@4.60.2)
       resolve: 1.22.12
       rollup: 4.60.2
-      typescript: 5.3.3
+      typescript: 5.9.3
     dev: true
 
   /@rollup/pluginutils@3.1.0(rollup@2.80.0):
@@ -4286,9 +4301,9 @@ packages:
     requiresBuild: true
     dev: true
 
-  /@skax/rollup-config@0.1.0(ts-node@10.9.2):
-    resolution: {integrity: sha512-GZkT834CKFyY5pv2eeoJKfB+RzvEsoZt0LDOVHaImVPbcvoNm853O8/p1yTKB2J+OE+ClI6pWBfKYtD4bK6JIQ==}
-    engines: {node: '>=18.3'}
+  /@skax/rollup-config@0.1.1-beta.3(eslint@9.39.4)(ts-node@10.9.2):
+    resolution: {integrity: sha512-OGOwyKQZYTx0O/tdyI6jI9EU1cWqbzdxBYMIL7G8DCAAeSpEDmZPS2qdu9OMrnKCazfQ+nCb+WxVU35ExMIF2Q==}
+    engines: {node: '>=16'}
     dependencies:
       '@babel/core': 7.29.0
       '@babel/preset-env': 7.29.2(@babel/core@7.29.0)
@@ -4299,30 +4314,25 @@ packages:
       '@rollup/plugin-node-resolve': 16.0.3(rollup@4.60.2)
       '@rollup/plugin-replace': 6.0.3(rollup@4.60.2)
       '@rollup/plugin-swc': 0.4.0(@swc/core@1.15.30)(rollup@4.60.2)
-      '@rollup/plugin-typescript': 11.1.6(rollup@4.60.2)(typescript@5.3.3)
+      '@rollup/plugin-terser': 0.4.4(rollup@4.60.2)
+      '@rollup/plugin-typescript': 11.1.6(rollup@4.60.2)(typescript@5.9.3)
       '@skax/camel': 0.2.8
       '@swc/core': 1.15.30
       autoprefixer: 10.5.0(postcss@8.5.10)
       cssnano: 7.1.7(postcss@8.5.10)
       dayjs: 1.11.20
-      eslint: 9.39.4
-      eslint-config-xx: 2.2.4
       postcss: 8.5.10
-      prettier: 3.8.3
       rollup: 4.60.2
       rollup-plugin-copy: 3.5.0
-      rollup-plugin-dts: 6.4.1(rollup@4.60.2)(typescript@5.3.3)
+      rollup-plugin-dts: 6.4.1(rollup@4.60.2)(typescript@5.9.3)
       rollup-plugin-postcss: 4.0.2(postcss@8.5.10)(ts-node@10.9.2)
       rollup-plugin-serve: 2.0.3
       sass: 1.99.0
-      typescript: 5.3.3
+      typescript: 5.9.3
     transitivePeerDependencies:
       - '@swc/helpers'
       - '@types/babel__core'
-      - '@types/eslint'
-      - eslint-import-resolver-webpack
-      - eslint-plugin-import-x
-      - jiti
+      - eslint
       - supports-color
       - ts-node
       - tslib
@@ -16115,7 +16125,7 @@ packages:
       is-plain-object: 3.0.1
     dev: true
 
-  /rollup-plugin-dts@6.4.1(rollup@4.60.2)(typescript@5.3.3):
+  /rollup-plugin-dts@6.4.1(rollup@4.60.2)(typescript@5.9.3):
     resolution: {integrity: sha512-l//F3Zf7ID5GoOfLfD8kroBjQKEKpy1qfhtAdnpibFZMffPaylrg1CoDC2vGkPeTeyxUe4bVFCln2EFuL7IGGg==}
     engines: {node: '>=20'}
     peerDependencies:
@@ -16127,7 +16137,7 @@ packages:
       convert-source-map: 2.0.0
       magic-string: 0.30.21
       rollup: 4.60.2
-      typescript: 5.3.3
+      typescript: 5.9.3
     optionalDependencies:
       '@babel/code-frame': 7.29.0
     dev: true
