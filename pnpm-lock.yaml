@@ -24,8 +24,8 @@ importers:
         specifier: ^1.58.2
         version: 1.59.1
       '@skax/rollup-config':
-        specifier: ^0.1.1-beta.3
-        version: 0.1.1-beta.3(eslint@9.39.4)(ts-node@10.9.2)
+        specifier: ^1.0.1
+        version: 1.0.1(eslint@9.39.4)(ts-node@10.9.2)
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
@@ -44,9 +44,6 @@ importers:
       cross-env:
         specifier: ^10.1.0
         version: 10.1.0
-      dayjs:
-        specifier: ^1.11.13
-        version: 1.11.20
       eslint:
         specifier: ^9.39.4
         version: 9.39.4
@@ -4301,8 +4298,8 @@ packages:
     requiresBuild: true
     dev: true
 
-  /@skax/rollup-config@0.1.1-beta.3(eslint@9.39.4)(ts-node@10.9.2):
-    resolution: {integrity: sha512-OGOwyKQZYTx0O/tdyI6jI9EU1cWqbzdxBYMIL7G8DCAAeSpEDmZPS2qdu9OMrnKCazfQ+nCb+WxVU35ExMIF2Q==}
+  /@skax/rollup-config@1.0.1(eslint@9.39.4)(ts-node@10.9.2):
+    resolution: {integrity: sha512-wUTL1hjaElU4erpAlf7A9IXEu8GBUY1cWZK/djmpDYyenYQJJYVrowz+g3ZvrSd2Q9x9hJOy1FovVmxVnb3jEA==}
     engines: {node: '>=16'}
     dependencies:
       '@babel/core': 7.29.0
@@ -4320,7 +4317,6 @@ packages:
       '@swc/core': 1.15.30
       autoprefixer: 10.5.0(postcss@8.5.10)
       cssnano: 7.1.7(postcss@8.5.10)
-      dayjs: 1.11.20
       postcss: 8.5.10
       rollup: 4.60.2
       rollup-plugin-copy: 3.5.0
@@ -8234,10 +8230,6 @@ packages:
 
   /dateformat@3.0.3:
     resolution: {integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==}
-    dev: true
-
-  /dayjs@1.11.20:
-    resolution: {integrity: sha512-YbwwqR/uYpeoP4pu043q+LTDLFBLApUP6VxRihdfNTqu4ubqMlGDLd6ErXhEgsyvY0K6nCs7nggYumAN+9uEuQ==}
     dev: true
 
   /de-indent@1.0.2:
