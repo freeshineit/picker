@@ -9,8 +9,8 @@ import pickerProvider from "./provider";
  *
  * @public
  */
-
 const _$PICKER_PLACEMENT$_ = ["top", "tl", "tr", "bottom", "bl", "br"];
+
 /** 展示位置
  *
  * |   top    |     tl    |     tr    | bottom    |     bl     |     br     |
@@ -28,7 +28,7 @@ export interface PickerOptions {
   wrapClassName?: string;
   /** 是否展开，默认false */
   open?: boolean;
-  /** 展示位置  */
+  /** 展示位置 */
   placement?: PickerPlacement;
   /** 通过x中的offset[0]和y中的offset[1]偏移源节点 */
   offset?: [number, number];
@@ -72,7 +72,6 @@ const _$PICKER_PREFIX_CLS$_ = "epicker";
 /**
  * Picker 默认值
  */
-
 const __$PICKER_DEFAULT_OPTIONS$__ = {
   getPopupContainer: () => document.body,
   wrapClassName: "",
@@ -370,25 +369,20 @@ class Picker {
     }
     if (!this._options.isMobile) {
       window.removeEventListener("blur", this._onHide);
-
       document.removeEventListener("visibilitychange", this._onHide);
-
       window.removeEventListener("resize", this._onHide);
-
       document.removeEventListener("click", this._onDocumentClick);
     }
 
     if (this._$mask) {
       this._$mask.removeEventListener("click", this._onHide);
       this._$mask.remove();
-
       this._$mask = null!;
     }
     if (this._options.isMobile) document.body.classList.remove(`${_$PICKER_PREFIX_CLS$_}-body-noscroll`);
 
     if (this.$wrapperContent) {
       this.$wrapperContent.remove();
-
       this.$wrapperContent = null!;
     }
   }
@@ -546,11 +540,8 @@ class Picker {
     if (this._$mask) this._$mask.addEventListener("click", this._onHide);
     if (!this._options.isMobile) {
       window.addEventListener("blur", this._onHide);
-
       document.addEventListener("visibilitychange", this._onHide);
-
       window.addEventListener("resize", this._onHide);
-
       document.addEventListener("click", this._onDocumentClick);
     }
   }
