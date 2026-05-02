@@ -81,17 +81,23 @@ function App() {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
-  const openPicker = () => {
+  const openPicker = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
     if (!pickerRef.current) return;
     pickerRef.current.open = true;
   };
 
-  const closePicker = () => {
+  const closePicker = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
     if (!pickerRef.current) return;
     pickerRef.current.open = false;
   };
 
-  const togglePicker = () => {
+  const togglePicker = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
     if (!pickerRef.current) return;
     pickerRef.current.open = !pickerRef.current.open;
   };

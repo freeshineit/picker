@@ -135,15 +135,21 @@ export default {
       this.pickerReady = true;
       this.pushLog("picker rebuilt");
     },
-    openPicker() {
+    openPicker(e) {
+      e.preventDefault();
+      e.stopPropagation();
       if (!this.picker) return;
       this.picker.open = true;
     },
-    closePicker() {
+    closePicker(e) {
+      e.preventDefault();
+      e.stopPropagation();
       if (!this.picker) return;
       this.picker.open = false;
     },
-    togglePicker() {
+    togglePicker(e) {
+      e.preventDefault();
+      e.stopPropagation();
       if (!this.picker) return;
       this.picker.open = !this.picker.open;
     },

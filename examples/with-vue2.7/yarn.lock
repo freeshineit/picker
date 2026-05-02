@@ -962,10 +962,10 @@
   resolved "https://registry.yarnpkg.com/@sideway/pinpoint/-/pinpoint-2.0.0.tgz#cff8ffadc372ad29fd3f78277aeb29e632cc70df"
   integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
 
-"@skax/picker@^2.0.0-alpha.3":
-  version "2.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@skax/picker/-/picker-2.0.0-beta.3.tgz#c27ea2a92ea2626fab655e362b2258758fc9f5bb"
-  integrity sha512-bGwaSdVdpjRy8F9jYA17KWHbkACEdkBWT6yy0Rt19SXeI9/wwqi3WqcTuO7yJJ6S2YZlebsYg4zWK4wOuCs2ug==
+"@skax/picker@^2.0.0-alpha.4":
+  version "2.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@skax/picker/-/picker-2.0.0-beta.4.tgz#59d0d90c57c6d30416f155541602286a38af3902"
+  integrity sha512-h+UgJ51ZrKMVuX+EbCSDu8h3Bs28MU41BS3kLNWxQwoq+4RAdkQrE58dIeQ/g3U0gPa/sZprSA4xLtjMI2Cheg==
 
 "@soda/friendly-errors-webpack-plugin@^1.8.0":
   version "1.8.1"

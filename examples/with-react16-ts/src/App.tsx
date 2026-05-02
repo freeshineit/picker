@@ -72,6 +72,8 @@ function App() {
       },
     });
 
+    window.picker = pickerRef.current;
+
     pickerRef.current.disabled = !!form.disabled;
     setPickerReady(true);
     pushLog("picker rebuilt");
@@ -81,26 +83,42 @@ function App() {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
-  const openPicker = () => {
+  const openPicker = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
+    // 阻止事件冒泡和默认行为，并立即停止事件传播(react@16)
+    e.nativeEvent.stopImmediatePropagation();
     if (!pickerRef.current) return;
+    console.log("openPicker triggered", pickerRef.current.open);
     pickerRef.current.open = true;
-  };
+  }, []);
 
-  const closePicker = () => {
+  const closePicker = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
+    // 阻止事件冒泡和默认行为，并立即停止事件传播(react@16)
+    e.nativeEvent.stopImmediatePropagation();
     if (!pickerRef.current) return;
+    console.log("closePicker triggered", pickerRef.current.open);
     pickerRef.current.open = false;
-  };
+    return;
+  }, []);
 
-  const togglePicker = () => {
+  const togglePicker = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
+    // 阻止事件冒泡和默认行为，并立即停止事件传播(react@16)
+    e.nativeEvent.stopImmediatePropagation();
     if (!pickerRef.current) return;
+    console.log("togglePicker triggered", pickerRef.current.open);
     pickerRef.current.open = !pickerRef.current.open;
-  };
+  }, []);
 
-  const updateContent = () => {
+  const updateContent = useCallback(() => {
     if (!pickerRef.current) return;
     pickerRef.current.innerHTML(form.contentHtml);
     pushLog("content updated by innerHTML");
-  };
+  }, [form.contentHtml, pushLog]);
 
   useEffect(() => {
     rebuildPicker();
@@ -113,7 +131,7 @@ function App() {
 
   return (
     <div className="demo-page">
-      <h2>Picker React + TS Demo</h2>
+      <h2>Picker React16 + TS Demo</h2>
 
       <div className="control-panel">
         <label>

@@ -81,26 +81,32 @@ function App() {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
-  const openPicker = () => {
+  const openPicker = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
     if (!pickerRef.current) return;
     pickerRef.current.open = true;
-  };
+  }, []);
 
-  const closePicker = () => {
+  const closePicker = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
     if (!pickerRef.current) return;
     pickerRef.current.open = false;
-  };
+  }, []);
 
-  const togglePicker = () => {
+  const togglePicker = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
     if (!pickerRef.current) return;
     pickerRef.current.open = !pickerRef.current.open;
-  };
+  }, []);
 
-  const updateContent = () => {
+  const updateContent = useCallback(() => {
     if (!pickerRef.current) return;
     pickerRef.current.innerHTML(form.contentHtml);
     pushLog("content updated by innerHTML");
-  };
+  }, [form.contentHtml, pushLog]);
 
   useEffect(() => {
     rebuildPicker();
@@ -113,7 +119,7 @@ function App() {
 
   return (
     <div className="demo-page">
-      <h2>Picker React + TS Demo</h2>
+      <h2>Picker React17 + TS Demo</h2>
 
       <div className="control-panel">
         <label>
