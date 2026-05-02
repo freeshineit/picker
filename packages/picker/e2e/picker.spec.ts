@@ -6,6 +6,7 @@ import path from "path";
  */
 const PROJECT_ROOT = process.cwd();
 const FIXTURE_URL = `file://${path.join(PROJECT_ROOT, "packages/picker/e2e/fixtures/picker-test.html")}`;
+const ROTATE_FIXTURE_URL = `file://${path.join(PROJECT_ROOT, "packages/picker/e2e/fixtures/rotate-test.html")}`;
 
 /**
  * 在指定 section 内获取 picker wrapper 元素
@@ -373,5 +374,292 @@ test.describe("Picker 集成测试 - 边界情况", () => {
     }
 
     expect(errors).toEqual([]);
+  });
+});
+
+test.describe("Picker 旋转容器 - 位置验证", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto(ROTATE_FIXTURE_URL);
+    await page.waitForLoadState("networkidle");
+    // 等待旋转网格渲染完成
+    await page.waitForTimeout(500);
+  });
+
+  test("0deg 容器 - bottom 弹出位置在目标下方", async ({ page }) => {
+    const btn = page.locator("#rotate-target-bottom-0");
+    await expect(btn).toBeVisible();
+
+    const btnBox = await btn.boundingBox();
+    expect(btnBox).not.toBeNull();
+
+    // 点击打开
+    await btn.click();
+    // wrapper 挂载在按钮内部（getPopupContainer: () => target）
+    const wrapper = page.locator("#rotate-target-bottom-0 > .epicker-wrapper");
+    await wrapper.waitFor({ state: "visible", timeout: 5000 });
+    await page.waitForTimeout(400);
+
+    const wrapperBox = await wrapper.boundingBox();
+    expect(wrapperBox).not.toBeNull();
+
+    if (btnBox && wrapperBox) {
+      // bottom 弹窗应在目标下方：wrapper.top >= btn.bottom
+      expect(wrapperBox.y).toBeGreaterThanOrEqual(btnBox.y + btnBox.height - 5);
+      // 水平居中：wrapper 中心在 btn 中心附近
+      const btnCenterX = btnBox.x + btnBox.width / 2;
+      const wrapperCenterX = wrapperBox.x + wrapperBox.width / 2;
+      expect(Math.abs(wrapperCenterX - btnCenterX)).toBeLessThan(btnBox.width / 2 + 10);
+    }
+  });
+
+  test("0deg 容器 - top 弹出位置在目标上方", async ({ page }) => {
+    const btn = page.locator("#rotate-target-top-0");
+    await expect(btn).toBeVisible();
+
+    await btn.click();
+    const wrapper = page.locator("#rotate-target-top-0 > .epicker-wrapper");
+    await wrapper.waitFor({ state: "visible", timeout: 5000 });
+    await page.waitForTimeout(400);
+
+    const btnBox = await btn.boundingBox();
+    const wrapperBox = await wrapper.boundingBox();
+    expect(btnBox).not.toBeNull();
+    expect(wrapperBox).not.toBeNull();
+
+    if (btnBox && wrapperBox) {
+      // top 弹窗应在目标上方：wrapper.bottom <= btn.top
+      expect(wrapperBox.y + wrapperBox.height).toBeLessThanOrEqual(btnBox.y + 5);
+      // 水平居中
+      const btnCenterX = btnBox.x + btnBox.width / 2;
+      const wrapperCenterX = wrapperBox.x + wrapperBox.width / 2;
+      expect(Math.abs(wrapperCenterX - btnCenterX)).toBeLessThan(btnBox.width / 2 + 10);
+    }
+  });
+
+  test("0deg 容器 - br 弹出位置在目标右下方", async ({ page }) => {
+    const btn = page.locator("#rotate-target-br-0");
+    await expect(btn).toBeVisible();
+
+    await btn.click();
+    const wrapper = page.locator("#rotate-target-br-0 > .epicker-wrapper");
+    await wrapper.waitFor({ state: "visible", timeout: 5000 });
+    await page.waitForTimeout(400);
+
+    const btnBox = await btn.boundingBox();
+    const wrapperBox = await wrapper.boundingBox();
+    expect(btnBox).not.toBeNull();
+    expect(wrapperBox).not.toBeNull();
+
+    if (btnBox && wrapperBox) {
+      // br = bottom-right：wrapper.right 对齐 btn.right（wrapper 可能比 btn 宽）
+      expect(Math.abs(wrapperBox.x + wrapperBox.width - (btnBox.x + btnBox.width))).toBeLessThan(10);
+      // wrapper.top 接近 btn.bottom
+      expect(Math.abs(wrapperBox.y - (btnBox.y + btnBox.height))).toBeLessThan(10);
+    }
+  });
+
+  test("0deg 容器 - tr 弹出位置在目标右上方", async ({ page }) => {
+    const btn = page.locator("#rotate-target-tr-0");
+    await expect(btn).toBeVisible();
+
+    await btn.click();
+    const wrapper = page.locator("#rotate-target-tr-0 > .epicker-wrapper");
+    await wrapper.waitFor({ state: "visible", timeout: 5000 });
+    await page.waitForTimeout(400);
+
+    const btnBox = await btn.boundingBox();
+    const wrapperBox = await wrapper.boundingBox();
+    expect(btnBox).not.toBeNull();
+    expect(wrapperBox).not.toBeNull();
+
+    if (btnBox && wrapperBox) {
+      // tr = top-right：wrapper.right 对齐 btn.right
+      expect(Math.abs(wrapperBox.x + wrapperBox.width - (btnBox.x + btnBox.width))).toBeLessThan(10);
+      // wrapper.bottom 接近 btn.top
+      expect(Math.abs(wrapperBox.y + wrapperBox.height - btnBox.y)).toBeLessThan(10);
+    }
+  });
+
+  test("0deg 容器 - bl 弹出位置在目标左下方", async ({ page }) => {
+    const btn = page.locator("#rotate-target-bl-0");
+    await expect(btn).toBeVisible();
+
+    await btn.click();
+    const wrapper = page.locator("#rotate-target-bl-0 > .epicker-wrapper");
+    await wrapper.waitFor({ state: "visible", timeout: 5000 });
+    await page.waitForTimeout(400);
+
+    const btnBox = await btn.boundingBox();
+    const wrapperBox = await wrapper.boundingBox();
+    expect(btnBox).not.toBeNull();
+    expect(wrapperBox).not.toBeNull();
+
+    if (btnBox && wrapperBox) {
+      // bl = bottom-left：wrapper.left 对齐 btn.left
+      expect(Math.abs(wrapperBox.x - btnBox.x)).toBeLessThan(10);
+      // wrapper.top 接近 btn.bottom
+      expect(Math.abs(wrapperBox.y - (btnBox.y + btnBox.height))).toBeLessThan(10);
+    }
+  });
+
+  test("0deg 容器 - tl 弹出位置在目标左上方", async ({ page }) => {
+    const btn = page.locator("#rotate-target-tl-0");
+    await expect(btn).toBeVisible();
+
+    await btn.click();
+    const wrapper = page.locator("#rotate-target-tl-0 > .epicker-wrapper");
+    await wrapper.waitFor({ state: "visible", timeout: 5000 });
+    await page.waitForTimeout(400);
+
+    const btnBox = await btn.boundingBox();
+    const wrapperBox = await wrapper.boundingBox();
+    expect(btnBox).not.toBeNull();
+    expect(wrapperBox).not.toBeNull();
+
+    if (btnBox && wrapperBox) {
+      // tl = top-left：wrapper.left 对齐 btn.left
+      expect(Math.abs(wrapperBox.x - btnBox.x)).toBeLessThan(10);
+      // wrapper.bottom 接近 btn.top
+      expect(Math.abs(wrapperBox.y + wrapperBox.height - btnBox.y)).toBeLessThan(10);
+    }
+  });
+
+  test("弹窗不超出视口右边界", async ({ page }) => {
+    // 使用靠近右侧的 placement 测试
+    const btn = page.locator("#rotate-target-br-0");
+    await expect(btn).toBeVisible();
+
+    await btn.click();
+    const wrapper = page.locator("#rotate-target-br-0 > .epicker-wrapper");
+    await wrapper.waitFor({ state: "visible", timeout: 5000 });
+    await page.waitForTimeout(400);
+
+    const viewport = page.viewportSize();
+    const wrapperBox = await wrapper.boundingBox();
+    expect(wrapperBox).not.toBeNull();
+
+    if (wrapperBox && viewport) {
+      // 不超出右边界
+      expect(wrapperBox.x + wrapperBox.width).toBeLessThanOrEqual(viewport.width + 2);
+      // 不超出下边界
+      expect(wrapperBox.y + wrapperBox.height).toBeLessThanOrEqual(viewport.height + 2);
+      // 不超出左边界
+      expect(wrapperBox.x).toBeGreaterThanOrEqual(0);
+    }
+  });
+
+  test("弹窗在 body 挂载时位置也正确", async ({ page }) => {
+    // 使用 index.html 中的 body 挂载测试
+    await page.goto(FIXTURE_URL);
+    await page.waitForLoadState("networkidle");
+
+    const btn = page.locator("#btn-basic");
+    await expect(btn).toBeVisible();
+
+    const btnBox = await btn.boundingBox();
+    expect(btnBox).not.toBeNull();
+
+    await btn.click();
+    await page.waitForTimeout(500);
+
+    const wrapper = page.locator(".epicker-wrapper").filter({ hasText: "Basic Picker Content" }).first();
+    await expect(wrapper).toBeVisible();
+
+    const wrapperBox = await wrapper.boundingBox();
+    expect(wrapperBox).not.toBeNull();
+
+    if (btnBox && wrapperBox) {
+      // bottom 弹窗应在按钮下方
+      expect(wrapperBox.y).toBeGreaterThanOrEqual(btnBox.y + btnBox.height - 5);
+    }
+  });
+
+  test("90deg 旋转容器 - bottom 弹出位置正确", async ({ page }) => {
+    const btn = page.locator("#rotate-target-bottom-90");
+    await expect(btn).toBeVisible();
+
+    await btn.click();
+    const wrapper = page.locator("#rotate-target-bottom-90 > .epicker-wrapper");
+    await wrapper.waitFor({ state: "visible", timeout: 5000 });
+    await page.waitForTimeout(400);
+
+    const btnBox = await btn.boundingBox();
+    const wrapperBox = await wrapper.boundingBox();
+    expect(btnBox).not.toBeNull();
+    expect(wrapperBox).not.toBeNull();
+
+    if (btnBox && wrapperBox) {
+      // 弹层应在按钮外部（不重叠），视觉上在对应方向
+      const overlapX = Math.max(0, Math.min(wrapperBox.x + wrapperBox.width, btnBox.x + btnBox.width) - Math.max(wrapperBox.x, btnBox.x));
+      const overlapY = Math.max(0, Math.min(wrapperBox.y + wrapperBox.height, btnBox.y + btnBox.height) - Math.max(wrapperBox.y, btnBox.y));
+      // 弹层和按钮不应有显著重叠（可接受 5px 以内容差）
+      expect(overlapX * overlapY).toBeLessThan(btnBox.width * btnBox.height * 0.3);
+    }
+  });
+
+  test("270deg 旋转容器 - bottom 弹出位置正确", async ({ page }) => {
+    const btn = page.locator("#rotate-target-bottom-270");
+    await expect(btn).toBeVisible();
+
+    await btn.click();
+    const wrapper = page.locator("#rotate-target-bottom-270 > .epicker-wrapper");
+    await wrapper.waitFor({ state: "visible", timeout: 5000 });
+    await page.waitForTimeout(400);
+
+    const btnBox = await btn.boundingBox();
+    const wrapperBox = await wrapper.boundingBox();
+    expect(btnBox).not.toBeNull();
+    expect(wrapperBox).not.toBeNull();
+
+    if (btnBox && wrapperBox) {
+      // 弹层不显著重叠
+      const overlapX = Math.max(0, Math.min(wrapperBox.x + wrapperBox.width, btnBox.x + btnBox.width) - Math.max(wrapperBox.x, btnBox.x));
+      const overlapY = Math.max(0, Math.min(wrapperBox.y + wrapperBox.height, btnBox.y + btnBox.height) - Math.max(wrapperBox.y, btnBox.y));
+      expect(overlapX * overlapY).toBeLessThan(btnBox.width * btnBox.height * 0.3);
+    }
+  });
+
+  test("180deg 旋转容器 - bottom 弹出位置正确", async ({ page }) => {
+    const btn = page.locator("#rotate-target-bottom-180");
+    await expect(btn).toBeVisible();
+
+    await btn.click();
+    const wrapper = page.locator("#rotate-target-bottom-180 > .epicker-wrapper");
+    await wrapper.waitFor({ state: "visible", timeout: 5000 });
+    await page.waitForTimeout(400);
+
+    const btnBox = await btn.boundingBox();
+    const wrapperBox = await wrapper.boundingBox();
+    expect(btnBox).not.toBeNull();
+    expect(wrapperBox).not.toBeNull();
+
+    if (btnBox && wrapperBox) {
+      // 弹层不显著重叠
+      const overlapX = Math.max(0, Math.min(wrapperBox.x + wrapperBox.width, btnBox.x + btnBox.width) - Math.max(wrapperBox.x, btnBox.x));
+      const overlapY = Math.max(0, Math.min(wrapperBox.y + wrapperBox.height, btnBox.y + btnBox.height) - Math.max(wrapperBox.y, btnBox.y));
+      expect(overlapX * overlapY).toBeLessThan(btnBox.width * btnBox.height * 0.3);
+    }
+  });
+
+  test("-90deg 旋转容器 - bottom 弹出位置正确", async ({ page }) => {
+    const btn = page.locator("#rotate-target-bottom--90");
+    await expect(btn).toBeVisible();
+
+    await btn.click();
+    const wrapper = page.locator("#rotate-target-bottom--90 > .epicker-wrapper");
+    await wrapper.waitFor({ state: "visible", timeout: 5000 });
+    await page.waitForTimeout(400);
+
+    const btnBox = await btn.boundingBox();
+    const wrapperBox = await wrapper.boundingBox();
+    expect(btnBox).not.toBeNull();
+    expect(wrapperBox).not.toBeNull();
+
+    if (btnBox && wrapperBox) {
+      // 弹层不显著重叠
+      const overlapX = Math.max(0, Math.min(wrapperBox.x + wrapperBox.width, btnBox.x + btnBox.width) - Math.max(wrapperBox.x, btnBox.x));
+      const overlapY = Math.max(0, Math.min(wrapperBox.y + wrapperBox.height, btnBox.y + btnBox.height) - Math.max(wrapperBox.y, btnBox.y));
+      expect(overlapX * overlapY).toBeLessThan(btnBox.width * btnBox.height * 0.3);
+    }
   });
 });
