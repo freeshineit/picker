@@ -388,7 +388,13 @@ class Picker {
   }
 
   /**
-   * 现实位置
+   * 设置弹出位置 (移动端不生效)
+   * 位置计算逻辑：
+   * 1. 根据 options.placement 获取初始位置
+   * 2. 检测上下方向空间是否足够，不足则翻转
+   * 3. 计算 left 和 top，转换为浏览器可视窗口坐标系
+   * 4. 边界裁剪，确保弹框在浏览器窗口内
+   * 5. 转换回挂载容器坐标系，设置样式
    */
   private _setPlacement() {
     if (!this._open || this._options.isMobile || !this.$container) return;
