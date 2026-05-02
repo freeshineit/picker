@@ -67,6 +67,57 @@
         </section>
 
         <section class="demo-section">
+          <h2>Body · Click</h2>
+          <p>弹层挂载在 body，点击触发，适合全局弹窗场景。</p>
+          <div class="demo-grid">
+            <button class="demo-target" data-picker data-container="body" data-trigger="click" data-placement="top" data-label="Body Click / Top">Body Top</button>
+            <button class="demo-target" data-picker data-container="body" data-trigger="click" data-placement="tl" data-label="Body Click / TL">Body TL</button>
+            <button class="demo-target" data-picker data-container="body" data-trigger="click" data-placement="tr" data-label="Body Click / TR">Body TR</button>
+            <button class="demo-target" data-picker data-container="body" data-trigger="click" data-placement="bottom" data-label="Body Click / Bottom">Body Bottom</button>
+            <button class="demo-target" data-picker data-container="body" data-trigger="click" data-placement="bl" data-label="Body Click / BL">Body BL</button>
+            <button class="demo-target" data-picker data-container="body" data-trigger="click" data-placement="br" data-label="Body Click / BR">Body BR</button>
+          </div>
+        </section>
+
+        <section class="demo-section">
+          <h2>Container · Click · Offset</h2>
+          <p>容器挂载 + 点击触发，配合偏移量调整弹层位置。</p>
+          <div class="demo-row">
+            <button class="demo-target" data-picker data-container="self" data-trigger="click" data-placement="bottom" data-offset="0,20" data-label="Container Click Offset (0,20)">
+              Offset 0,20
+            </button>
+            <button class="demo-target" data-picker data-container="self" data-trigger="click" data-placement="bottom" data-offset="0,40" data-label="Container Click Offset (0,40)">
+              Offset 0,40
+            </button>
+            <button class="demo-target" data-picker data-container="self" data-trigger="click" data-placement="bottom" data-offset="20,10" data-label="Container Click Offset (20,10)">
+              Offset 20,10
+            </button>
+            <button class="demo-target" data-picker data-container="self" data-trigger="click" data-placement="top" data-offset="0,-30" data-label="Container Click Offset (0,-30)">
+              Offset 0,-30
+            </button>
+          </div>
+        </section>
+
+        <section class="demo-section">
+          <h2>Body · Click · Offset</h2>
+          <p>Body 挂载 + 点击触发，配合偏移量调整弹层位置。</p>
+          <div class="demo-row">
+            <button class="demo-target" data-picker data-container="body" data-trigger="click" data-placement="bottom" data-offset="0,20" data-label="Body Click Offset (0,20)">
+              Body Offset 0,20
+            </button>
+            <button class="demo-target" data-picker data-container="body" data-trigger="click" data-placement="bottom" data-offset="20,30" data-label="Body Click Offset (20,30)">
+              Body Offset 20,30
+            </button>
+            <button class="demo-target" data-picker data-container="body" data-trigger="click" data-placement="top" data-offset="0,-30" data-label="Body Click Offset (0,-30)">
+              Body Offset 0,-30
+            </button>
+            <button class="demo-target" data-picker data-container="body" data-trigger="click" data-placement="br" data-offset="-10,10" data-label="Body Click Offset (-10,10)">
+              BR Offset -10,10
+            </button>
+          </div>
+        </section>
+
+        <section class="demo-section">
           <h2>Offset · Hover</h2>
           <p>偏移量示例：适合让气泡留出可视间距。</p>
           <div class="demo-row">
