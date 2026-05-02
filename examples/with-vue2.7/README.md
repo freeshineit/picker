@@ -1,4 +1,6 @@
-# my-project
+# with-vue2.7
+
+Picker demo built with Vue 2.7.
 
 ## Project setup
 
@@ -17,13 +19,3 @@ yarn serve
 ```
 yarn build
 ```
-
-### Lints and fixes files
-
-```
-yarn lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
