@@ -19,11 +19,13 @@ export default {
     ],
     "^.+\\.jsx?$": "babel-jest",
     "^.+\\.scss$": "jest-transform-stub",
+    "^.+\\.sass$": "jest-transform-stub",
+    "^.+\\.css$": "jest-transform-stub",
   },
   transformIgnorePatterns: [
     // pnpm installs packages under node_modules/.pnpm/<name>@<version>/node_modules/<name>
     // "/node_modules/(?!.pnpm|@skax/picker)",
-    // "/node_modules/.pnpm/(?!(@skax\+picker)@)",
+    // "/node_modules/.pnpm/(?!(@skax/picker)@)",
   ],
   moduleNameMapper: {
     "^@skax/picker/dist/style/index\\.js$": "<rootDir>/__mocks__/styleMock.js",
