@@ -179,20 +179,28 @@
             },
           );
           picker.disabled = form.disabled;
+          window.picker = picker;
           updateState();
           pushLog("picker rebuilt");
         }
 
         els.btnRebuild.addEventListener("click", rebuildPicker);
-        els.btnOpen.addEventListener("click", function () {
+        els.btnOpen.addEventListener("click", function (e) {
+          e.stopPropagation();
+          e.preventDefault();
           if (!picker) return;
+
           picker.open = true;
         });
-        els.btnClose.addEventListener("click", function () {
+        els.btnClose.addEventListener("click", function (e) {
+          e.stopPropagation();
+          e.preventDefault();
           if (!picker) return;
           picker.open = false;
         });
-        els.btnToggle.addEventListener("click", function () {
+        els.btnToggle.addEventListener("click", function (e) {
+          e.stopPropagation();
+          e.preventDefault();
           if (!picker) return;
           picker.open = !picker.open;
         });
