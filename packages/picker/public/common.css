@@ -81,7 +81,7 @@ body {
 }
 .demo-target {
   appearance: none;
-  border: 1px solid #d5dbe7;
+  border: 10px solid #d5dbe7;
   background: #f8fafc;
   border-radius: 10px;
   padding: 12px 14px;
