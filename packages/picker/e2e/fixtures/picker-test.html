@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Picker E2E Test</title>
+    <link rel="stylesheet" href="../../dist/style/css.css" />
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+      }
+      .target-btn {
+        border: 1px solid #111;
+        background: #fff;
+        border-radius: 8px;
+        cursor: pointer;
+        padding: 8px 12px;
+      }
+      .target-btn:hover {
+        background: #f0f0f0;
+      }
+      .status {
+        margin-top: 6px;
+        font-size: 13px;
+        color: #666;
+      }
+      .test-section {
+        position: relative;
+        min-height: 60px;
+        padding: 12px;
+        margin-bottom: 8px;
+        border: 1px solid #eee;
+        border-radius: 6px;
+      }
+      .test-section h3 {
+        margin: 0 0 8px 0;
+        font-size: 14px;
+        color: #333;
+      }
+      .flex-row {
+        display: flex;
+        gap: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Picker E2E Tests</h1>
+
+    <div id="test-basic" class="test-section">
+      <h3>Basic Click Picker</h3>
+      <button id="btn-basic" class="target-btn">Open Picker</button>
+      <div id="status-basic" class="status">closed</div>
+    </div>
+
+    <div id="test-hover" class="test-section">
+      <h3>Hover Picker</h3>
+      <button id="btn-hover" class="target-btn">Hover Me</button>
+      <div id="status-hover" class="status">closed</div>
+    </div>
+
+    <div id="test-multiple" class="test-section">
+      <h3>Multiple Pickers</h3>
+      <div class="flex-row">
+        <div>
+          <button id="btn-multi-1" class="target-btn">Picker 1</button>
+          <div id="status-multi-1" class="status">closed</div>
+        </div>
+        <div>
+          <button id="btn-multi-2" class="target-btn">Picker 2</button>
+          <div id="status-multi-2" class="status">closed</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="test-disabled" class="test-section">
+      <h3>Disabled Picker</h3>
+      <button id="btn-disabled" class="target-btn">Disabled Picker</button>
+      <div id="status-disabled" class="status">closed</div>
+    </div>
+
+    <div id="test-mobile" class="test-section">
+      <h3>Mobile Picker</h3>
+      <button id="btn-mobile" class="target-btn">Mobile Picker</button>
+      <div id="status-mobile" class="status">closed</div>
+    </div>
+
+    <div id="test-content" class="test-section">
+      <h3>Content Update</h3>
+      <button id="btn-content" class="target-btn">Content Picker</button>
+      <div id="status-content" class="status">closed</div>
+    </div>
+
+    <div id="test-placement" class="test-section">
+      <h3>Placement</h3>
+      <button id="btn-placement" class="target-btn" style="margin-left: 300px">Placement Test</button>
+      <div id="status-placement" class="status">closed</div>
+    </div>
+
+    <div id="test-close-other" class="test-section">
+      <h3>Close Other</h3>
+      <div class="flex-row">
+        <div>
+          <button id="btn-co-1" class="target-btn">Picker A</button>
+          <div id="status-co-1" class="status">closed</div>
+        </div>
+        <div>
+          <button id="btn-co-2" class="target-btn">Picker B</button>
+          <div id="status-co-2" class="status">closed</div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../dist/index.umd.js"></script>
+    <script>
+      (function () {
+        var allPickers = [];
+
+        function updateStatus(id, picker) {
+          var el = document.getElementById(id);
+          if (el) el.textContent = picker && picker.open ? "open" : "closed";
+        }
+
+        var containers = {};
+        function ensureContainer(sectionId) {
+          if (!containers[sectionId]) {
+            var section = document.getElementById(sectionId);
+            var div = document.createElement("div");
+            div.className = "picker-container";
+            section.appendChild(div);
+            containers[sectionId] = div;
+          }
+          return containers[sectionId];
+        }
+
+        function createBasicPicker() {
+          if (allPickers["basic"]) allPickers["basic"].destroy();
+          var container = ensureContainer("test-basic");
+          var picker = new Picker(document.getElementById("btn-basic"), {
+            placement: "bottom",
+            trigger: "click",
+            triggerClose: true,
+            getPopupContainer: function () {
+              return container;
+            },
+            content: "<div style='padding:12px'><p>Basic Picker Content</p><button id='btn-inside-basic'>Inside</button></div>",
+            onOpenChange: function (open) {
+              updateStatus("status-basic", picker);
+            },
+          });
+          allPickers["basic"] = picker;
+          return picker;
+        }
+
+        function createHoverPicker() {
+          if (allPickers["hover"]) allPickers["hover"].destroy();
+          var container = ensureContainer("test-hover");
+          var picker = new Picker(document.getElementById("btn-hover"), {
+            placement: "bottom",
+            trigger: "hover",
+            mouseEnterDelay: 0.05,
+            mouseLeaveDelay: 0.1,
+            getPopupContainer: function () {
+              return container;
+            },
+            content: "<div style='padding:12px'>Hover Picker Content</div>",
+            onOpenChange: function (open) {
+              updateStatus("status-hover", picker);
+            },
+          });
+          allPickers["hover"] = picker;
+          return picker;
+        }
+
+        function createMultiplePickers() {
+          if (allPickers["multi1"]) allPickers["multi1"].destroy();
+          if (allPickers["multi2"]) allPickers["multi2"].destroy();
+          var container = ensureContainer("test-multiple");
+          var p1 = new Picker(document.getElementById("btn-multi-1"), {
+            placement: "bottom",
+            trigger: "click",
+            triggerClose: true,
+            getPopupContainer: function () {
+              return container;
+            },
+            content: "<div style='padding:12px'>Picker 1 Content</div>",
+            onOpenChange: function (open) {
+              updateStatus("status-multi-1", p1);
+            },
+          });
+          allPickers["multi1"] = p1;
+          var p2 = new Picker(document.getElementById("btn-multi-2"), {
+            placement: "bottom",
+            trigger: "click",
+            triggerClose: true,
+            getPopupContainer: function () {
+              return container;
+            },
+            content: "<div style='padding:12px'>Picker 2 Content</div>",
+            onOpenChange: function (open) {
+              updateStatus("status-multi-2", p2);
+            },
+          });
+          allPickers["multi2"] = p2;
+        }
+
+        function createDisabledPicker() {
+          if (allPickers["disabled"]) allPickers["disabled"].destroy();
+          var container = ensureContainer("test-disabled");
+          var picker = new Picker(document.getElementById("btn-disabled"), {
+            placement: "bottom",
+            trigger: "click",
+            getPopupContainer: function () {
+              return container;
+            },
+            content: "<div style='padding:12px'>Disabled Picker Content</div>",
+            onOpenChange: function (open) {
+              updateStatus("status-disabled", picker);
+            },
+          });
+          picker.disabled = true;
+          allPickers["disabled"] = picker;
+          return picker;
+        }
+
+        function createMobilePicker() {
+          if (allPickers["mobile"]) allPickers["mobile"].destroy();
+          var picker = new Picker(document.getElementById("btn-mobile"), {
+            placement: "bottom",
+            trigger: "click",
+            isMobile: true,
+            content: "<div style='padding:12px'>Mobile Picker Content</div>",
+            onOpenChange: function (open) {
+              updateStatus("status-mobile", picker);
+            },
+          });
+          allPickers["mobile"] = picker;
+          return picker;
+        }
+
+        function createContentPicker() {
+          if (allPickers["content"]) allPickers["content"].destroy();
+          var container = ensureContainer("test-content");
+          var picker = new Picker(document.getElementById("btn-content"), {
+            placement: "bottom",
+            trigger: "click",
+            triggerClose: true,
+            getPopupContainer: function () {
+              return container;
+            },
+            content: "<div style='padding:12px' id='initial-content'>Initial Content</div>",
+            onOpenChange: function (open) {
+              updateStatus("status-content", picker);
+            },
+          });
+          allPickers["content"] = picker;
+          return picker;
+        }
+
+        function createPlacementPicker() {
+          if (allPickers["placement"]) allPickers["placement"].destroy();
+          var container = ensureContainer("test-placement");
+          var picker = new Picker(document.getElementById("btn-placement"), {
+            placement: "br",
+            trigger: "click",
+            triggerClose: true,
+            getPopupContainer: function () {
+              return container;
+            },
+            content: "<div style='padding:12px;width:150px'>Placement Test Content</div>",
+            onOpenChange: function (open) {
+              updateStatus("status-placement", picker);
+            },
+          });
+          allPickers["placement"] = picker;
+          return picker;
+        }
+
+        function createCloseOtherPickers() {
+          if (allPickers["co1"]) allPickers["co1"].destroy();
+          if (allPickers["co2"]) allPickers["co2"].destroy();
+          var container = ensureContainer("test-close-other");
+          var p1 = new Picker(document.getElementById("btn-co-1"), {
+            placement: "bottom",
+            trigger: "click",
+            triggerClose: true,
+            getPopupContainer: function () {
+              return container;
+            },
+            content: "<div style='padding:12px'>Picker A Content</div>",
+            onOpenChange: function (open) {
+              updateStatus("status-co-1", p1);
+            },
+          });
+          allPickers["co1"] = p1;
+          var p2 = new Picker(document.getElementById("btn-co-2"), {
+            placement: "bottom",
+            trigger: "click",
+            triggerClose: true,
+            getPopupContainer: function () {
+              return container;
+            },
+            content: "<div style='padding:12px'>Picker B Content</div>",
+            onOpenChange: function (open) {
+              updateStatus("status-co-2", p2);
+            },
+          });
+          allPickers["co2"] = p2;
+        }
+
+        createBasicPicker();
+        createHoverPicker();
+        createMultiplePickers();
+        createDisabledPicker();
+        createMobilePicker();
+        createContentPicker();
+        createPlacementPicker();
+        createCloseOtherPickers();
+
+        window.__test__ = {
+          createBasicPicker: createBasicPicker,
+          createHoverPicker: createHoverPicker,
+          createDisabledPicker: createDisabledPicker,
+          createContentPicker: createContentPicker,
+          createPlacementPicker: createPlacementPicker,
+          getAllPickers: function () {
+            return allPickers;
+          },
+        };
+      })();
+    </script>
+  </body>
+</html>
