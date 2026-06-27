@@ -72,7 +72,7 @@ function App() {
       },
     });
 
-    window.picker = pickerRef.current;
+    (window as any).picker = pickerRef.current;
 
     pickerRef.current.disabled = !!form.disabled;
     setPickerReady(true);
