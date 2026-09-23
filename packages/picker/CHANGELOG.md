@@ -1,3 +1,9 @@
+## 2.0.0
+
+### Feat
+
+- change `getPopupContainer` to `getMountContainer`
+
 ## v1.1.9 (2025-12-10)
 
 ### Feat
