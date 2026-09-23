@@ -612,14 +612,12 @@ class Picker {
    * @param event - 鼠标点击事件
    */
   private _onDocumentClick(event: Event) {
-    if (
-      !(
-        this.$wrapperContent.contains(event.target as HTMLElement) ||
-        this.$wrapperContent === event.target ||
-        this.$container?.contains(event.target as HTMLElement) ||
-        this.$container === event.target
-      )
-    ) {
+    if (!(
+      this.$wrapperContent.contains(event.target as HTMLElement) ||
+      this.$wrapperContent === event.target ||
+      this.$container?.contains(event.target as HTMLElement) ||
+      this.$container === event.target
+    )) {
       if (this._disabled) return;
       this._onHide();
     }
