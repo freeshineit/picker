@@ -1,5 +1,5 @@
-<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>Picker | @skax/picker - v2.0.0-beta.4</title><meta name="description" content="Documentation for @skax/picker"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
-<div class="tsd-toolbar-contents container"><a href="../index.html" class="title">@skax/picker - v2.0.0-beta.4</a>
+<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>Picker | @skax/picker - v2.0.0-beta.5</title><meta name="description" content="Documentation for @skax/picker"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="../index.html" class="title">@skax/picker - v2.0.0-beta.5</a>
 <div id="tsd-toolbar-links"><a href="https://github.com/freeshineit/picker/tree/main/examples">Examples</a><a href="https://github.com/freeshineit/picker">Github</a></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
 <ul role="listbox" id="tsd-search-results"></ul>
 <div id="tsd-search-status" aria-live="polite" aria-atomic="true">
@@ -19,12 +19,12 @@
 它提供了丰富的配置选项，可以自定义弹窗的样式、位置、触发方式等。</p>
 </div>
 <div class="tsd-tag-example">
-<h4 class="tsd-anchor-link" id="example">Example<a href="#example" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-6">import</span><span class="hl-2"> </span><span class="hl-3">&quot;@skax/picker/dist/style/css&quot;</span><span class="hl-2">;</span><br/><span class="hl-6">import</span><span class="hl-2"> </span><span class="hl-5">Picker</span><span class="hl-2"> </span><span class="hl-6">from</span><span class="hl-2"> </span><span class="hl-3">&#39;@skax/picker&#39;</span><span class="hl-2">;</span><br/><span class="hl-4">const</span><span class="hl-2"> </span><span class="hl-8">picker</span><span class="hl-2"> = </span><span class="hl-4">new</span><span class="hl-2"> </span><span class="hl-1">Picker</span><span class="hl-2">(</span><span class="hl-5">document</span><span class="hl-2">.</span><span class="hl-1">getElementById</span><span class="hl-2">(</span><span class="hl-3">&#39;picker-container&#39;</span><span class="hl-2">),</span><br/><span class="hl-2">{</span><br/><span class="hl-2">  </span><span class="hl-5">placement:</span><span class="hl-2"> </span><span class="hl-3">&#39;bottom&#39;</span><span class="hl-2">,</span><br/><span class="hl-2">  </span><span class="hl-5">content:</span><span class="hl-2"> </span><span class="hl-3">&#39;&lt;div&gt;选择内容&lt;/div&gt;&#39;</span><span class="hl-2">, </span><span class="hl-0">// or () =&gt; &#39;&lt;div&gt;选择内容&lt;/div&gt;&#39;</span><br/><span class="hl-2">  </span><span class="hl-5">trigger:</span><span class="hl-2"> </span><span class="hl-3">&#39;click&#39;</span><span class="hl-2">,</span><br/><span class="hl-2">  </span><span class="hl-5">isMobile:</span><span class="hl-2"> </span><span class="hl-4">false</span><span class="hl-2">,</span><br/><span class="hl-2">});</span><br/><span class="hl-5">picker</span><span class="hl-2">.</span><span class="hl-5">open</span><span class="hl-2"> = </span><span class="hl-4">true</span><span class="hl-2">; </span><span class="hl-0">// 打开弹窗</span><br/><span class="hl-5">picker</span><span class="hl-2">.</span><span class="hl-1">setPlacement</span><span class="hl-2">(</span><span class="hl-3">&#39;top&#39;</span><span class="hl-2">); </span><span class="hl-0">// 设置弹窗位置</span><br/><span class="hl-5">picker</span><span class="hl-2">.</span><span class="hl-1">innerHTML</span><span class="hl-2">(</span><span class="hl-3">&#39;&lt;div&gt;新内容&lt;/div&gt;&#39;</span><span class="hl-2">); </span><span class="hl-0">// 设置弹窗内容（会覆盖之前的内容）</span><br/><span class="hl-5">picker</span><span class="hl-2">.</span><span class="hl-1">destroy</span><span class="hl-2">(); </span><span class="hl-0">// 销毁弹窗</span>
+<h4 class="tsd-anchor-link" id="example">Example<a href="#example" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-2">&quot;@skax/picker/dist/style/css&quot;</span><span class="hl-1">;</span><br/><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-3">Picker</span><span class="hl-1"> </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@skax/picker&#39;</span><span class="hl-1">;</span><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">picker</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">Picker</span><span class="hl-1">(</span><span class="hl-3">document</span><span class="hl-1">.</span><span class="hl-6">getElementById</span><span class="hl-1">(</span><span class="hl-2">&#39;picker-container&#39;</span><span class="hl-1">),</span><br/><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-3">placement:</span><span class="hl-1"> </span><span class="hl-2">&#39;bottom&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-3">content:</span><span class="hl-1"> </span><span class="hl-2">&#39;&lt;div&gt;选择内容&lt;/div&gt;&#39;</span><span class="hl-1">, </span><span class="hl-7">// or () =&gt; &#39;&lt;div&gt;选择内容&lt;/div&gt;&#39;</span><br/><span class="hl-1">  </span><span class="hl-3">trigger:</span><span class="hl-1"> </span><span class="hl-2">&#39;click&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-3">isMobile:</span><span class="hl-1"> </span><span class="hl-4">false</span><span class="hl-1">,</span><br/><span class="hl-1">});</span><br/><span class="hl-3">picker</span><span class="hl-1">.</span><span class="hl-3">open</span><span class="hl-1"> = </span><span class="hl-4">true</span><span class="hl-1">; </span><span class="hl-7">// 打开弹窗</span><br/><span class="hl-3">picker</span><span class="hl-1">.</span><span class="hl-6">setPlacement</span><span class="hl-1">(</span><span class="hl-2">&#39;top&#39;</span><span class="hl-1">); </span><span class="hl-7">// 设置弹窗位置</span><br/><span class="hl-3">picker</span><span class="hl-1">.</span><span class="hl-6">innerHTML</span><span class="hl-1">(</span><span class="hl-2">&#39;&lt;div&gt;新内容&lt;/div&gt;&#39;</span><span class="hl-1">); </span><span class="hl-7">// 设置弹窗内容（会覆盖之前的内容）</span><br/><span class="hl-3">picker</span><span class="hl-1">.</span><span class="hl-6">destroy</span><span class="hl-1">(); </span><span class="hl-7">// 销毁弹窗</span>
 </code><button type="button">Copy</button></pre>
 
 </div></div></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freeshineit/picker/blob/84e0c8c7789f3d6ee4858caeb50ecd1fe585a73d/packages/picker/src/index.ts#L113">index.ts:113</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/freeshineit/picker/blob/469a077a5bfca5403c495577b7ed8c2c3c875e3e/packages/picker/src/index.ts#L119">index.ts:119</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -82,7 +82,7 @@
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="" class="tsd-signature-type tsd-kind-class">Picker</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freeshineit/picker/blob/84e0c8c7789f3d6ee4858caeb50ecd1fe585a73d/packages/picker/src/index.ts#L149">index.ts:149</a></li></ul></aside></div></li></ul></section></section></details>
+<li>Defined in <a href="https://github.com/freeshineit/picker/blob/469a077a5bfca5403c495577b7ed8c2c3c875e3e/packages/picker/src/index.ts#L155">index.ts:155</a></li></ul></aside></div></li></ul></section></section></details>
 <details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Properties"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
 <h2 class="tsd-anchor-link" id="properties-1">Properties<a href="#properties-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary>
 <section>
@@ -92,21 +92,21 @@
 <div class="tsd-comment tsd-typography"><p>内容主体节点</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freeshineit/picker/blob/84e0c8c7789f3d6ee4858caeb50ecd1fe585a73d/packages/picker/src/index.ts#L130">index.ts:130</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/freeshineit/picker/blob/469a077a5bfca5403c495577b7ed8c2c3c875e3e/packages/picker/src/index.ts#L136">index.ts:136</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="container"><span>$container</span><a href="#container" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">$container</span><span class="tsd-signature-symbol">:</span> <a href="https://developer.mozilla.org/docs/Web/API/HTMLElement" class="tsd-signature-type external" target="_blank">HTMLElement</a> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">null</span></div>
 <div class="tsd-comment tsd-typography"><p>容器触发节点，当容器不存在，可以使用 picker.open 来触发打开</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freeshineit/picker/blob/84e0c8c7789f3d6ee4858caeb50ecd1fe585a73d/packages/picker/src/index.ts#L124">index.ts:124</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/freeshineit/picker/blob/469a077a5bfca5403c495577b7ed8c2c3c875e3e/packages/picker/src/index.ts#L130">index.ts:130</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="wrappercontent"><span>$wrapper<wbr/>Content</span><a href="#wrappercontent" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">$wrapperContent</span><span class="tsd-signature-symbol">:</span> <a href="https://developer.mozilla.org/docs/Web/API/HTMLElement" class="tsd-signature-type external" target="_blank">HTMLElement</a></div>
 <div class="tsd-comment tsd-typography"><p>内容节点</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freeshineit/picker/blob/84e0c8c7789f3d6ee4858caeb50ecd1fe585a73d/packages/picker/src/index.ts#L128">index.ts:128</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/freeshineit/picker/blob/469a077a5bfca5403c495577b7ed8c2c3c875e3e/packages/picker/src/index.ts#L134">index.ts:134</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="version"><code class="tsd-tag">Static</code><span>VERSION</span><a href="#version" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">VERSION</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;__VERSION__&quot;</span></div>
@@ -114,12 +114,12 @@
 </div>
 <div class="tsd-comment tsd-typography">
 <div class="tsd-tag-example">
-<h4 class="tsd-anchor-link" id="example-1">Example<a href="#example-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-5">Picker</span><span class="hl-2">.</span><span class="hl-8">VERSION</span><span class="hl-2">; </span><span class="hl-0">// 输出版本号</span>
+<h4 class="tsd-anchor-link" id="example-1">Example<a href="#example-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-3">Picker</span><span class="hl-1">.</span><span class="hl-5">VERSION</span><span class="hl-1">; </span><span class="hl-7">// 输出版本号</span>
 </code><button type="button">Copy</button></pre>
 
 </div></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freeshineit/picker/blob/84e0c8c7789f3d6ee4858caeb50ecd1fe585a73d/packages/picker/src/index.ts#L121">index.ts:121</a></li></ul></aside></section></section></details>
+<li>Defined in <a href="https://github.com/freeshineit/picker/blob/469a077a5bfca5403c495577b7ed8c2c3c875e3e/packages/picker/src/index.ts#L127">index.ts:127</a></li></ul></aside></section></section></details>
 <details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Accessors"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
 <h2 class="tsd-anchor-link" id="accessors-1">Accessors<a href="#accessors-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary>
 <section>
@@ -134,12 +134,12 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 <div class="tsd-comment tsd-typography">
 <div class="tsd-tag-example">
-<h4 class="tsd-anchor-link" id="example-2">Example<a href="#example-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-5">picker</span><span class="hl-2">.</span><span class="hl-5">disabled</span><span class="hl-2"> = </span><span class="hl-4">true</span><span class="hl-2">; </span><span class="hl-0">// 禁用</span><br/><span class="hl-5">picker</span><span class="hl-2">.</span><span class="hl-5">disabled</span><span class="hl-2"> = </span><span class="hl-4">false</span><span class="hl-2">; </span><span class="hl-0">// 启用</span><br/><span class="hl-5">console</span><span class="hl-2">.</span><span class="hl-1">log</span><span class="hl-2">(</span><span class="hl-5">picker</span><span class="hl-2">.</span><span class="hl-5">disabled</span><span class="hl-2">); </span><span class="hl-0">// 获取禁用状态</span>
+<h4 class="tsd-anchor-link" id="example-2">Example<a href="#example-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-3">picker</span><span class="hl-1">.</span><span class="hl-3">disabled</span><span class="hl-1"> = </span><span class="hl-4">true</span><span class="hl-1">; </span><span class="hl-7">// 禁用</span><br/><span class="hl-3">picker</span><span class="hl-1">.</span><span class="hl-3">disabled</span><span class="hl-1"> = </span><span class="hl-4">false</span><span class="hl-1">; </span><span class="hl-7">// 启用</span><br/><span class="hl-3">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-3">picker</span><span class="hl-1">.</span><span class="hl-3">disabled</span><span class="hl-1">); </span><span class="hl-7">// 获取禁用状态</span>
 </code><button type="button">Copy</button></pre>
 
 </div></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freeshineit/picker/blob/84e0c8c7789f3d6ee4858caeb50ecd1fe585a73d/packages/picker/src/index.ts#L268">index.ts:268</a></li></ul></aside></div></li>
+<li>Defined in <a href="https://github.com/freeshineit/picker/blob/469a077a5bfca5403c495577b7ed8c2c3c875e3e/packages/picker/src/index.ts#L274">index.ts:274</a></li></ul></aside></div></li>
 <li>
 <div class="tsd-signature" id="disableddisabled-1"><span class="tsd-signature-keyword">set</span> <span class="tsd-kind-set-signature">disabled</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">disabled</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span></div>
 <div class="tsd-description">
@@ -149,7 +149,7 @@
 <li><span><span class="tsd-kind-parameter">disabled</span>: <span class="tsd-signature-type">boolean</span></span></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freeshineit/picker/blob/84e0c8c7789f3d6ee4858caeb50ecd1fe585a73d/packages/picker/src/index.ts#L272">index.ts:272</a></li></ul></aside></div></li></ul></section>
+<li>Defined in <a href="https://github.com/freeshineit/picker/blob/469a077a5bfca5403c495577b7ed8c2c3c875e3e/packages/picker/src/index.ts#L278">index.ts:278</a></li></ul></aside></div></li></ul></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="open"><span>open</span><a href="#open" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -161,12 +161,12 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 <div class="tsd-comment tsd-typography">
 <div class="tsd-tag-example">
-<h4 class="tsd-anchor-link" id="example-3">Example<a href="#example-3" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-5">console</span><span class="hl-2">.</span><span class="hl-1">log</span><span class="hl-2">(</span><span class="hl-5">picker</span><span class="hl-2">.</span><span class="hl-5">open</span><span class="hl-2">); </span><span class="hl-0">// 获取当前打开状态</span><br/><span class="hl-5">picker</span><span class="hl-2">.</span><span class="hl-5">open</span><span class="hl-2"> = </span><span class="hl-4">true</span><span class="hl-2">; </span><span class="hl-0">// 打开</span><br/><span class="hl-5">picker</span><span class="hl-2">.</span><span class="hl-5">open</span><span class="hl-2"> = </span><span class="hl-4">false</span><span class="hl-2">; </span><span class="hl-0">// 关闭</span>
+<h4 class="tsd-anchor-link" id="example-3">Example<a href="#example-3" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-3">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-3">picker</span><span class="hl-1">.</span><span class="hl-3">open</span><span class="hl-1">); </span><span class="hl-7">// 获取当前打开状态</span><br/><span class="hl-3">picker</span><span class="hl-1">.</span><span class="hl-3">open</span><span class="hl-1"> = </span><span class="hl-4">true</span><span class="hl-1">; </span><span class="hl-7">// 打开</span><br/><span class="hl-3">picker</span><span class="hl-1">.</span><span class="hl-3">open</span><span class="hl-1"> = </span><span class="hl-4">false</span><span class="hl-1">; </span><span class="hl-7">// 关闭</span>
 </code><button type="button">Copy</button></pre>
 
 </div></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freeshineit/picker/blob/84e0c8c7789f3d6ee4858caeb50ecd1fe585a73d/packages/picker/src/index.ts#L193">index.ts:193</a></li></ul></aside></div></li>
+<li>Defined in <a href="https://github.com/freeshineit/picker/blob/469a077a5bfca5403c495577b7ed8c2c3c875e3e/packages/picker/src/index.ts#L199">index.ts:199</a></li></ul></aside></div></li>
 <li>
 <div class="tsd-signature" id="openopen-1"><span class="tsd-signature-keyword">set</span> <span class="tsd-kind-set-signature">open</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">open</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span></div>
 <div class="tsd-description">
@@ -176,7 +176,7 @@
 <li><span><span class="tsd-kind-parameter">open</span>: <span class="tsd-signature-type">boolean</span></span></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freeshineit/picker/blob/84e0c8c7789f3d6ee4858caeb50ecd1fe585a73d/packages/picker/src/index.ts#L197">index.ts:197</a></li></ul></aside></div></li></ul></section></section></details>
+<li>Defined in <a href="https://github.com/freeshineit/picker/blob/469a077a5bfca5403c495577b7ed8c2c3c875e3e/packages/picker/src/index.ts#L203">index.ts:203</a></li></ul></aside></div></li></ul></section></section></details>
 <details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Methods"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
 <h2 class="tsd-anchor-link" id="methods-1">Methods<a href="#methods-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary>
 <section>
@@ -196,7 +196,7 @@
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freeshineit/picker/blob/84e0c8c7789f3d6ee4858caeb50ecd1fe585a73d/packages/picker/src/index.ts#L573">index.ts:573</a></li></ul></aside></div></li></ul></section>
+<li>Defined in <a href="https://github.com/freeshineit/picker/blob/469a077a5bfca5403c495577b7ed8c2c3c875e3e/packages/picker/src/index.ts#L602">index.ts:602</a></li></ul></aside></div></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-protected">
 <h3 class="tsd-anchor-link" id="_onhide"><code class="tsd-tag">Protected</code><span>_<wbr/>on<wbr/>Hide</span><a href="#_onhide" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-protected">
@@ -211,7 +211,7 @@
 <li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">e</span>: <a href="https://developer.mozilla.org/docs/Web/API/Event" class="tsd-signature-type external" target="_blank">Event</a></span></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freeshineit/picker/blob/84e0c8c7789f3d6ee4858caeb50ecd1fe585a73d/packages/picker/src/index.ts#L604">index.ts:604</a></li></ul></aside></div></li></ul></section>
+<li>Defined in <a href="https://github.com/freeshineit/picker/blob/469a077a5bfca5403c495577b7ed8c2c3c875e3e/packages/picker/src/index.ts#L633">index.ts:633</a></li></ul></aside></div></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-protected">
 <h3 class="tsd-anchor-link" id="_onopenchange"><code class="tsd-tag">Protected</code><span>_<wbr/>on<wbr/>Open<wbr/>Change</span><a href="#_onopenchange" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-protected">
@@ -228,7 +228,7 @@
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freeshineit/picker/blob/84e0c8c7789f3d6ee4858caeb50ecd1fe585a73d/packages/picker/src/index.ts#L341">index.ts:341</a></li></ul></aside></div></li></ul></section>
+<li>Defined in <a href="https://github.com/freeshineit/picker/blob/469a077a5bfca5403c495577b7ed8c2c3c875e3e/packages/picker/src/index.ts#L353">index.ts:353</a></li></ul></aside></div></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-protected">
 <h3 class="tsd-anchor-link" id="_onshow"><code class="tsd-tag">Protected</code><span>_<wbr/>on<wbr/>Show</span><a href="#_onshow" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-protected">
@@ -239,7 +239,7 @@
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freeshineit/picker/blob/84e0c8c7789f3d6ee4858caeb50ecd1fe585a73d/packages/picker/src/index.ts#L588">index.ts:588</a></li></ul></aside></div></li></ul></section>
+<li>Defined in <a href="https://github.com/freeshineit/picker/blob/469a077a5bfca5403c495577b7ed8c2c3c875e3e/packages/picker/src/index.ts#L617">index.ts:617</a></li></ul></aside></div></li></ul></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="destroy"><span>destroy</span><a href="#destroy" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -251,12 +251,12 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography">
 <div class="tsd-tag-example">
-<h4 class="tsd-anchor-link" id="example-4">Example<a href="#example-4" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-5">picker</span><span class="hl-2">.</span><span class="hl-1">destroy</span><span class="hl-2">();</span>
+<h4 class="tsd-anchor-link" id="example-4">Example<a href="#example-4" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-3">picker</span><span class="hl-1">.</span><span class="hl-6">destroy</span><span class="hl-1">();</span>
 </code><button type="button">Copy</button></pre>
 
 </div></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freeshineit/picker/blob/84e0c8c7789f3d6ee4858caeb50ecd1fe585a73d/packages/picker/src/index.ts#L311">index.ts:311</a></li></ul></aside></div></li></ul></section>
+<li>Defined in <a href="https://github.com/freeshineit/picker/blob/469a077a5bfca5403c495577b7ed8c2c3c875e3e/packages/picker/src/index.ts#L323">index.ts:323</a></li></ul></aside></div></li></ul></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="innerhtml"><span>inner<wbr/>HTML</span><a href="#innerhtml" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -274,12 +274,12 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography">
 <div class="tsd-tag-example">
-<h4 class="tsd-anchor-link" id="example-5">Example<a href="#example-5" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-5">picker</span><span class="hl-2">.</span><span class="hl-1">innerHTML</span><span class="hl-2">(</span><span class="hl-3">&#39;&lt;div&gt;内容&lt;/div&gt;&#39;</span><span class="hl-2">);</span>
+<h4 class="tsd-anchor-link" id="example-5">Example<a href="#example-5" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-3">picker</span><span class="hl-1">.</span><span class="hl-6">innerHTML</span><span class="hl-1">(</span><span class="hl-2">&#39;&lt;div&gt;内容&lt;/div&gt;&#39;</span><span class="hl-1">);</span>
 </code><button type="button">Copy</button></pre>
 
 </div></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freeshineit/picker/blob/84e0c8c7789f3d6ee4858caeb50ecd1fe585a73d/packages/picker/src/index.ts#L326">index.ts:326</a></li></ul></aside></div></li></ul></section>
+<li>Defined in <a href="https://github.com/freeshineit/picker/blob/469a077a5bfca5403c495577b7ed8c2c3c875e3e/packages/picker/src/index.ts#L338">index.ts:338</a></li></ul></aside></div></li></ul></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="setplacement"><span>set<wbr/>Placement</span><a href="#setplacement" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -297,12 +297,12 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography">
 <div class="tsd-tag-example">
-<h4 class="tsd-anchor-link" id="example-6">Example<a href="#example-6" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-5">picker</span><span class="hl-2">.</span><span class="hl-1">setPlacement</span><span class="hl-2">(</span><span class="hl-3">&quot;top&quot;</span><span class="hl-2">);</span><br/><span class="hl-5">picker</span><span class="hl-2">.</span><span class="hl-1">setPlacement</span><span class="hl-2">(</span><span class="hl-3">&quot;tl&quot;</span><span class="hl-2">);</span><br/><span class="hl-5">picker</span><span class="hl-2">.</span><span class="hl-1">setPlacement</span><span class="hl-2">(</span><span class="hl-3">&quot;tr&quot;</span><span class="hl-2">);</span><br/><span class="hl-5">picker</span><span class="hl-2">.</span><span class="hl-1">setPlacement</span><span class="hl-2">(</span><span class="hl-3">&quot;bottom&quot;</span><span class="hl-2">);</span><br/><span class="hl-5">picker</span><span class="hl-2">.</span><span class="hl-1">setPlacement</span><span class="hl-2">(</span><span class="hl-3">&quot;bl&quot;</span><span class="hl-2">);</span><br/><span class="hl-5">picker</span><span class="hl-2">.</span><span class="hl-1">setPlacement</span><span class="hl-2">(</span><span class="hl-3">&quot;br&quot;</span><span class="hl-2">);</span>
+<h4 class="tsd-anchor-link" id="example-6">Example<a href="#example-6" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-3">picker</span><span class="hl-1">.</span><span class="hl-6">setPlacement</span><span class="hl-1">(</span><span class="hl-2">&quot;top&quot;</span><span class="hl-1">);</span><br/><span class="hl-3">picker</span><span class="hl-1">.</span><span class="hl-6">setPlacement</span><span class="hl-1">(</span><span class="hl-2">&quot;tl&quot;</span><span class="hl-1">);</span><br/><span class="hl-3">picker</span><span class="hl-1">.</span><span class="hl-6">setPlacement</span><span class="hl-1">(</span><span class="hl-2">&quot;tr&quot;</span><span class="hl-1">);</span><br/><span class="hl-3">picker</span><span class="hl-1">.</span><span class="hl-6">setPlacement</span><span class="hl-1">(</span><span class="hl-2">&quot;bottom&quot;</span><span class="hl-1">);</span><br/><span class="hl-3">picker</span><span class="hl-1">.</span><span class="hl-6">setPlacement</span><span class="hl-1">(</span><span class="hl-2">&quot;bl&quot;</span><span class="hl-1">);</span><br/><span class="hl-3">picker</span><span class="hl-1">.</span><span class="hl-6">setPlacement</span><span class="hl-1">(</span><span class="hl-2">&quot;br&quot;</span><span class="hl-1">);</span>
 </code><button type="button">Copy</button></pre>
 
 </div></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freeshineit/picker/blob/84e0c8c7789f3d6ee4858caeb50ecd1fe585a73d/packages/picker/src/index.ts#L294">index.ts:294</a></li></ul></aside></div></li></ul></section></section></details></div>
+<li>Defined in <a href="https://github.com/freeshineit/picker/blob/469a077a5bfca5403c495577b7ed8c2c3c875e3e/packages/picker/src/index.ts#L300">index.ts:300</a></li></ul></aside></div></li></ul></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -328,7 +328,7 @@
 <div><a href="#_oncontainerclick" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>_<wbr/>on<wbr/>Container<wbr/>Click</span></a><a href="#_onhide" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>_<wbr/>on<wbr/>Hide</span></a><a href="#_onopenchange" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>_<wbr/>on<wbr/>Open<wbr/>Change</span></a><a href="#_onshow" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>_<wbr/>on<wbr/>Show</span></a><a href="#destroy"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>destroy</span></a><a href="#innerhtml"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>inner<wbr/>HTML</span></a><a href="#setplacement"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>set<wbr/>Placement</span></a></div></details></div></details></div>
 <div class="site-menu">
 <nav id="tsd-sidebar-links" class="tsd-navigation"><a href="https://github.com/freeshineit/picker/tree/main/examples" class="tsd-nav-link">Examples</a><a href="https://github.com/freeshineit/picker" class="tsd-nav-link">Github</a></nav>
-<nav class="tsd-navigation"><a href="../modules.html">@skax/picker - v2.0.0-beta.4</a>
+<nav class="tsd-navigation"><a href="../modules.html">@skax/picker - v2.0.0-beta.5</a>
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container">
 <li>Loading...</li></ul></nav></div></div></div><footer></footer>
 <div class="overlay"></div></body></html>
