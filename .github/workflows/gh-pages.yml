@@ -29,10 +29,10 @@ jobs:
         run: cp packages/picker/dist/index.umd.js docs/media/index.umd.js
 
       - name: Copy public styles to docs
-        run: cp packages/picker/public/*.css docs/media/
+        run: cp -rf packages/picker/public/*.css docs/media/
 
-      - name: Copy demo common.css to docs
-        run: cp packages/picker/public/common.css docs/media/common.css
+      - name: Copy dist styles to docs
+        run: cp -rf packages/picker/dist/style docs/media/
 
       - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
