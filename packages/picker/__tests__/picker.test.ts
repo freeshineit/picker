@@ -334,6 +334,90 @@ describe("Picker", () => {
     // });
   });
 
+  describe("boundaryContainer", () => {
+    const mockRect = (el: HTMLElement, rect: Partial<DOMRect>) => {
+      el.getBoundingClientRect = () =>
+        ({
+          left: 0,
+          top: 0,
+          right: 0,
+          bottom: 0,
+          width: 0,
+          height: 0,
+          x: 0,
+          y: 0,
+          toJSON: () => ({}),
+          ...rect,
+        }) as DOMRect;
+    };
+
+    const mockSize = (el: HTMLElement, width: number, height: number) => {
+      Object.defineProperty(el, "clientWidth", { configurable: true, value: width });
+      Object.defineProperty(el, "clientHeight", { configurable: true, value: height });
+    };
+
+    test("未指定时默认以 window 窗口为边界裁剪", () => {
+      mockRect(container, { left: 1000, top: 100, right: 1050, bottom: 140, width: 50, height: 40 });
+      const picker = createPicker({ placement: "br" });
+      mockSize(picker.$wrapperContent, 100, 60);
+
+      (picker as any)._open = true;
+      (picker as any)._setPlacement();
+
+      const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+      // left 超出视口右边界，应被裁剪到视口内
+      expect(picker.$wrapperContent.style.left).toBe(`${Math.max(0, viewportWidth - 100)}px`);
+      // top 无需裁剪
+      expect(picker.$wrapperContent.style.top).toBe("140px");
+    });
+
+    test("应该支持指定元素作为边界节点", () => {
+      const boundary = document.createElement("div");
+      document.body.appendChild(boundary);
+      mockRect(boundary, { left: 100, top: 100, right: 400, bottom: 400, width: 300, height: 300 });
+      mockRect(container, { left: 380, top: 350, right: 430, bottom: 390, width: 50, height: 40 });
+
+      const picker = createPicker({ placement: "br", boundaryContainer: boundary });
+      mockSize(picker.$wrapperContent, 100, 60);
+
+      (picker as any)._open = true;
+      (picker as any)._setPlacement();
+
+      // 下方空间不足，翻转到上方；left 超出边界右侧，裁剪到 400 - 100
+      expect(picker.$wrapperContent.style.left).toBe("300px");
+      expect(picker.$wrapperContent.style.top).toBe("290px");
+    });
+
+    test("应该支持函数形式的边界节点", () => {
+      const boundary = document.createElement("div");
+      document.body.appendChild(boundary);
+      mockRect(boundary, { left: 0, top: 0, right: 200, bottom: 200, width: 200, height: 200 });
+      mockRect(container, { left: 180, top: 20, right: 230, bottom: 60, width: 50, height: 40 });
+
+      const picker = createPicker({ placement: "br", boundaryContainer: () => boundary });
+      mockSize(picker.$wrapperContent, 100, 60);
+
+      (picker as any)._open = true;
+      (picker as any)._setPlacement();
+
+      // 右侧裁剪到 200 - 100，下方保持 60
+      expect(picker.$wrapperContent.style.left).toBe("100px");
+      expect(picker.$wrapperContent.style.top).toBe("60px");
+    });
+
+    test("boundaryContainer 为 null 时回退到 window 窗口", () => {
+      mockRect(container, { left: 1000, top: 100, right: 1050, bottom: 140, width: 50, height: 40 });
+      const picker = createPicker({ placement: "br", boundaryContainer: null });
+      mockSize(picker.$wrapperContent, 100, 60);
+
+      (picker as any)._open = true;
+      (picker as any)._setPlacement();
+
+      const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+      expect(picker.$wrapperContent.style.left).toBe(`${Math.max(0, viewportWidth - 100)}px`);
+    });
+  });
+
   describe("延迟配置", () => {
     test("应该支持 mouseEnterDelay", () => {
       const onOpenChange = jest.fn();

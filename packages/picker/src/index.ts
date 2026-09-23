@@ -60,6 +60,11 @@ export interface PickerOptions {
   isMobile?: boolean;
   /** 内容挂载节点 */
   getPopupContainer?: () => HTMLElement;
+  /**
+   * 边界节点，弹层不会超出该节点的可视范围
+   * 默认为 window 窗口（即浏览器视口）
+   */
+  boundaryContainer?: HTMLElement | (() => HTMLElement) | null;
   /** 面板展开或关闭变化时触发 */
   onOpenChange?: (open: boolean) => void;
 }
@@ -74,6 +79,7 @@ const _$PICKER_PREFIX_CLS$_ = "epicker";
  */
 const __$PICKER_DEFAULT_OPTIONS$__ = {
   getPopupContainer: () => document.body,
+  boundaryContainer: null,
   wrapClassName: "",
   open: false,
   placement: "br",
@@ -295,6 +301,12 @@ class Picker {
     if (this._disabled) return;
     if (_$PICKER_PLACEMENT$_.includes(placement)) {
       this._options.placement = placement;
+      this.$wrapperContent.classList.forEach((cls) => {
+        if (cls.includes(`${_$PICKER_PREFIX_CLS$_}-placement-`)) {
+          this.$wrapperContent.classList.remove(cls);
+        }
+      });
+      this.$wrapperContent.classList.add(`${_$PICKER_PREFIX_CLS$_}-placement-${placement}`);
     } else {
       console.warn(`${placement} is not a valid placement`);
     }
@@ -388,12 +400,30 @@ class Picker {
   }
 
   /**
+   * 获取边界节点在视口中的位置和尺寸
+   * 未指定 boundaryContainer 时默认为 window 窗口（浏览器视口）
+   */
+  private _getBoundaryRect(): { left: number; top: number; right: number; bottom: number } {
+    const boundary = typeof this._options.boundaryContainer === "function" ? this._options.boundaryContainer() : this._options.boundaryContainer;
+
+    if (boundary && typeof boundary.getBoundingClientRect === "function") {
+      const rect = boundary.getBoundingClientRect();
+      return { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom };
+    }
+
+    // 默认 window 窗口
+    const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    return { left: 0, top: 0, right: viewportWidth, bottom: viewportHeight };
+  }
+
+  /**
    * 设置弹出位置 (移动端不生效)
    * 位置计算逻辑：
    * 1. 根据 options.placement 获取初始位置
    * 2. 检测上下方向空间是否足够，不足则翻转
    * 3. 计算 left 和 top，转换为浏览器可视窗口坐标系
-   * 4. 边界裁剪，确保弹框在浏览器窗口内
+   * 4. 边界裁剪，确保弹框在边界节点内（默认 window 窗口，可通过 boundaryContainer 指定）
    * 5. 转换回挂载容器坐标系，设置样式
    */
   private _setPlacement() {
@@ -426,9 +456,8 @@ class Picker {
     const containerLeft = Math.ceil($containerRect.left) - popupPaddingEdgeLeft;
     const containerTop = Math.ceil($containerRect.top) - popupPaddingEdgeTop;
 
-    // 视口尺寸
-    const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
-    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    // 边界节点（默认为 window 窗口）在视口中的位置和尺寸
+    const boundaryRect = this._getBoundaryRect();
 
     // 容器在视口中的绝对位置
     const containerAbsTop = Math.ceil($containerRect.top);
@@ -440,12 +469,12 @@ class Picker {
 
     if (isTopPlacement) {
       // 原本要放在上方，检查上方空间是否足够
-      const topSpace = containerAbsTop;
+      const topSpace = containerAbsTop - boundaryRect.top;
       const needSpace = wrapperHeight + Math.abs(offsetY);
 
       if (topSpace < needSpace) {
         // 上方空间不够，检查下方空间
-        const bottomSpace = viewportHeight - containerAbsBottom;
+        const bottomSpace = boundaryRect.bottom - containerAbsBottom;
         if (bottomSpace >= needSpace) {
           // 翻转到下方
           actualPlacement = actualPlacement.replace(/^t/, "b") as PickerPlacement;
@@ -453,12 +482,12 @@ class Picker {
       }
     } else {
       // 原本要放在下方，检查下方空间是否足够
-      const bottomSpace = viewportHeight - containerAbsBottom;
+      const bottomSpace = boundaryRect.bottom - containerAbsBottom;
       const needSpace = wrapperHeight + Math.abs(offsetY);
 
       if (bottomSpace < needSpace) {
         // 下方空间不够，检查上方空间
-        const topSpace = containerAbsTop;
+        const topSpace = containerAbsTop - boundaryRect.top;
         if (topSpace >= needSpace) {
           // 翻转到上方
           actualPlacement = actualPlacement.replace(/^b/, "t") as PickerPlacement;
@@ -481,13 +510,13 @@ class Picker {
     const absLeft = popupPaddingEdgeLeft + left + offsetX;
     const absTop = popupPaddingEdgeTop + baseTop + offsetY;
 
-    // 边界裁剪（确保弹框在浏览器窗口内）
+    // 边界裁剪（确保弹框在边界节点内）
     const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
-    const maxAbsLeft = Math.max(0, viewportWidth - wrapperWidth);
-    const maxAbsTop = Math.max(0, viewportHeight - wrapperHeight);
+    const maxAbsLeft = Math.max(boundaryRect.left, boundaryRect.right - wrapperWidth);
+    const maxAbsTop = Math.max(boundaryRect.top, boundaryRect.bottom - wrapperHeight);
 
-    const clampedAbsLeft = clamp(absLeft, 0, maxAbsLeft);
-    const clampedAbsTop = clamp(absTop, 0, maxAbsTop);
+    const clampedAbsLeft = clamp(absLeft, boundaryRect.left, maxAbsLeft);
+    const clampedAbsTop = clamp(absTop, boundaryRect.top, maxAbsTop);
 
     // 转换回挂载容器 padding box 坐标系（绝对定位原点）
     const nextLeft = clampedAbsLeft - popupPaddingEdgeLeft;
@@ -506,7 +535,7 @@ class Picker {
   private _initContentStyle() {
     if (!this.$wrapperContent) return;
     // prettier-ignore
-    this.$wrapperContent.classList.add(`${_$PICKER_PREFIX_CLS$_}`,`${_$PICKER_PREFIX_CLS$_}-wrapper`, `${_$PICKER_PREFIX_CLS$_}-${this._options.placement}`);
+    this.$wrapperContent.classList.add(`${_$PICKER_PREFIX_CLS$_}`,`${_$PICKER_PREFIX_CLS$_}-wrapper`, `${_$PICKER_PREFIX_CLS$_}-placement-${this._options.placement}`);
     // 提升优先级
     this.$wrapperContent.style.display = "none";
     if (this._options.isMobile) {

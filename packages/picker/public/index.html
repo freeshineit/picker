@@ -127,6 +127,95 @@
             <button class="demo-target" data-picker data-container="body" data-trigger="hover" data-placement="top" data-offset="0,-20" data-label="Body Offset (-20)">Body Offset -20</button>
           </div>
         </section>
+
+        <section class="demo-section">
+          <h2>Boundary · Container</h2>
+          <p>通过 boundaryContainer 指定边界节点（虚线框）：弹层不会溢出该范围，默认为 window 窗口。</p>
+          <div class="demo-boundary" id="boundary-box">
+            <div class="demo-row">
+              <button class="demo-target" data-picker data-container="body" data-trigger="click" data-placement="bottom" data-boundary="boundary-box" data-label="Boundary / Bottom">Bottom</button>
+              <button class="demo-target" data-picker data-container="body" data-trigger="click" data-placement="top" data-boundary="boundary-box" data-label="Boundary / Top">Top</button>
+              <button class="demo-target" data-picker data-container="body" data-trigger="click" data-placement="br" data-boundary="boundary-box" data-label="Boundary / BR">BR</button>
+              <button class="demo-target" data-picker data-container="self" data-trigger="click" data-placement="bottom" data-boundary="boundary-box" data-label="Boundary / Self Bottom">
+                Self Bottom
+              </button>
+            </div>
+          </div>
+          <div class="demo-note">定位翻转与最终裁剪都以该虚线框为参考，不再以浏览器视口为准。</div>
+        </section>
+
+        <section class="demo-section" id="api-demo">
+          <h2>API 使用</h2>
+          <p>通过实例属性 / 方法动态控制弹层：new Picker(...) · open · setPlacement() · innerHTML() · disabled · destroy() · onOpenChange。</p>
+
+          <div class="demo-fields">
+            <label class="demo-field">
+              placement
+              <select id="api-placement">
+                <option value="top">top</option>
+                <option value="tl">tl</option>
+                <option value="tr">tr</option>
+                <option value="bottom" selected>bottom</option>
+                <option value="bl">bl</option>
+                <option value="br">br</option>
+              </select>
+            </label>
+
+            <label class="demo-field">
+              trigger
+              <select id="api-trigger">
+                <option value="click" selected>click</option>
+                <option value="hover">hover</option>
+              </select>
+            </label>
+
+            <label class="demo-field">
+              getPopupContainer
+              <select id="api-container">
+                <option value="body" selected>body</option>
+                <option value="self">self</option>
+              </select>
+            </label>
+
+            <label class="demo-field demo-check">
+              <input id="api-trigger-close" type="checkbox" />
+              triggerClose
+            </label>
+
+            <label class="demo-field demo-check">
+              <input id="api-is-mobile" type="checkbox" />
+              isMobile
+            </label>
+
+            <label class="demo-field demo-check">
+              <input id="api-disabled" type="checkbox" />
+              disabled
+            </label>
+
+            <label class="demo-field demo-field--wide">
+              content
+              <textarea id="api-content" rows="3"></textarea>
+            </label>
+          </div>
+
+          <div class="demo-actions">
+            <button class="demo-btn" id="api-rebuild">new Picker(...)</button>
+            <button class="demo-btn secondary" id="api-open">open = true</button>
+            <button class="demo-btn secondary" id="api-close">open = false</button>
+            <button class="demo-btn secondary" id="api-toggle">open = !open</button>
+            <button class="demo-btn secondary" id="api-set-placement">setPlacement()</button>
+            <button class="demo-btn secondary" id="api-update">innerHTML()</button>
+            <button class="demo-btn secondary" id="api-destroy">destroy()</button>
+          </div>
+
+          <div class="demo-row">
+            <button class="demo-target" id="api-target">API Target</button>
+            <div class="demo-state" id="api-state">
+              <span>picker: destroyed</span>
+              <span>open: false</span>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
     <script src="./index.umd.js"></script>
@@ -175,6 +264,7 @@
           const label = target.dataset.label || target.textContent.trim();
           const offset = parseOffset(target.dataset.offset);
           const popupContainerId = target.dataset.popupContainerId;
+          const boundaryId = target.dataset.boundary;
 
           const options = {
             placement,
@@ -187,6 +277,11 @@
             options.getPopupContainer = () => document.getElementById(popupContainerId);
           } else if (container === "self") {
             options.getPopupContainer = () => target;
+          }
+
+          // 指定边界节点（函数形式），未指定时默认 window 窗口
+          if (boundaryId) {
+            options.boundaryContainer = () => document.getElementById(boundaryId);
           }
 
           if (offset) {
@@ -213,6 +308,118 @@
             destroyBtn.textContent = "Destroyed";
           }
         });
+
+        // ---------------- API 使用示例 ----------------
+        const apiEls = {
+          placement: document.getElementById("api-placement"),
+          trigger: document.getElementById("api-trigger"),
+          container: document.getElementById("api-container"),
+          triggerClose: document.getElementById("api-trigger-close"),
+          isMobile: document.getElementById("api-is-mobile"),
+          disabled: document.getElementById("api-disabled"),
+          content: document.getElementById("api-content"),
+          target: document.getElementById("api-target"),
+          state: document.getElementById("api-state"),
+          rebuild: document.getElementById("api-rebuild"),
+          open: document.getElementById("api-open"),
+          close: document.getElementById("api-close"),
+          toggle: document.getElementById("api-toggle"),
+          setPlacement: document.getElementById("api-set-placement"),
+          update: document.getElementById("api-update"),
+          destroy: document.getElementById("api-destroy"),
+        };
+
+        if (apiEls.target) {
+          let apiPicker = null;
+          let apiOpen = false;
+
+          apiEls.content.value = [
+            '<div class="demo-popup">',
+            '  <div class="demo-popup-item">',
+            '    <div style="font-weight: 600; margin-bottom: 6px;">API Panel</div>',
+            "    <div>由实例方法动态控制</div>",
+            "  </div>",
+            "</div>",
+          ].join("\n");
+
+          const renderApiState = () => {
+            apiEls.state.innerHTML = `<span>picker: ${apiPicker ? "ready" : "destroyed"}</span><span>open: ${apiOpen ? "true" : "false"}</span>`;
+          };
+
+          const destroyApiPicker = () => {
+            if (apiPicker) {
+              apiPicker.destroy();
+              apiPicker = null;
+            }
+            apiOpen = false;
+            renderApiState();
+          };
+
+          const rebuildApiPicker = () => {
+            destroyApiPicker();
+            const options = {
+              placement: apiEls.placement.value,
+              trigger: apiEls.trigger.value,
+              triggerClose: apiEls.triggerClose.checked,
+              isMobile: apiEls.isMobile.checked,
+              content: apiEls.content.value,
+              onOpenChange: (open) => {
+                apiOpen = !!open;
+                renderApiState();
+              },
+            };
+            if (apiEls.container.value === "self") {
+              options.getPopupContainer = () => apiEls.target;
+            }
+            apiPicker = new Picker(apiEls.target, options);
+            apiPicker.disabled = apiEls.disabled.checked;
+            renderApiState();
+          };
+
+          // 外部按钮触发时阻止冒泡，避免被 document 点击监听立即关闭
+          const withStop = (handler) => (event) => {
+            event.stopPropagation();
+            handler();
+          };
+
+          apiEls.rebuild.addEventListener("click", withStop(rebuildApiPicker));
+          apiEls.open.addEventListener(
+            "click",
+            withStop(() => {
+              if (apiPicker) apiPicker.open = true;
+            }),
+          );
+          apiEls.close.addEventListener(
+            "click",
+            withStop(() => {
+              if (apiPicker) apiPicker.open = false;
+            }),
+          );
+          apiEls.toggle.addEventListener(
+            "click",
+            withStop(() => {
+              if (apiPicker) apiPicker.open = !apiPicker.open;
+            }),
+          );
+          apiEls.setPlacement.addEventListener(
+            "click",
+            withStop(() => {
+              if (apiPicker) apiPicker.setPlacement(apiEls.placement.value);
+            }),
+          );
+          apiEls.update.addEventListener(
+            "click",
+            withStop(() => {
+              if (apiPicker) apiPicker.innerHTML(apiEls.content.value);
+            }),
+          );
+          apiEls.destroy.addEventListener("click", withStop(destroyApiPicker));
+          apiEls.disabled.addEventListener("change", () => {
+            if (apiPicker) apiPicker.disabled = apiEls.disabled.checked;
+          });
+
+          rebuildApiPicker();
+        }
       })();
     </script>
   </body>
