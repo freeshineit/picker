@@ -21,5 +21,6 @@ rollup.config-*.cjs
 
 build/
 coverage/
-
-
+playwright-report
+test-results
+test-results.json
