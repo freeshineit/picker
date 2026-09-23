@@ -3,6 +3,22 @@
 ### Feat
 
 - change `getPopupContainer` to `getMountContainer`
+- add `boundaryContainer` option: the popup direction flip detection and boundary clamping are constrained within a specified boundary node, default `window`
+
+### Fixed
+
+- position calculation now accounts for the mount container `border` (border-box to padding-box conversion)
+- only set `position: relative` on the mount container when it is `static`, avoid overriding existing `absolute` / `fixed` / `sticky`
+
+### Docs
+
+- document `PickerOptions` (incl. `boundaryContainer`) in README
+- add API usage & boundary demos to `public/index.html`; add boundary demo to `public/rotate.html`
+
+### Test
+
+- add unit tests for `boundaryContainer`
+- add Playwright e2e integration & rotated-mount position tests
 
 ## v1.1.9 (2025-12-10)
 
