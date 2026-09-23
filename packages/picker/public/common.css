@@ -225,3 +225,61 @@ body {
   transform: translate(-50%, -50%);
   min-width: 0;
 }
+
+/* boundaryContainer 演示：弹层不会溢出该虚线框 */
+.demo-boundary {
+  position: relative;
+  min-height: 220px;
+  padding: 20px;
+  border: 1px dashed #94a3b8;
+  border-radius: 12px;
+  background: repeating-linear-gradient(135deg, #f8fafc, #f8fafc 12px, #eef2ff 12px, #eef2ff 24px);
+}
+
+.demo-boundary .demo-row {
+  align-items: flex-start;
+}
+
+/* API 使用示例：表单控件 */
+.demo-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.demo-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: #475569;
+}
+.demo-field--wide {
+  grid-column: 1 / -1;
+}
+.demo-field select,
+.demo-field textarea {
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  padding: 6px 8px;
+  font-size: 13px;
+  font-family: inherit;
+  color: #0f172a;
+  background: #fff;
+}
+.demo-check {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+.demo-state {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 170px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #f1f5f9;
+  font-size: 12px;
+  color: #475569;
+}
