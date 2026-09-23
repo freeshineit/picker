@@ -14,7 +14,7 @@ export default {
   hideGenerator: true,
   disableSources: false,
   tsconfig: "tsconfig.json",
-  readme: "README.md",
+  readme: "packages/picker/README.md",
   githubPages: true,
   gitRemote: "origin",
   highlightLanguages: ["typescript", "javascript", "css", "html", "json", "scss", "jsx", "tsx", "bash"],

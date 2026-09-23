@@ -7,7 +7,7 @@ Picker 是一个通用的弹窗组件，可以用于日期选择器、时间选�
 
 ## npm dist 文件目录
 
-```tree
+```text
 .
 ├── index.cjs // commonjs 入口
 ├── index.mjs // esm 兼容
@@ -92,6 +92,21 @@ picker.setPlacement("top"); // 设置弹窗位置
 picker.innerHTML("<div>新内容</div>"); // 设置弹窗内容
 picker.destroy(); // 销毁弹窗
 ```
+
+## 示例
+
+示例位于仓库 `packages/picker/public`，直接引用构建产物（`dist`），可用于快速验证各类定位、触发方式与边界约束。
+
+| 示例                                         | 说明                                                                 |
+| -------------------------------------------- | -------------------------------------------------------------------- |
+| [综合示例](./public/index.html)              | 容器 / body 挂载、偏移量、边界约束（`boundaryContainer`）与 API 使用 |
+| [旋转容器](./public/rotate.html)             | 旋转 `0 / 90 / 180 / 270 / 360 / 450 / -90` 度挂载下的定位与边界约束 |
+| [移动端](./public/mobile.html)               | 移动端底部弹层适配                                                   |
+| [移动端 Picker](./public/mobile_picker.html) | 移动端 Picker 示例                                                   |
+| [PC](./public/PC.html)                       | PC 端示例                                                            |
+| [Null Container](./public/null.html)         | `container = null` 时通过 `picker.open` 控制显隐                     |
+
+本地预览：`pnpm dev`，然后访问 <http://localhost:3000/index.html>。
 
 ## 配置项
 

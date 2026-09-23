@@ -23,13 +23,16 @@ jobs:
 
       # - name: Copy static files to docs
       - name: Ensure target directory exists
-        run: mkdir -p docs/media/style
+        run: mkdir -p docs/media
 
       - name: Copy JS to docs
         run: cp packages/picker/dist/index.umd.js docs/media/index.umd.js
 
-      - name: Copy CSS to docs
-        run: cp packages/picker/dist/style/css.css docs/media/style/css.css
+      - name: Copy public styles to docs
+        run: cp packages/picker/public/*.css docs/media/
+
+      - name: Copy demo common.css to docs
+        run: cp packages/picker/public/common.css docs/media/common.css
 
       - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
