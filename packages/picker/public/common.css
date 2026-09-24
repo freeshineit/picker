@@ -258,6 +258,8 @@ body {
   grid-column: 1 / -1;
 }
 .demo-field select,
+.demo-field input[type="text"],
+.demo-field input[type="number"],
 .demo-field textarea {
   border: 1px solid #d9d9d9;
   border-radius: 8px;

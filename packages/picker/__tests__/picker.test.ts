@@ -92,6 +92,60 @@ describe("Picker", () => {
       const picker = createPicker({ isMobile: true });
       expect(picker.$wrapperContent.classList.contains("epicker-mobile")).toBe(true);
     });
+
+    test("应该支持初始 open 为 true", () => {
+      const picker = createPicker({ open: true });
+      expect(picker.open).toBe(true);
+    });
+
+    test("content 为函数时应该被调用", () => {
+      const content = jest.fn(() => "<div>函数内容</div>");
+      const picker = createPicker({ content });
+      expect(content).toHaveBeenCalled();
+      expect(picker.$body.innerHTML).toBe("<div>函数内容</div>");
+    });
+
+    test("wrapClassName 应该支持空格分隔的多个类名", () => {
+      const picker = createPicker({ wrapClassName: "cls-a cls-b" });
+      expect(picker.$wrapperContent.classList.contains("cls-a")).toBe(true);
+      expect(picker.$wrapperContent.classList.contains("cls-b")).toBe(true);
+    });
+  });
+
+  describe("类名与样式", () => {
+    test("wrapper 应该包含基础类名与 placement 类名", () => {
+      const picker = createPicker({ placement: "bottom" });
+      expect(picker.$wrapperContent.classList.contains("epicker")).toBe(true);
+      expect(picker.$wrapperContent.classList.contains("epicker-wrapper")).toBe(true);
+      expect(picker.$wrapperContent.classList.contains("epicker-placement-bottom")).toBe(true);
+    });
+
+    test("$body 应该包含 epicker-body 类名", () => {
+      const picker = createPicker({});
+      expect(picker.$body.classList.contains("epicker-body")).toBe(true);
+    });
+
+    test("setPlacement 应该更新 placement 类名", () => {
+      const picker = createPicker({ placement: "bottom" });
+      picker.setPlacement("top");
+      expect(picker.$wrapperContent.classList.contains("epicker-placement-top")).toBe(true);
+      expect(picker.$wrapperContent.classList.contains("epicker-placement-bottom")).toBe(false);
+    });
+
+    test("应该把 zIndex 应用到弹层样式", () => {
+      const picker = createPicker({ zIndex: 2000 });
+      picker.open = true;
+      jest.runAllTimers();
+      expect(picker.$wrapperContent.style.zIndex).toBe("2000");
+    });
+
+    test("应该把 offset 应用到弹层位置", () => {
+      const picker = createPicker({ offset: [10, 20] });
+      picker.open = true;
+      jest.runAllTimers();
+      expect(picker.$wrapperContent.style.left).toBe("10px");
+      expect(picker.$wrapperContent.style.top).toBe("20px");
+    });
   });
 
   describe("open 状态", () => {
@@ -129,6 +183,15 @@ describe("Picker", () => {
       picker.disabled = true;
       picker.open = true;
       expect(picker.open).toBe(false);
+    });
+
+    test("重复设置相同的 open 不应该触发 onOpenChange", () => {
+      const onOpenChange = jest.fn();
+      const picker = createPicker({ onOpenChange });
+
+      picker.open = false;
+      jest.runAllTimers();
+      expect(onOpenChange).not.toHaveBeenCalled();
     });
   });
 
@@ -237,6 +300,22 @@ describe("Picker", () => {
       });
 
       container.click();
+      expect(picker.open).toBe(false);
+    });
+
+    test("triggerClose 为 true 时点击弹层内部不应该关闭", () => {
+      const picker = createPicker({ trigger: "click", triggerClose: true, open: true });
+      jest.runAllTimers();
+
+      picker.$wrapperContent.click();
+      expect(picker.open).toBe(true);
+    });
+
+    test("点击弹层与容器外部应该关闭弹窗", () => {
+      const picker = createPicker({ trigger: "click", open: true });
+      jest.runAllTimers();
+
+      document.body.click();
       expect(picker.open).toBe(false);
     });
   });
@@ -461,6 +540,18 @@ describe("Picker", () => {
       jest.advanceTimersByTime(1);
       expect(onOpenChange).toHaveBeenCalledWith(false);
     });
+
+    test("负的 mouseEnterDelay 应该按 0 处理", () => {
+      const onOpenChange = jest.fn();
+      const picker = createPicker({ trigger: "hover", mouseEnterDelay: -1, onOpenChange });
+
+      container.dispatchEvent(new MouseEvent("mouseenter", { bubbles: true }));
+      expect(picker.open).toBe(true);
+      expect(onOpenChange).not.toHaveBeenCalled();
+
+      jest.runAllTimers();
+      expect(onOpenChange).toHaveBeenCalledWith(true);
+    });
   });
 
   describe("移动端模式", () => {
@@ -483,6 +574,21 @@ describe("Picker", () => {
       });
 
       expect(picker.$wrapperContent.classList.contains("epicker-mobile")).toBe(true);
+    });
+
+    test("移动端模式应该创建遮罩节点", () => {
+      const picker = createPicker({ isMobile: true });
+      expect(picker.$wrapperContent.querySelector(".epicker-mask")).toBeTruthy();
+    });
+
+    test("移动端点击遮罩应该关闭弹窗", () => {
+      const picker = createPicker({ isMobile: true });
+      picker.open = true;
+      jest.runAllTimers();
+
+      const mask = picker.$wrapperContent.querySelector(".epicker-mask") as HTMLElement;
+      mask.click();
+      expect(picker.open).toBe(false);
     });
   });
 
