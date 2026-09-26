@@ -39,6 +39,26 @@
 | 反复创建/销毁    | 多次创建和销毁实例不报错 |
 | 函数形式 content | content 为函数时正常渲染 |
 
+### 旋转容器 (picker.spec.ts)
+
+| 测试项              | 描述                            |
+| ------------------- | ------------------------------- |
+| 0deg 六向位置       | top/bottom/tl/tr/bl/br 位置正确 |
+| 旋转 90/180/270/-90 | 旋转挂载下弹层不显著重叠        |
+| 视口边界            | 弹层不超出视口                  |
+| body 挂载           | body 挂载时位置正确             |
+
+### 健壮性 (robustness.spec.ts)
+
+> 无头（headless）运行，验证异常路径与资源释放。
+
+| 测试项                    | 描述                                                            |
+| ------------------------- | --------------------------------------------------------------- |
+| destroy 幂等 + 销毁后调用 | 重复销毁不报错；销毁后 `setPlacement`/`innerHTML`/`open` 不抛错 |
+| 创建/销毁不残留 DOM       | 连续创建+销毁 200 次后 DOM 节点数回基线                         |
+| 容器 position 不被覆盖    | `relative/absolute/fixed/sticky` 保持；默认设 `relative`        |
+| 移动端销毁移除滚动锁      | 销毁后 `body` 不再带 `epicker-body-noscroll`                    |
+
 ## 运行测试
 
 ### 前提条件
@@ -85,14 +105,20 @@ pnpm test:pw:report
 packages/picker/
 ├── e2e/
 │   ├── README.md               # 本文件
-│   ├── picker.spec.ts           # 主测试文件
+│   ├── picker.spec.ts           # 交互 / 定位 / 旋转 / 多实例 测试
+│   ├── robustness.spec.ts       # 健壮性（销毁、DOM 释放、position 守卫）
 │   └── fixtures/
-│       └── picker-test.html     # 测试 HTML 页面（加载 dist 中的 UMD 构建）
+│       ├── picker-test.html     # 基础交互测试页
+│       ├── rotate-test.html     # 旋转容器测试页
+│       ├── robustness-test.html # 健壮性测试页
+│       └── common.css           # 测试页样式
 ├── dist/                        # 构建产物（测试依赖）
 │   ├── index.umd.js
 │   └── style/css.css
 └── src/                         # 源码
 ```
+
+> 所有测试默认以 **headless** 模式运行；需要可视化时使用 `pnpm test:pw:headed`。
 
 ## 测试原则
 

@@ -143,6 +143,8 @@ class Picker {
   private _animationTimer: number | null = null;
   private _disabled = false;
   private _timer: number | null = null;
+  /** 是否已销毁 */
+  private _destroyed = false;
 
   // prettier-ignore
   /**
@@ -174,7 +176,13 @@ class Picker {
       console.warn("popup container node does not support child elements, default body!");
       this._$popupContainer = document.body;
     }
-    if (this._$popupContainer !== document.body) this._$popupContainer.style.position = "relative";
+    // 仅在挂载容器为 static 时设置定位上下文，避免覆盖 absolute / fixed / sticky
+    if (this._$popupContainer !== document.body) {
+      const popupPosition = window.getComputedStyle(this._$popupContainer).position;
+      if (popupPosition === "static") {
+        this._$popupContainer.style.position = "relative";
+      }
+    }
     this._$popupContainer?.appendChild(this.$wrapperContent);
 
     this._onContentClick = this._onContentClick.bind(this);
@@ -201,7 +209,7 @@ class Picker {
   }
 
   set open(open: boolean) {
-    if (this._disabled) return;
+    if (this._disabled || this._destroyed) return;
 
     if (this._open !== !!open) {
       this._animationTimerClear();
@@ -276,6 +284,7 @@ class Picker {
   }
 
   set disabled(disabled: boolean) {
+    if (this._destroyed) return;
     if (disabled) {
       this.$container?.classList?.add?.(`${_$PICKER_PREFIX_CLS$_}-disabled`);
     } else {
@@ -298,7 +307,7 @@ class Picker {
    * ```
    */
   setPlacement(placement: PickerPlacement) {
-    if (this._disabled) return;
+    if (this._disabled || this._destroyed) return;
     if (_$PICKER_PLACEMENT$_.includes(placement)) {
       this._options.placement = placement;
       this.$wrapperContent.classList.forEach((cls) => {
@@ -321,9 +330,20 @@ class Picker {
    * ```
    */
   destroy() {
+    if (this._destroyed) return;
+    this._destroyed = true;
+
     this._animationTimerClear();
+    if (this._timer) {
+      clearTimeout(this._timer);
+      this._timer = null;
+    }
+    this._open = false;
+
     this._removeHtml();
     pickerProvider.remove(this);
+
+    this.$container = null;
     // this._$popupContainer 的 position 样式不会被移除
   }
 
@@ -336,7 +356,7 @@ class Picker {
    * ```
    */
   innerHTML(html?: string) {
-    if (this.$body) {
+    if (!this._destroyed && this.$body) {
       this.$body.innerHTML = html || "";
       this._setPlacement();
     }
@@ -397,6 +417,7 @@ class Picker {
       this.$wrapperContent.remove();
       this.$wrapperContent = null!;
     }
+    this.$body = null!;
   }
 
   /**
@@ -427,7 +448,7 @@ class Picker {
    * 5. 转换回挂载容器坐标系，设置样式
    */
   private _setPlacement() {
-    if (!this._open || this._options.isMobile || !this.$container) return;
+    if (!this._open || this._options.isMobile || !this.$container || !this.$wrapperContent) return;
 
     const $containerRect = this.$container?.getBoundingClientRect?.();
     const $popupContainerRect = this._$popupContainer.getBoundingClientRect();
