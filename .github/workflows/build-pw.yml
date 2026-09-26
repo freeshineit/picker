@@ -1,0 +1,35 @@
+name: build-pw
+
+on:
+  push:
+    branches: ["main", "develop"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x, 21.x, 22.x, 23.x, 24.x, 25.x, 26.x]
+
+    steps:
+      - uses: actions/checkout@v6
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: pnpm/action-setup@v5
+        with:
+          version: 8
+      - run: pnpm install
+      - run: pnpm run lint
+      - run: pnpm run test
+      - run: pnpm run test:pw # Playwright requires Node.js 20 or higher
+      - run: pnpm run docs
+      - run: pnpm run build
+
+      # - run: cd ./example/esmodule
+      # - run: pnpm install
+      # - run: pnpm run build
