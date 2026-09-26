@@ -41,6 +41,77 @@ async function waitForPickerClose(page: Page, sectionId: string) {
   await expect(wrapper).toBeHidden();
 }
 
+/** picker 弹出位置 */
+type Placement = "top" | "bottom" | "tl" | "tr" | "bl" | "br";
+
+/** 视口坐标系下的矩形 */
+interface Rect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+const PLACEMENTS: Placement[] = ["top", "bottom", "tl", "tr", "bl", "br"];
+
+/**
+ * 将目标节点滚动到视口垂直居中，避免点击时的自动滚动导致目标与弹层坐标错位
+ */
+async function centerTarget(page: Page, targetId: string) {
+  await page.locator(`#${targetId}`).evaluate((el) => el.scrollIntoView({ block: "center", inline: "center" }));
+  await page.waitForTimeout(100);
+}
+
+/**
+ * 在同一帧内读取目标与弹层在视口中的位置，以及弹层的类名
+ */
+async function measureOpenPicker(page: Page, targetId: string, wrapperSelector: string) {
+  return page.evaluate(
+    ([id, selector]) => {
+      const target = document.getElementById(id);
+      const wrapper = document.querySelector(selector);
+      if (!target || !wrapper) return null;
+      const t = target.getBoundingClientRect();
+      const w = wrapper.getBoundingClientRect();
+      return {
+        target: { x: t.left, y: t.top, width: t.width, height: t.height },
+        wrapper: { x: w.left, y: w.top, width: w.width, height: w.height },
+        classes: Array.from(wrapper.classList),
+      };
+    },
+    [targetId, wrapperSelector] as [string, string],
+  );
+}
+
+/**
+ * 校验弹层相对于目标的方位是否符合 placement 语义
+ */
+function expectPlacementGeometry(placement: Placement, target: Rect, wrapper: Rect) {
+  const isTop = placement.startsWith("t");
+  const isLeft = placement.endsWith("l");
+  const isRight = placement.endsWith("r");
+
+  // 垂直：上方位居目标上方、下方位居目标下方，且与目标边缘贴合
+  if (isTop) {
+    expect(wrapper.y + wrapper.height).toBeLessThanOrEqual(target.y + 5);
+    expect(Math.abs(wrapper.y + wrapper.height - target.y)).toBeLessThan(10);
+  } else {
+    expect(wrapper.y).toBeGreaterThanOrEqual(target.y + target.height - 5);
+    expect(Math.abs(wrapper.y - (target.y + target.height))).toBeLessThan(10);
+  }
+
+  // 水平：左 / 右边缘对齐，top / bottom 居中
+  if (isLeft) {
+    expect(Math.abs(wrapper.x - target.x)).toBeLessThan(10);
+  } else if (isRight) {
+    expect(Math.abs(wrapper.x + wrapper.width - (target.x + target.width))).toBeLessThan(10);
+  } else {
+    const targetCenterX = target.x + target.width / 2;
+    const wrapperCenterX = wrapper.x + wrapper.width / 2;
+    expect(Math.abs(wrapperCenterX - targetCenterX)).toBeLessThan(target.width / 2 + 10);
+  }
+}
+
 test.describe("Picker 集成测试 - 基础功能", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(FIXTURE_URL);
@@ -91,15 +162,19 @@ test.describe("Picker 集成测试 - 基础功能", () => {
     await expect(status).toHaveText("closed");
 
     // 鼠标移入
+    // 等待「状态」这一行为信号，而不是固定等待 400ms 动画时长：
+    // 弹层打开期间若发生 window resize / blur / visibilitychange，库会自动关闭 picker，
+    // 固定等待会把这个自动关闭误判为「未打开」
     await btn.hover();
-    await waitForPickerOpen(page, "test-hover");
     await expect(status).toHaveText("open");
+    await expect(wrapper).toBeVisible();
     await expect(wrapper).toContainText("Hover Picker Content");
 
-    // 鼠标移出到空白区域
-    await page.mouse.move(0, 0);
-    await waitForPickerClose(page, "test-hover");
+    // 鼠标移出到远离按钮与弹层的位置
+    await page.mouse.move(1200, 700);
+    // 关闭动画需要 100ms 延时 + 300ms 过渡，使用自动重试断言
     await expect(status).toHaveText("closed");
+    await expect(wrapper).toBeHidden();
   });
 
   test("4. 同一 Provider 下点击一个 picker 会关闭其他", async ({ page }) => {
@@ -267,6 +342,8 @@ test.describe("Picker 集成测试 - Placement", () => {
     // 获取弹窗位置
     const wrapper = getWrapper(page, "test-placement");
     await expect(wrapper).toBeVisible();
+    // 内容位置类名应与 placement 一致
+    await expect(wrapper).toHaveClass(/\bepicker-placement-br\b/);
 
     const wrapperBox = await wrapper.boundingBox();
     expect(wrapperBox).not.toBeNull();
@@ -291,6 +368,7 @@ test.describe("Picker 集成测试 - Placement", () => {
 
     const wrapper = getWrapper(page, "test-placement");
     await expect(wrapper).toBeVisible();
+    await expect(wrapper).toHaveClass(/\bepicker-placement-top\b/);
     await expect(wrapper).toContainText("Placement Test Content");
   });
 });
@@ -326,7 +404,6 @@ test.describe("Picker 集成测试 - 多 picker 交互", () => {
   });
 
   test("关闭一个 picker 不影响其他 picker", async ({ page }) => {
-    const btnA = page.locator("#btn-co-1");
     const btnB = page.locator("#btn-co-2");
     const statusA = page.locator("#status-co-1");
     const statusB = page.locator("#status-co-2");
@@ -334,8 +411,8 @@ test.describe("Picker 集成测试 - 多 picker 交互", () => {
 
     // 通过 evaluate 直接设置 picker 状态更可靠
     await page.evaluate(() => {
-      var w = window.__test__;
-      var pickers = w.getAllPickers();
+      const w = window.__test__;
+      const pickers = w.getAllPickers();
       pickers["co1"].open = true;
     });
     await page.waitForTimeout(600);
@@ -385,144 +462,36 @@ test.describe("Picker 旋转容器 - 位置验证", () => {
     await page.waitForTimeout(500);
   });
 
-  test("0deg 容器 - bottom 弹出位置在目标下方", async ({ page }) => {
-    const btn = page.locator("#rotate-target-bottom-0");
-    await expect(btn).toBeVisible();
+  for (const placement of PLACEMENTS) {
+    test(`0deg 容器 - ${placement} 位置类名与弹出方位正确`, async ({ page }) => {
+      const targetId = `rotate-target-${placement}-0`;
+      const btn = page.locator(`#${targetId}`);
+      await expect(btn).toBeVisible();
+      await expect(btn).toHaveAttribute("data-placement", placement);
 
-    const btnBox = await btn.boundingBox();
-    expect(btnBox).not.toBeNull();
+      await centerTarget(page, targetId);
+      await btn.click();
 
-    // 点击打开
-    await btn.click();
-    // wrapper 挂载在按钮内部（getPopupContainer: () => target）
-    const wrapper = page.locator("#rotate-target-bottom-0 > .epicker-wrapper");
-    await wrapper.waitFor({ state: "visible", timeout: 5000 });
-    await page.waitForTimeout(400);
+      // wrapper 挂载在按钮内部（getPopupContainer: () => target）
+      const wrapper = page.locator(`#${targetId} > .epicker-wrapper`);
+      await wrapper.waitFor({ state: "visible", timeout: 5000 });
+      await page.waitForTimeout(400);
 
-    const wrapperBox = await wrapper.boundingBox();
-    expect(wrapperBox).not.toBeNull();
+      // ---- 内容位置类名验证 ----
+      await expect(wrapper).toHaveClass(/\bepicker\b/);
+      await expect(wrapper).toHaveClass(/\bepicker-wrapper\b/);
+      await expect(wrapper).toHaveClass(new RegExp(`epicker-placement-${placement}(\\s|$)`));
+      await expect(wrapper.locator(":scope > .epicker-body")).toHaveCount(1);
 
-    if (btnBox && wrapperBox) {
-      // bottom 弹窗应在目标下方：wrapper.top >= btn.bottom
-      expect(wrapperBox.y).toBeGreaterThanOrEqual(btnBox.y + btnBox.height - 5);
-      // 水平居中：wrapper 中心在 btn 中心附近
-      const btnCenterX = btnBox.x + btnBox.width / 2;
-      const wrapperCenterX = wrapperBox.x + wrapperBox.width / 2;
-      expect(Math.abs(wrapperCenterX - btnCenterX)).toBeLessThan(btnBox.width / 2 + 10);
-    }
-  });
-
-  test("0deg 容器 - top 弹出位置在目标上方", async ({ page }) => {
-    const btn = page.locator("#rotate-target-top-0");
-    await expect(btn).toBeVisible();
-
-    await btn.click();
-    const wrapper = page.locator("#rotate-target-top-0 > .epicker-wrapper");
-    await wrapper.waitFor({ state: "visible", timeout: 5000 });
-    await page.waitForTimeout(400);
-
-    const btnBox = await btn.boundingBox();
-    const wrapperBox = await wrapper.boundingBox();
-    expect(btnBox).not.toBeNull();
-    expect(wrapperBox).not.toBeNull();
-
-    if (btnBox && wrapperBox) {
-      // top 弹窗应在目标上方：wrapper.bottom <= btn.top
-      expect(wrapperBox.y + wrapperBox.height).toBeLessThanOrEqual(btnBox.y + 5);
-      // 水平居中
-      const btnCenterX = btnBox.x + btnBox.width / 2;
-      const wrapperCenterX = wrapperBox.x + wrapperBox.width / 2;
-      expect(Math.abs(wrapperCenterX - btnCenterX)).toBeLessThan(btnBox.width / 2 + 10);
-    }
-  });
-
-  test("0deg 容器 - br 弹出位置在目标右下方", async ({ page }) => {
-    const btn = page.locator("#rotate-target-br-0");
-    await expect(btn).toBeVisible();
-
-    await btn.click();
-    const wrapper = page.locator("#rotate-target-br-0 > .epicker-wrapper");
-    await wrapper.waitFor({ state: "visible", timeout: 5000 });
-    await page.waitForTimeout(400);
-
-    const btnBox = await btn.boundingBox();
-    const wrapperBox = await wrapper.boundingBox();
-    expect(btnBox).not.toBeNull();
-    expect(wrapperBox).not.toBeNull();
-
-    if (btnBox && wrapperBox) {
-      // br = bottom-right：wrapper.right 对齐 btn.right（wrapper 可能比 btn 宽）
-      expect(Math.abs(wrapperBox.x + wrapperBox.width - (btnBox.x + btnBox.width))).toBeLessThan(10);
-      // wrapper.top 接近 btn.bottom
-      expect(Math.abs(wrapperBox.y - (btnBox.y + btnBox.height))).toBeLessThan(10);
-    }
-  });
-
-  test("0deg 容器 - tr 弹出位置在目标右上方", async ({ page }) => {
-    const btn = page.locator("#rotate-target-tr-0");
-    await expect(btn).toBeVisible();
-
-    await btn.click();
-    const wrapper = page.locator("#rotate-target-tr-0 > .epicker-wrapper");
-    await wrapper.waitFor({ state: "visible", timeout: 5000 });
-    await page.waitForTimeout(400);
-
-    const btnBox = await btn.boundingBox();
-    const wrapperBox = await wrapper.boundingBox();
-    expect(btnBox).not.toBeNull();
-    expect(wrapperBox).not.toBeNull();
-
-    if (btnBox && wrapperBox) {
-      // tr = top-right：wrapper.right 对齐 btn.right
-      expect(Math.abs(wrapperBox.x + wrapperBox.width - (btnBox.x + btnBox.width))).toBeLessThan(10);
-      // wrapper.bottom 接近 btn.top
-      expect(Math.abs(wrapperBox.y + wrapperBox.height - btnBox.y)).toBeLessThan(10);
-    }
-  });
-
-  test("0deg 容器 - bl 弹出位置在目标左下方", async ({ page }) => {
-    const btn = page.locator("#rotate-target-bl-0");
-    await expect(btn).toBeVisible();
-
-    await btn.click();
-    const wrapper = page.locator("#rotate-target-bl-0 > .epicker-wrapper");
-    await wrapper.waitFor({ state: "visible", timeout: 5000 });
-    await page.waitForTimeout(400);
-
-    const btnBox = await btn.boundingBox();
-    const wrapperBox = await wrapper.boundingBox();
-    expect(btnBox).not.toBeNull();
-    expect(wrapperBox).not.toBeNull();
-
-    if (btnBox && wrapperBox) {
-      // bl = bottom-left：wrapper.left 对齐 btn.left
-      expect(Math.abs(wrapperBox.x - btnBox.x)).toBeLessThan(10);
-      // wrapper.top 接近 btn.bottom
-      expect(Math.abs(wrapperBox.y - (btnBox.y + btnBox.height))).toBeLessThan(10);
-    }
-  });
-
-  test("0deg 容器 - tl 弹出位置在目标左上方", async ({ page }) => {
-    const btn = page.locator("#rotate-target-tl-0");
-    await expect(btn).toBeVisible();
-
-    await btn.click();
-    const wrapper = page.locator("#rotate-target-tl-0 > .epicker-wrapper");
-    await wrapper.waitFor({ state: "visible", timeout: 5000 });
-    await page.waitForTimeout(400);
-
-    const btnBox = await btn.boundingBox();
-    const wrapperBox = await wrapper.boundingBox();
-    expect(btnBox).not.toBeNull();
-    expect(wrapperBox).not.toBeNull();
-
-    if (btnBox && wrapperBox) {
-      // tl = top-left：wrapper.left 对齐 btn.left
-      expect(Math.abs(wrapperBox.x - btnBox.x)).toBeLessThan(10);
-      // wrapper.bottom 接近 btn.top
-      expect(Math.abs(wrapperBox.y + wrapperBox.height - btnBox.y)).toBeLessThan(10);
-    }
-  });
+      // ---- 内容位置验证 ----
+      const measured = await measureOpenPicker(page, targetId, `#${targetId} > .epicker-wrapper`);
+      expect(measured).not.toBeNull();
+      if (measured) {
+        expect(measured.classes).toContain(`epicker-placement-${placement}`);
+        expectPlacementGeometry(placement, measured.target, measured.wrapper);
+      }
+    });
+  }
 
   test("弹窗不超出视口右边界", async ({ page }) => {
     // 使用靠近右侧的 placement 测试
@@ -564,6 +533,7 @@ test.describe("Picker 旋转容器 - 位置验证", () => {
 
     const wrapper = page.locator(".epicker-wrapper").filter({ hasText: "Basic Picker Content" }).first();
     await expect(wrapper).toBeVisible();
+    await expect(wrapper).toHaveClass(/\bepicker-placement-bottom\b/);
 
     const wrapperBox = await wrapper.boundingBox();
     expect(wrapperBox).not.toBeNull();
@@ -579,7 +549,7 @@ test.describe("Picker 旋转容器 - 位置验证", () => {
     await expect(btn).toBeVisible();
 
     await btn.click();
-    const wrapper = page.locator("#rotate-target-bottom-90 > .epicker-wrapper");
+    const wrapper = page.locator("#rotate-target-bottom-90 > .epicker-wrapper.epicker-placement-bottom");
     await wrapper.waitFor({ state: "visible", timeout: 5000 });
     await page.waitForTimeout(400);
 
@@ -602,7 +572,7 @@ test.describe("Picker 旋转容器 - 位置验证", () => {
     await expect(btn).toBeVisible();
 
     await btn.click();
-    const wrapper = page.locator("#rotate-target-bottom-270 > .epicker-wrapper");
+    const wrapper = page.locator("#rotate-target-bottom-270 > .epicker-wrapper.epicker-placement-bottom");
     await wrapper.waitFor({ state: "visible", timeout: 5000 });
     await page.waitForTimeout(400);
 
@@ -624,7 +594,7 @@ test.describe("Picker 旋转容器 - 位置验证", () => {
     await expect(btn).toBeVisible();
 
     await btn.click();
-    const wrapper = page.locator("#rotate-target-bottom-180 > .epicker-wrapper");
+    const wrapper = page.locator("#rotate-target-bottom-180 > .epicker-wrapper.epicker-placement-bottom");
     await wrapper.waitFor({ state: "visible", timeout: 5000 });
     await page.waitForTimeout(400);
 
@@ -646,7 +616,7 @@ test.describe("Picker 旋转容器 - 位置验证", () => {
     await expect(btn).toBeVisible();
 
     await btn.click();
-    const wrapper = page.locator("#rotate-target-bottom--90 > .epicker-wrapper");
+    const wrapper = page.locator("#rotate-target-bottom--90 > .epicker-wrapper.epicker-placement-bottom");
     await wrapper.waitFor({ state: "visible", timeout: 5000 });
     await page.waitForTimeout(400);
 
