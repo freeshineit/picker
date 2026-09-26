@@ -81,3 +81,37 @@ jobs:
             # 使用 from-package 确保发布的是当前 package.json 里的版本
             pnpm --filter "$NAME" publish --access public --tag "$TAG" --no-git-checks
           done
+
+      ## 创建 Release.txt 文件，内容为当前提交的 SHA 值
+      - name: Build Release.txt
+        run: echo ${{ github.sha }} > Release.txt
+      - name: Test
+        run: cat Release.txt
+      # 打包 dist 为自定义压缩包
+      - name: Create release archive
+        run: |
+          PKG_NAME=$(node -p "require('./packages/picker/package.json').name")
+          VERSION=$(node -p "require('./packages/picker/package.json').version")
+          ARCHIVE_NAME="${PKG_NAME}-${VERSION}"
+
+          # 创建包含 picker 的 zip 包，排除 node_modules
+          zip -r "${ARCHIVE_NAME}.zip" packages/picker -x "packages/picker/node_modules/*"
+
+          # 创建包含 picker 的 tar.gz 包，排除 node_modules
+          tar -czf "${ARCHIVE_NAME}.tar.gz" --exclude='*/node_modules' packages/picker
+
+          echo "archive_name=${ARCHIVE_NAME}" >> "$GITHUB_OUTPUT"
+        id: archive
+
+      # 自动创建 GitHub Release
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          generate_release_notes: true
+          prerelease: ${{ steps.determine_tag.outputs.tag != 'latest' }}
+          files: |
+            ${{ steps.archive.outputs.archive_name }}.zip
+            ${{ steps.archive.outputs.archive_name }}.tar.gz
+            Release.txt
