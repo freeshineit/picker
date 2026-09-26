@@ -90,7 +90,7 @@ jobs:
       # 打包 dist 为自定义压缩包
       - name: Create release archive
         run: |
-          PKG_NAME=$(node -p "require('./packages/picker/package.json').name")
+          PKG_NAME=$(node -p "require('./packages/picker/package.json').name.replace('@skax/', '')")
           VERSION=$(node -p "require('./packages/picker/package.json').version")
           ARCHIVE_NAME="${PKG_NAME}-${VERSION}"
 
