@@ -18,6 +18,7 @@
         </div>
         <div class="demo-badges">
           <span class="demo-badge">Build: public/index.html</span>
+          <a class="demo-badge" href="./rotate.html" target="_blank">rotate.html</a>
           <span class="demo-badge">Device: <span id="device-status">Detecting</span></span>
         </div>
       </header>
@@ -146,7 +147,7 @@
 
         <section class="demo-section" id="api-demo">
           <h2>API 使用</h2>
-          <p>通过实例属性 / 方法动态控制弹层：new Picker(...) · open · setPlacement() · innerHTML() · disabled · destroy() · onOpenChange。</p>
+          <p>覆盖全部配置项，通过 new Picker(...) 与实例属性 / 方法动态控制弹层。</p>
 
           <div class="demo-fields">
             <label class="demo-field">
@@ -177,6 +178,19 @@
               </select>
             </label>
 
+            <label class="demo-field">
+              boundaryContainer
+              <select id="api-boundary">
+                <option value="" selected>window</option>
+                <option value="box">#api-boundary-box</option>
+              </select>
+            </label>
+
+            <label class="demo-field demo-check">
+              <input id="api-open-init" type="checkbox" />
+              open (initial)
+            </label>
+
             <label class="demo-field demo-check">
               <input id="api-trigger-close" type="checkbox" />
               triggerClose
@@ -192,9 +206,44 @@
               disabled
             </label>
 
+            <label class="demo-field demo-check">
+              <input id="api-content-fn" type="checkbox" />
+              content()
+            </label>
+
+            <label class="demo-field">
+              offsetX
+              <input id="api-offset-x" type="number" value="0" />
+            </label>
+
+            <label class="demo-field">
+              offsetY
+              <input id="api-offset-y" type="number" value="8" />
+            </label>
+
+            <label class="demo-field">
+              zIndex
+              <input id="api-z-index" type="number" value="1000" />
+            </label>
+
+            <label class="demo-field">
+              mouseEnterDelay
+              <input id="api-enter-delay" type="number" step="0.1" value="0.1" />
+            </label>
+
+            <label class="demo-field">
+              mouseLeaveDelay
+              <input id="api-leave-delay" type="number" step="0.1" value="0.1" />
+            </label>
+
+            <label class="demo-field">
+              wrapClassName
+              <input id="api-wrap-class" type="text" value="demo-wrapper" />
+            </label>
+
             <label class="demo-field demo-field--wide">
               content
-              <textarea id="api-content" rows="3"></textarea>
+              <textarea id="api-content" rows="8"></textarea>
             </label>
           </div>
 
@@ -208,11 +257,14 @@
             <button class="demo-btn secondary" id="api-destroy">destroy()</button>
           </div>
 
-          <div class="demo-row">
-            <button class="demo-target" id="api-target">API Target</button>
-            <div class="demo-state" id="api-state">
-              <span>picker: destroyed</span>
-              <span>open: false</span>
+          <div class="demo-boundary" id="api-boundary-box">
+            <div class="demo-row">
+              <button class="demo-target" id="api-target">API Target</button>
+              <div class="demo-state" id="api-state">
+                <span>picker: destroyed</span>
+                <span>open: false</span>
+              </div>
+              <div class="demo-note" id="api-log">onOpenChange: -</div>
             </div>
           </div>
         </section>
@@ -314,9 +366,20 @@
           placement: document.getElementById("api-placement"),
           trigger: document.getElementById("api-trigger"),
           container: document.getElementById("api-container"),
+          boundary: document.getElementById("api-boundary"),
+          boundaryBox: document.getElementById("api-boundary-box"),
+          openInit: document.getElementById("api-open-init"),
+          contentFn: document.getElementById("api-content-fn"),
+          enterDelay: document.getElementById("api-enter-delay"),
+          leaveDelay: document.getElementById("api-leave-delay"),
+          log: document.getElementById("api-log"),
           triggerClose: document.getElementById("api-trigger-close"),
           isMobile: document.getElementById("api-is-mobile"),
           disabled: document.getElementById("api-disabled"),
+          offsetX: document.getElementById("api-offset-x"),
+          offsetY: document.getElementById("api-offset-y"),
+          zIndex: document.getElementById("api-z-index"),
+          wrapClassName: document.getElementById("api-wrap-class"),
           content: document.getElementById("api-content"),
           target: document.getElementById("api-target"),
           state: document.getElementById("api-state"),
@@ -355,21 +418,37 @@
             renderApiState();
           };
 
+          const num = (value, fallback) => {
+            const n = Number(value);
+            return Number.isFinite(n) ? n : fallback;
+          };
+
           const rebuildApiPicker = () => {
             destroyApiPicker();
+            const contentValue = apiEls.content.value;
             const options = {
               placement: apiEls.placement.value,
               trigger: apiEls.trigger.value,
               triggerClose: apiEls.triggerClose.checked,
               isMobile: apiEls.isMobile.checked,
-              content: apiEls.content.value,
+              open: apiEls.openInit.checked,
+              offset: [num(apiEls.offsetX.value, 0), num(apiEls.offsetY.value, 0)],
+              zIndex: num(apiEls.zIndex.value, 1000),
+              wrapClassName: apiEls.wrapClassName.value,
+              mouseEnterDelay: num(apiEls.enterDelay.value, 0.1),
+              mouseLeaveDelay: num(apiEls.leaveDelay.value, 0.1),
+              content: apiEls.contentFn.checked ? () => contentValue : contentValue,
               onOpenChange: (open) => {
                 apiOpen = !!open;
                 renderApiState();
+                if (apiEls.log) apiEls.log.textContent = `onOpenChange: ${!!open}`;
               },
             };
             if (apiEls.container.value === "self") {
               options.getPopupContainer = () => apiEls.target;
+            }
+            if (apiEls.boundary.value === "box") {
+              options.boundaryContainer = () => apiEls.boundaryBox;
             }
             apiPicker = new Picker(apiEls.target, options);
             apiPicker.disabled = apiEls.disabled.checked;
