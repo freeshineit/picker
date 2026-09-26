@@ -276,6 +276,95 @@ describe("Picker", () => {
     });
   });
 
+  describe("销毁后行为", () => {
+    test("重复 destroy 不应该抛错也不应重复警告", () => {
+      const picker = createPicker({});
+      const consoleSpy = jest.spyOn(console, "warn");
+
+      picker.destroy();
+      expect(() => picker.destroy()).not.toThrow();
+      expect(consoleSpy).not.toHaveBeenCalledWith("Picker not found in the provider.");
+    });
+
+    test("destroy 应该清理定时器并重置状态", () => {
+      const picker = createPicker({});
+      picker.open = true;
+      expect((picker as any)._timer).not.toBeNull();
+
+      picker.destroy();
+
+      expect((picker as any)._timer).toBeNull();
+      expect(picker.open).toBe(false);
+      expect(picker.$container).toBeNull();
+      expect(picker.$body).toBeFalsy();
+      expect(picker.$wrapperContent).toBeFalsy();
+    });
+
+    test("destroy 后调用 setPlacement 不应该抛错", () => {
+      const picker = createPicker({});
+      picker.destroy();
+      expect(() => picker.setPlacement("top")).not.toThrow();
+    });
+
+    test("destroy 后调用 innerHTML 不应该抛错", () => {
+      const picker = createPicker({});
+      picker.open = true;
+      jest.runAllTimers();
+      picker.destroy();
+
+      expect(() => picker.innerHTML("<div>x</div>")).not.toThrow();
+    });
+
+    test("destroy 后设置 open 不应该生效", () => {
+      const picker = createPicker({});
+      picker.destroy();
+
+      picker.open = true;
+      expect(picker.open).toBe(false);
+    });
+  });
+
+  describe("挂载容器 position", () => {
+    const appendPopup = (position?: string) => {
+      const popup = document.createElement("div");
+      if (position) popup.style.position = position;
+      document.body.appendChild(popup);
+      return popup;
+    };
+
+    beforeEach(() => {
+      // 模拟浏览器：计算值反映内联 position，未设置则为 static
+      jest.spyOn(window, "getComputedStyle").mockImplementation((el: Element) => {
+        const position = (el as HTMLElement).style?.position || "static";
+        return { position } as CSSStyleDeclaration;
+      });
+    });
+
+    test("容器默认（static）时应该设置为 relative", () => {
+      const popup = appendPopup();
+
+      createPicker({ getPopupContainer: () => popup });
+
+      expect(popup.style.position).toBe("relative");
+    });
+
+    test.each(["relative", "absolute", "fixed", "sticky"])("容器为 %s 时不应该被覆盖", (position) => {
+      const popup = appendPopup(position);
+
+      createPicker({ getPopupContainer: () => popup });
+
+      expect(popup.style.position).toBe(position);
+    });
+
+    test("挂载到 body 时不应该修改 body 定位", () => {
+      const original = document.body.style.position;
+
+      createPicker({});
+
+      expect(document.body.style.position).toBe(original);
+    });
+  });
+
   describe("触发方式", () => {
     test("click 触发应该能打开弹窗", () => {
       const picker = createPicker({ trigger: "click" });
