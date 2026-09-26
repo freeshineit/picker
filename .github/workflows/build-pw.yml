@@ -26,9 +26,37 @@ jobs:
       - run: pnpm install
       - run: pnpm run lint
       - run: pnpm run test
-      - run: pnpm run test:pw # Playwright requires Node.js 20 or higher
       - run: pnpm run docs
       - run: pnpm run build
+
+  # Playwright needs a single Node.js version (>= 20) plus a downloaded browser,
+  # so it runs in its own job instead of across the whole version matrix.
+  e2e:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v6
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20.x
+      - uses: pnpm/action-setup@v5
+        with:
+          version: 8
+      - run: pnpm install
+      # The e2e fixtures load `packages/picker/dist`, so build it before testing.
+      - run: pnpm run build:picker
+      # `--with-deps` also installs the OS libraries Chromium needs on ubuntu-latest.
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm run test:pw
+      - name: Upload Playwright report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
 
       # - run: cd ./example/esmodule
       # - run: pnpm install
